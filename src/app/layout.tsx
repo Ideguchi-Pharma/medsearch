@@ -32,7 +32,7 @@ export default function RootLayout({
         <div className="flex flex-grow">
            {/* サイドメニュー */}
            <aside className="
-              w-8 sm:w-56 {/* サイドメニューの幅を調整。小さい画面では狭く */}
+              w-8 sm:w-48 {/* サイドメニューの幅を調整。小さい画面では狭く */}
               bg-white border-r border-gray-200 shadow-md
               flex flex-col justify-between
               pt-4 pb-4 {/* サイドメニュー自体の上下パディング */}
@@ -43,15 +43,17 @@ export default function RootLayout({
               <nav className="flex flex-col gap-2">
                 {/* 各メニュー項目 (アイコンなし、テキストのみ) */}
                 {/* メドサーチ (アクティブ状態の例) */}
+                <p className="text-xs sm:text-xs text-gray-400 items-left px-4">サービス</p>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-cyan-600 font-bold bg-cyan-50 hover:bg-cyan-100 border-l-4 border-cyan-600 rounded-md">
                   <span className="text-xs sm:text-base hidden sm:inline">メドサーチ</span>
                 </a>
-                {/* メドオーダー */}
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
                 <span className="text-xs sm:text-base hidden sm:inline">メドオーダー</span>
                 </a>
-                {/* 区切り線 */}
-                <hr className="my-2 border-gray-200 hidden sm:block" />
+                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
+                <span className="text-xs sm:text-base hidden sm:inline">メドシェア</span>
+                </a>
+                <p className="text-xs sm:text-xs text-gray-400 items-left px-4">一般</p>
                 {/* 設定 */}
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
                 <span className="text-xs sm:text-base hidden sm:inline">設定</span>{/* 右矢印の代わりに文字 */}
@@ -60,42 +62,39 @@ export default function RootLayout({
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
                 <span className="text-xs sm:text-base hidden sm:inline">ドキュメント</span>
                 </a>
-                {/* 区切り線 */}
-                <hr className="my-2 border-gray-200 hidden sm:block" />
+                <p className="text-xs sm:text-xs text-gray-400 items-left px-4">サービス概要</p>
                 {/* 公式HP */}
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
                 <span className="text-xs sm:text-base hidden sm:inline">ファーマクラウド</span>
                 </a>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドオーダーとは</span>
+                <span className="text-xs sm:text-base hidden sm:inline">メドオーダー</span>
                 </a>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドシェアとは</span>
+                <span className="text-xs sm:text-base hidden sm:inline">メドシェア</span>
                 </a>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドサーチとは</span>
+                <span className="text-xs sm:text-base hidden sm:inline">メドサーチ</span>
                 </a>
-                {/* 区切り線 */}
-                <hr className="my-2 border-gray-200 hidden sm:block" />
+                <p className="text-xs sm:text-xs text-gray-400 items-left px-4">使い方</p>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドオーダーの使い方</span>
-                </a>
-                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドシェアの使い方</span>
+                <span className="text-xs sm:text-base hidden sm:inline">メドオーダー</span>
                 </a>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドサーチの使い方</span>
-                </a>
-                {/* 区切り線 */}
-                <hr className="my-2 border-gray-200 hidden sm:block" />
-                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドオーダーの事例</span>
+                <span className="text-xs sm:text-base hidden sm:inline">メドシェア</span>
                 </a>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドシェアの事例</span>
+                <span className="text-xs sm:text-base hidden sm:inline">メドサーチ</span>
+                </a>
+                <p className="text-xs sm:text-xs text-gray-400 items-left px-4">活用事例</p>
+                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
+                <span className="text-xs sm:text-base hidden sm:inline">メドオーダー</span>
                 </a>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドサーチの事例</span>
+                <span className="text-xs sm:text-base hidden sm:inline">メドシェア</span>
+                </a>
+                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
+                <span className="text-xs sm:text-base hidden sm:inline">メドサーチ</span>
                 </a>
 
               </nav>
