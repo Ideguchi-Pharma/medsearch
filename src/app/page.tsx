@@ -3,8 +3,35 @@ import { RiInformationFill } from "react-icons/ri";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[10px_1fr_10px] items-left justify-items-left min-h-screen px-2 pb-20 gap-16 sm:px-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[8px] row-start-1 items-center sm:items-start">
+    <div className="grid grid-rows-[10px_1fr_10px] items-left justify-items-left min-h-screen font-[family-name:var(--font-geist-sans)]">
+       <header className="w-full bg-white bg-opacity-50 border-b border-gray-200 p-4 flex items-center gap-4 shadow-sm fixed top-0 z- backdrop-blur-sm">
+        <div className="flex items-center gap-4"> 
+              {/* サイドメニュー開閉ボタンのプレースホルダー */}
+              {/* 元のサイトには左側に「>」のようなアイコンがあるので、それを模倣 */}
+        <div className="
+            flex items-center justify-center 
+            px-1 py-1 
+            border border-green-500 rounded-lg
+            text-green-600 font-bold text-sm
+            min-w-[60px] sm:min-w-[80px]
+            cursor-pointer select-none
+          ">
+            デモ薬局
+          </div>
+          <span className="
+            flex items-center justify-center
+            bg-orange-300 text-gray-800 
+            text-xs font-bold
+            px-1 py-1 rounded-lg
+            uppercase 
+            min-w-[70px] sm:min-w-[70px]
+            cursor-pointer select-none
+          ">
+            PREVIEW
+          </span>
+          </div>
+        </header> 
+      <main className="flex flex-col gap-[8px] row-start-1 items-center p-8 sm:items-start mt-[64px]">
         <p className="tracking-[-.01em] text-2xl font-bold">
             メドサーチ
         </p>
