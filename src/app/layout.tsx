@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Image from "next/image";
 import "./globals.css";
 
 
@@ -40,10 +41,19 @@ export default function RootLayout({
               sticky top-o h-screen
               overflow-y-auto
             ">
-              <nav className="flex flex-col gap-2">
+              <nav className="flex flex-col gap-4">
+              <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
                 {/* 各メニュー項目 (アイコンなし、テキストのみ) */}
                 {/* メドサーチ (アクティブ状態の例) */}
-                <p className="text-xs sm:text-xs text-gray-400 items-left px-4">サービス</p>
+                <Image 
+                 className="ml-2 sm:ml-4" 
+                 src="/pharmacloud_mark.svg" 
+                 alt="ファーマクラウド" 
+                 width={35} 
+                 height={35} 
+                
+                 />
+                <p className="mt-4 text-xs sm:text-xs text-gray-400 items-left px-4 py-2">サービス</p>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-cyan-600 font-bold bg-cyan-50 hover:bg-cyan-100 border-l-4 border-cyan-600 rounded-md">
                   <span className="text-xs sm:text-base hidden sm:inline">メドサーチ</span>
                 </a>
@@ -53,7 +63,7 @@ export default function RootLayout({
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
                 <span className="text-xs sm:text-base hidden sm:inline">メドシェア</span>
                 </a>
-                <p className="text-xs sm:text-xs text-gray-400 items-left px-4">一般</p>
+                <p className="text-xs sm:text-xs text-gray-400 items-left px-4 py-2">一般</p>
                 {/* 設定 */}
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
                 <span className="text-xs sm:text-base hidden sm:inline">設定</span>{/* 右矢印の代わりに文字 */}
@@ -62,11 +72,21 @@ export default function RootLayout({
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
                 <span className="text-xs sm:text-base hidden sm:inline">ドキュメント</span>
                 </a>
-                <p className="text-xs sm:text-xs text-gray-400 items-left px-4">サービス概要</p>
+                <p className="text-xs sm:text-xs text-gray-400 items-left px-4 py-2">サービス概要</p>
                 {/* 公式HP */}
-                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
+                <a href="https://www.pharmacloud.co.jp/" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
                 <span className="text-xs sm:text-base hidden sm:inline">ファーマクラウド</span>
                 </a>
+                <a href="https://www.pharmacloud.co.jp/service/med-order-middle" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
+                <span className="text-xs sm:text-base hidden sm:inline">メドオーダー</span>
+                </a>
+                <a href="https://www.pharmacloud.co.jp/service/med-share" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
+                <span className="text-xs sm:text-base hidden sm:inline">メドシェア</span>
+                </a>
+                <a href="https://www.pharmacloud.co.jp/service/med-search" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
+                <span className="text-xs sm:text-base hidden sm:inline">メドサーチ</span>
+                </a>
+                <p className="text-xs sm:text-xs text-gray-400 items-left px-4 py-2">使い方</p>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
                 <span className="text-xs sm:text-base hidden sm:inline">メドオーダー</span>
                 </a>
@@ -76,27 +96,17 @@ export default function RootLayout({
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
                 <span className="text-xs sm:text-base hidden sm:inline">メドサーチ</span>
                 </a>
-                <p className="text-xs sm:text-xs text-gray-400 items-left px-4">使い方</p>
+                <p className="text-xs sm:text-xs text-gray-400 items-left px-4 py-2">活用事例</p>
                 <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
                 <span className="text-xs sm:text-base hidden sm:inline">メドオーダー</span>
                 </a>
-                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
+                <a href="https://www.pharmacloud.co.jp/case" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
                 <span className="text-xs sm:text-base hidden sm:inline">メドシェア</span>
                 </a>
-                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
+                <a href="https://www.pharmacloud.co.jp/case" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
                 <span className="text-xs sm:text-base hidden sm:inline">メドサーチ</span>
                 </a>
-                <p className="text-xs sm:text-xs text-gray-400 items-left px-4">活用事例</p>
-                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドオーダー</span>
-                </a>
-                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドシェア</span>
-                </a>
-                <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
-                <span className="text-xs sm:text-base hidden sm:inline">メドサーチ</span>
-                </a>
-
+              </ol>
               </nav>
             </aside>
             {/* 各ページのコンテンツがレンダリングされる部分 */}

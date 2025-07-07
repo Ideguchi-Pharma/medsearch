@@ -38,9 +38,9 @@ export default function Home() {
         <p className="tracking-[-.01em] mb-8">
             マイページ ・ メドサーチ
         </p>
-        <div className="flex items-start space-x-2 px-4 py-2 rounded-lg" style={{ backgroundColor: "#e0f7fa" }}>
+        <div className="flex items-start space-x-2 px-4 py-2 rounded-lg flex-grow" style={{ backgroundColor: "#e0f7fa" }}>
          <RiInformationFill /* className="w-5 h-5 text-cyan-600 flex-shrink-0 mt-0.5" *//>
-         <p className="text-black px-0.5 py-0.5 text-sm text-gray-800 rounded font-[family-name:var(--font-geist-mono)] flex-grow]">
+         <p className="text-black px-0.5 py-0.5 text-sm text-gray-800 rounded font-[family-name:var(--font-geist-mono)]">
             グループに共有されている在庫状況を検索します。対象グループを選択して、医薬品名を入力してください。
         </p>
         </div>
@@ -60,7 +60,7 @@ export default function Home() {
             width={16}
             height={16}
           />
-          まだ作成中
+          blank
         </a>
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
@@ -75,7 +75,7 @@ export default function Home() {
             width={16}
             height={16}
           />
-          まだ作成中
+          blank
         </a>
         <a
           className="flex items-center gap-2 py-16 hover:underline hover:underline-offset-4"
@@ -90,7 +90,7 @@ export default function Home() {
             width={16}
             height={16}
           />
-         まだ作成中
+         blank
         </a>
       </footer>
     </div>
