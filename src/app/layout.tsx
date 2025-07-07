@@ -27,7 +27,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header className="w-full bg-white border-b border-gray-200 p-4 flex items-center justify-start gap-4 shadow-sm">
+        <header className="w-full bg-white border-b border-gray-200 p-4 flex items-center justify-start gap-4 shadow-sm fixed top-0 z-10">
         <div className="
             flex items-center justify-center 
             px-1 py-1 
@@ -51,7 +51,9 @@ export default function RootLayout({
           </span>
 
         </header>
+        <div className="flex-grow pt-25">
         {children}
+        </div>
       </body>
     </html>
   );
