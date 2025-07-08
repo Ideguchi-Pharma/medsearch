@@ -1,11 +1,14 @@
 import Image from "next/image";
 import { RiInformationFill } from "react-icons/ri";
 import { CiSearch } from "react-icons/ci";
+import { dummyData } from "@/data/dummyData";
+import PharmacyTableHead from "@/components/PharmacyTableHead";
+
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[10px_1fr_10px] items-left justify-items-left min-h-screen font-[family-name:var(--font-geist-sans)]">
-       <header className="w-full bg-white bg-opacity-50 border-b border-gray-200 p-4 flex items-center gap-4 shadow-sm fixed top-0 z- backdrop-blur-sm">
+       <div className="w-full flex-col min-h-screen">       
+       <header className="w-full bg-white bg-opacity-50 border-b border-gray-200 p-4 flex items-center gap-4 shadow-sm fixed top-0 z-50 backdrop-blur-sm">
         <div className="flex items-center gap-4"> 
               {/* サイドメニュー開閉ボタンのプレースホルダー */}
               {/* 元のサイトには左側に「>」のようなアイコンがあるので、それを模倣 */}
@@ -32,7 +35,7 @@ export default function Home() {
           </span>
           </div>
         </header> 
-      <main className="flex flex-col gap-[8px] row-start-1 items-center p-8 sm:items-start mt-[64px]">
+      <main className="w-full flex flex-col gap-[8px] row-start-1 items-center p-8 sm:items-start mt-[64px]">
         <p className="tracking-[-.01em] text-2xl font-bold">
             メドサーチ
         </p>
@@ -49,13 +52,13 @@ export default function Home() {
         </div>
 
         <div className="flex items-center gap-4 mt-8 w-full">
-          <select className="
+          <select className="elati
           flex-grow-0 flex-shrink-0
           w-48 p-2 border border-gray-300 rounded-md
           focus-outline-none focus:ring-2 focus-ring-blue-500 focus:border-transparent
           bg-white text-gray-700"
           >
-            <option value="" disabled selected hidden className="text-gray-400">Group</option>
+            <option value="" className="text-gray-300">Group</option>
             <option value="groupA">シメサバ薬剤師会</option>
             <option value="groupB">グッピー薬局グループ</option>
             <option value="groupC">ナマズ株式会社グループ</option>
@@ -67,7 +70,7 @@ export default function Home() {
             <option value="groupI">キンメダイ薬剤師会</option>
           </select>
 
-          <div className="relative flex-grow">
+          <div className="rve flex-grow">
             <input
               type="text"
               placeholder="search..."
@@ -77,13 +80,46 @@ export default function Home() {
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
               text-gray-700"
             />
-            <div className="absolute left-4 top-4/7 -translate-y-1/2 text-gray-400 w-5 h-5">
+            <div className="absolute left-112 top-5/11 -translate-y-1/2 text-gray-400 w-5 h-5">
             <CiSearch  />
             </div>
           </div>
           </div>
+          <div className="mt-8 w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm"> 
+          <table className="min-w-full divide-y divide-gray-200"> 
+            {/* ★thead の代わりに PharmacyTableHead コンポーネントを使用★ */}
+            <PharmacyTableHead /> 
+            <tbody className="bg-white divide-y divide-gray-200"> 
+              {dummyData.map((pharmacy) => (
+                <tr key={pharmacy.id}>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900 w-[15%]">
+                    {pharmacy.drugName}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 w-[10%]">
+                    {pharmacy.price}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 w-[20%]">
+                    {pharmacy.facilityName}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-blue-600 font-medium w-[15%]">
+                    {pharmacy.distance}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 text-center w-[10%]">
+                    {pharmacy.dispenseCount}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 text-center w-[10%]">
+                    {pharmacy.dispenseAmount}
+                  </td>
+                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 text-right w-[15%]">
+                    {pharmacy.lastDispensetDate}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      <div className="
+      {/*<div className="
       flex w-full
       bg-gray-100 border-b border-gray-200
       py-3 px-4
@@ -98,6 +134,7 @@ export default function Home() {
         <div className="w-1/4">調剤量</div>
         <div className="w-1/4">最終調剤日</div>
       </div>
+      */}
       
 
       </main>

@@ -38,7 +38,7 @@ export default function RootLayout({
               flex flex-col justify-between
               pt-4 pb-4 {/* サイドメニュー自体の上下パディング */}
               flex-shrink-0 {/* サイドメニューが縮まないようにする */}
-              sticky top-o h-screen
+              sticky top-0 h-screen
               overflow-y-auto
             ">
               <nav className="flex flex-col gap-4">
