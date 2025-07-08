@@ -80,10 +80,25 @@ export default function Home() {
             <div className="absolute left-4 top-4/7 -translate-y-1/2 text-gray-400 w-5 h-5">
             <CiSearch  />
             </div>
-
+          </div>
           </div>
 
-        </div>
+      <div className="
+      flex w-full
+      bg-gray-100 border-b border-gray-200
+      py-3 px-4
+      mt-8
+      font-bold text-gray-600 text-sm
+      ">
+        <div className="w-1/4">医薬品名</div>
+        <div className="w-1/4">薬価</div>
+        <div className="w-1/4">施設名</div>
+        <div className="w-1/4">距離</div>
+        <div className="w-1/4">調剤数</div>
+        <div className="w-1/4">調剤量</div>
+        <div className="w-1/4">最終調剤日</div>
+      </div>
+      
 
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
