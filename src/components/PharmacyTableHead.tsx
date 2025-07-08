@@ -1,8 +1,8 @@
 // src/components/PharmacyTableHead.tsx
 
 import React from 'react';
-import type { FC } from 'react';
-import { FiArrowUp, FiArrowDown } from "react-icons/fi"; // ソートアイコン用
+
+import { FiArrowUp } from "react-icons/fi"; // ソートアイコン用
 
 // 必要であれば、ヘッダー項目の型定義もここに
 interface TableHeaderItem {
@@ -11,13 +11,6 @@ interface TableHeaderItem {
   align: 'left' | 'center' | 'right'; // テキストの配置
   width: string; // Tailwindの幅クラス (例: 'w-[20%]')
   sortable?: boolean; // ソート可能かどうか
-}
-
-interface PharmacyTableHeadProps {
-  // ソート状態を管理するためのプロパティを渡す (後で実装)
-  // currentSortColumn: string;
-  // sortDirection: 'asc' | 'desc';
-  // onSort: (column: string) => void;
 }
 
 const tableHeaders: TableHeaderItem[] = [
@@ -30,7 +23,7 @@ const tableHeaders: TableHeaderItem[] = [
   { key: 'lastDispenseDate', label: '最終調剤日', align: 'right', width: 'w-[15%]' },
 ];
 
-const PharmacyTableHead: React.FC<PharmacyTableHeadProps> = () => {
+const PharmacyTableHead = () => { 
   return (
     <thead className="bg-gray-100">
       <tr>
