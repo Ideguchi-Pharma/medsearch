@@ -8,11 +8,16 @@ import PharmacyTableHead from "@/components/PharmacyTableHead";
 export default function Home() {
   return (
        <div className="w-full flex-col min-h-screen">       
-       <header className="w-full bg-white bg-opacity-50 border-b border-gray-200 p-4 flex items-center gap-4 shadow-sm fixed top-0 z-50 backdrop-blur-sm">
-        <div className="flex items-center gap-4"> 
-              {/* サイドメニュー開閉ボタンのプレースホルダー */}
-              {/* 元のサイトには左側に「>」のようなアイコンがあるので、それを模倣 */}
-        <div className="
+        <header className="
+          w-full 
+          bg-white bg-opacity-50 
+          border-b border-gray-200 
+          p-4 flex items-center gap-4 
+          shadow-sm fixed top-0 z-50 
+          backdrop-blur-sm
+        ">
+         <div className="flex items-center gap-4"> 
+          <div className="
             flex items-center justify-center 
             px-1 py-1 
             border border-green-500 rounded-lg
@@ -22,34 +27,46 @@ export default function Home() {
           ">
             デモ薬局
           </div>
-          <span className="
-            flex items-center justify-center
-            bg-orange-300 text-gray-800 
-            text-xs font-bold
-            px-1 py-1 rounded-lg
-            uppercase 
-            min-w-[70px] sm:min-w-[70px]
-            cursor-pointer select-none
-          ">
+           <span className="
+             flex items-center justify-center
+             bg-orange-300 text-gray-800 
+             text-xs font-bold
+             px-1 py-1 rounded-lg
+             uppercase 
+             min-w-[70px] sm:min-w-[70px]
+             cursor-pointer select-none
+            ">
             PREVIEW
-          </span>
-          </div>
-        </header> 
-      <main className="w-full flex flex-col gap-[8px] row-start-1 items-center p-8 sm:items-start mt-[64px]">
-        <p className="tracking-[-.01em] text-2xl font-bold">
-            メドサーチ
-        </p>
-        <p className="tracking-[-.01em] mb-8">
-            マイページ ・ メドサーチ
-        </p>
-        <div className="relative flex items-start space-x-2 px-4 py-2 rounded-lg w-full" style={{ backgroundColor: "#e0f7fa" }}>
-         <p className="text-black px-0.5 py-0.5 text-sm text-gray-800 pl-10 rounded font-[family-name:var(--font-geist-mono)]">
-            グループに共有されている在庫状況を検索します。対象グループを選択して、医薬品名を入力してください。
-        </p>
-        <div className="absolute left-6 top-7 -translate-y-1/2 text-cyan-600 w-10 h-10 text-2xl">
-        <RiInformationFill />
-        </div>
-        </div>
+           </span>
+         </div>
+          </header> 
+           <main className="
+           w-full flex flex-col 
+           gap-[8px] row-start-1 
+           items-center p-8 
+           sm:items-start mt-[64px]
+           ">
+            <p className="tracking-[-.01em] text-2xl font-bold">
+             メドサーチ
+            </p>
+            <p className="tracking-[-.01em] mb-8">
+             マイページ ・ メドサーチ
+            </p>
+            <div className="
+            relative flex items-start 
+            space-x-2 px-4 py-2 rounded-lg w-full" 
+            style={{ backgroundColor: "#e0f7fa" }}>
+             <p className="
+             text-black px-0.5 py-0.5 
+             text-sm text-gray-800 pl-10 
+             rounded font-[family-name:var(--font-geist-mono)]
+             ">
+             グループに共有されている在庫状況を検索します。対象グループを選択して、医薬品名を入力してください。
+             </p>
+              <div className="absolute left-6 top-7 -translate-y-1/2 text-cyan-600 w-10 h-10 text-2xl">
+              <RiInformationFill />
+              </div>
+            </div>
 
         <div className="flex items-center gap-4 mt-8 w-full">
           <select className="elati
@@ -84,7 +101,7 @@ export default function Home() {
             <CiSearch  />
             </div>
           </div>
-          </div>
+        </div>
           <div className="mt-8 w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm"> 
           <table className="min-w-full divide-y divide-gray-200"> 
             {/* ★thead の代わりに PharmacyTableHead コンポーネントを使用★ */}
