@@ -3,6 +3,11 @@ import {
   InformationCircleIcon,
   MagnifyingGlassIcon
 } from "@heroicons/react/24/solid";
+
+import dayjs from 'dayjs';
+import 'dayjs/locale/ja'; 
+dayjs.locale('ja'); 
+
 import { dummyData } from "@/data/dummyData";
 import PharmacyTableHead from "@/components/PharmacyTableHead";
 
@@ -130,7 +135,7 @@ export default function Home() {
                     {pharmacy.dispenseAmount}
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 text-right w-[15%]">
-                    {pharmacy.lastDispensetDate}
+                    {dayjs(pharmacy.lastDispensetDate).format('YYYY/MM/DD')}
                   </td>
                 </tr>
               ))}
