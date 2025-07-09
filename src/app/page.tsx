@@ -7,7 +7,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { useState } from 'react';
-import { Listbox, ListboxButton, ListboxOptions, ListboxOption, } from '@headlessui/react';
+import { Listbox, ListboxButton, ListboxOptions, ListboxOption, Input } from '@headlessui/react';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja'; 
@@ -26,10 +26,6 @@ export default function Home() {
     { id: 'groupC', name: 'ナマズ株式会社グループ' },
     { id: 'groupD', name: 'トラフグ総合病院門前グループ' },
     { id: 'groupE', name: 'イワシ島グループ' },
-    { id: 'groupF', name: 'クロマグロ薬剤師会' },
-    { id: 'groupG', name: 'スルメイカ薬局グループ' },
-    { id: 'groupH', name: 'ブリ薬局グループ' },
-    { id: 'groupI', name: 'キンメダイ薬剤師会' },
   ];
 
   const handleGroupChange = (person: { id: string; name: string; }) => {
@@ -111,14 +107,14 @@ export default function Home() {
                      </ListboxButton>
 
                   <ListboxOptions className="
-                      absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm
+                      absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-black ring-opacity-5 focus:outline-none sm:text-sm
                   ">
                     {groups.map((group) => (
                       <ListboxOption
                         key={group.id}
                         className={({ active }) =>
-                          `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                            active ? 'bg-indigo-100 text-white' : 'text-gray-900'
+                          `relative cursor-default select-none py-2 pl-2 pr-2 ${
+                            active ? 'bg-gray-100 bg-opacity-80 rounded-lg bg-rounded-lg border-white ring-opacity-5' : 'text-gray-900'
                           }`
                         }
                         value={group}
@@ -132,14 +128,7 @@ export default function Home() {
                             >
                               {group.name}
                             </span>
-                            {selected ? (
-                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-indigo-600">
-                                {/* チェックマークアイコン */}
-                                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                  <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.052-.143z" clipRule="evenodd" />
-                                </svg>
-                              </span>
-                            ) : null}
+                            
                           </>
                         )}
                       </ListboxOption>
@@ -149,14 +138,14 @@ export default function Home() {
               )}
             </Listbox>
 
-          <div className="rve flex-grow">
-            <input
+          <div className="flex-grow">
+            <Input
               type="text"
               placeholder="search..."
               className="
-              w-full p-2 pl-10
-              border border-gray-300 rounded-md
-              focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+              w-full py-2 pl-10 sm:text-sm
+              border border-gray-500 rounded-md
+              focus:outline-none
               text-gray-700"
             />
             <div className="absolute left-112 top-75 -translate-y-1/2 text-gray-400 w-4 h-4">
