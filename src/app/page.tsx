@@ -1,6 +1,8 @@
 import Image from "next/image";
-import { RiInformationFill } from "react-icons/ri";
-import { CiSearch } from "react-icons/ci";
+import {
+  InformationCircleIcon,
+  MagnifyingGlassIcon
+} from "@heroicons/react/24/solid";
 import { dummyData } from "@/data/dummyData";
 import PharmacyTableHead from "@/components/PharmacyTableHead";
 
@@ -63,8 +65,8 @@ export default function Home() {
              ">
              グループに共有されている在庫状況を検索します。対象グループを選択して、医薬品名を入力してください。
              </p>
-              <div className="absolute left-6 top-7 -translate-y-1/2 text-cyan-600 w-10 h-10 text-2xl">
-              <RiInformationFill />
+              <div className="absolute left-6 top-5 -translate-y-1/2 text-cyan-600 rounded-full w-6 h-6 text-2xl">
+              <InformationCircleIcon />
               </div>
             </div>
 
@@ -97,8 +99,8 @@ export default function Home() {
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
               text-gray-700"
             />
-            <div className="absolute left-112 top-5/11 -translate-y-1/2 text-gray-400 w-5 h-5">
-            <CiSearch  />
+            <div className="absolute left-112 top-75 -translate-y-1/2 text-gray-400 w-4 h-4">
+            <MagnifyingGlassIcon />
             </div>
           </div>
         </div>
