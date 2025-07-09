@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "メドサーチ",
   description: "薬局間の在庫状況共有システム",
+  icons:{
+    icon:"pharmacloud_mark.svg"
+  }
 };
 
 export default function RootLayout({
