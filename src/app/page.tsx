@@ -99,7 +99,7 @@ export default function Home() {
 
         <div className="flex items-center gap-4 mt-8 w-full">
         <Listbox value={selectedGroup} onChange={handleGroupChange} className="relative flex-grow-0 flex-shrink-0 w-48">
-              {({ open }) => (
+              {() => (
                 <div>
                   <ListboxButton className={`
                       relative w-48 cursor-default rounded-md border border-gray-500 bg-white py-2 pl-3 pr-10 text-left 
