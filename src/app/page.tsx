@@ -5,27 +5,72 @@ import {
   InformationCircleIcon,
   MagnifyingGlassIcon
 } from "@heroicons/react/24/solid";
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption, Input } from '@headlessui/react';
-
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja'; 
 dayjs.locale('ja'); 
-
 import { dummyData } from "@/data/dummyData";
 import PharmacyTableHead from "@/components/PharmacyTableHead";
+import * as XLSX from 'xlsx';
+
+interface PharmacyData {
+  drugName: string; 
+  price: number | string; 
+  facilityName: string; 
+  distance: number | string; 
+  dispenseCount: number | string; 
+  dispenseAmount: number | string; 
+  lastDispenseDate: string | number; 
+}
+
 
 
 export default function Home() {
+  const [pharmacyData, setPharmacyData] = useState<PharmacyData[]>([]); 
+  const [loadingError, setLoadingError] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchExcelData = async () => {
+      setLoadingError(null); 
+      const filePath = '/PharmacyData.xlsx';
+      try {
+        const response = await fetch(filePath); 
+        if (!response.ok) { 
+          throw new Error(`ファイルが見つからないか、読み込めませんでした: ${response.status} - ${response.statusText}`);
+        }
+        const arrayBuffer = await response.arrayBuffer();
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+        const sheetName = workbook.SheetNames[0]; 
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet);
+
+        const processedData: PharmacyData[] = jsonData.map((item: any, index: number) => {
+          const processedItem: PharmacyData = {
+            drugName: item.drugName || '', 
+            price: Number(item.price), 
+            facilityName: item.facilityName || '',
+            distance: Number(item.distance), 
+            dispenseCount: Number(item.dispenseCount), 
+            dispenseAmount: Number(item.dispenseAmount), 
+            lastDispenseDate: Number(item.lastDispenseDate), 
+          };
+          return processedItem;
+      });
+      setPharmacyData(processedData); // 処理したデータをStateにセット
+      } catch (error: any) {
+        console.error("Excelファイルの読み込み中にエラーが発生しました:", error);
+        setLoadingError(`データの読み込みに失敗しました: ${error.message}`);
+      }
+    };
+    fetchExcelData(); // コンポーネントが最初に画面に表示されたときに、この関数を実行する
+  }, []);
+
   const [selectedGroup, setSelectedGroup] = useState({ id: '', name: 'Group' });
   const groups = [ 
     { id: '', name: 'Group' }, 
     { id: 'groupA', name: 'シメサバ薬剤師会' },
     { id: 'groupB', name: 'グッピー薬局グループ' },
-    { id: 'groupC', name: 'ナマズ株式会社グループ' },
-    { id: 'groupD', name: 'トラフグ総合病院門前グループ' },
-    { id: 'groupE', name: 'イワシ島グループ' },
+    { id: 'groupC', name: 'ナマズ市薬剤師会' },
   ];
 
   const handleGroupChange = (person: { id: string; name: string; }) => {
@@ -158,31 +203,46 @@ export default function Home() {
             {/* ★thead の代わりに PharmacyTableHead コンポーネントを使用★ */}
             <PharmacyTableHead /> 
             <tbody className="bg-white divide-y divide-gray-200"> 
-              {dummyData.map((pharmacy) => (
-                <tr key={pharmacy.id}>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-900 w-[15%]">
-                    {pharmacy.drugName}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 w-[10%]">
-                    {pharmacy.price}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 w-[20%]">
-                    {pharmacy.facilityName}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm text-blue-600 font-medium w-[15%]">
-                    {pharmacy.distance}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 text-center w-[10%]">
-                    {pharmacy.dispenseCount}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 text-center w-[10%]">
-                    {pharmacy.dispenseAmount}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 text-right w-[15%]">
-                    {dayjs(pharmacy.lastDispensetDate).format('YYYY/MM/DD')}
+              {/* pharmacyData が空の場合はメッセージを表示 */}
+              {/* loadingError も考慮して、読み込み中メッセージも表示 */}
+              {pharmacyData.length === 0 ? (
+                <tr>
+                  {/* colSpanを8に修正 (id列が追加されたため) */}
+                  <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                    {/* loadingError があればエラーメッセージを表示、なければ読み込み中メッセージ */}
+                    {/* loadingError State を定義している前提 */}
+                    {/* loadingError !== null ? loadingError : "表示するデータがありません。Excelファイルを読み込んでください。" */}
+                    データを読み込み中です...
                   </td>
                 </tr>
-              ))}
+              ) : (
+                // dummyData.map から pharmacyData.map に変更
+                pharmacyData.map((pharmacy) => (
+                  <tr key={pharmacy.drugName}> 
+                    <td className="px-4 py-4 text-sm font-medium text-gray-900 w-[10%]">
+                      {pharmacy.drugName} 
+                    </td>
+                    <td className="px-4 py-4 text-sm text-gray-500 w-[10%]">
+                      {pharmacy.price}
+                    </td>
+                    <td className="px-4 py-4 text-sm text-gray-500 w-[20%]">
+                      {pharmacy.facilityName}
+                    </td>
+                    <td className="px-4 py-4 text-sm text-blue-600 font-medium w-[10%]"> 
+                      {pharmacy.distance}
+                    </td>
+                    <td className="px-4 py-4 text-sm text-gray-500 text-center w-[10%]">
+                      {pharmacy.dispenseCount}
+                    </td>
+                    <td className="px-4 py-4 text-sm text-gray-500 text-center w-[10%]">
+                      {pharmacy.dispenseAmount} 
+                    </td>
+                    <td className="px-4 py-4 text-sm text-gray-500 text-right w-[10%]"> 
+                      {pharmacy.lastDispenseDate} 
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
