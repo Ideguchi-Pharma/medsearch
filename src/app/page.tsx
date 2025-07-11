@@ -41,13 +41,13 @@ export default function Home() {
         const workbook = XLSX.read(arrayBuffer, { type: 'array' });
         const sheetName = workbook.SheetNames[0]; 
         const worksheet = workbook.Sheets[sheetName];
-        const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet);
+        const jsonData: Record<string, unknown>[] = XLSX.utils.sheet_to_json(worksheet);
 
-        const processedData: PharmacyData[] = jsonData.map((item: any) => {
+        const processedData: PharmacyData[] = jsonData.map((item: Record<string, unknown>) => {
           const processedItem: PharmacyData = {
-            drugName: item.drugName || '', 
+            drugName: (item.drugName as string) || '', 
             price: Number(item.price), 
-            facilityName: item.facilityName || '',
+            facilityName: (item.facilityName as string) || '',
             distance: Number(item.distance), 
             dispenseCount: Number(item.dispenseCount), 
             dispenseAmount: Number(item.dispenseAmount), 
