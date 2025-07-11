@@ -43,7 +43,7 @@ export default function Home() {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet);
 
-        const processedData: PharmacyData[] = jsonData.map((item: any, index: number) => {
+        const processedData: PharmacyData[] = jsonData.map((item: any) => {
           const processedItem: PharmacyData = {
             drugName: item.drugName || '', 
             price: Number(item.price), 
@@ -204,13 +204,15 @@ export default function Home() {
             <tbody className="bg-white divide-y divide-gray-200"> 
               {/* pharmacyData が空の場合はメッセージを表示 */}
               {/* loadingError も考慮して、読み込み中メッセージも表示 */}
-              {pharmacyData.length === 0 ? (
+              {loadingError ? (
                 <tr>
-                  {/* colSpanを8に修正 (id列が追加されたため) */}
+                  <td colSpan={8} className="px-4 py-8 text-center text-red-500">
+                    {loadingError}
+                  </td>
+                </tr>
+              ) : pharmacyData.length === 0 ? (
+                <tr>
                   <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
-                    {/* loadingError があればエラーメッセージを表示、なければ読み込み中メッセージ */}
-                    {/* loadingError State を定義している前提 */}
-                    {/* loadingError !== null ? loadingError : "表示するデータがありません。Excelファイルを読み込んでください。" */}
                     データを読み込み中です...
                   </td>
                 </tr>
