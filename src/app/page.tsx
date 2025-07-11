@@ -1,3 +1,5 @@
+// src/app/page.tsx
+
 'use client';
 
 import Image from "next/image";
@@ -15,21 +17,10 @@ dayjs.extend(customParseFormat);
 import PharmacyTableHead from "@/components/PharmacyTableHead";
 import * as XLSX from 'xlsx';
 
-interface PharmacyData {
-  drugName: string; 
-  price: number | string; 
-  facilityName: string; 
-  distance: number | string; 
-  dispenseCount: number | string; 
-  dispenseAmount: number | string; 
-  lastDispenseDate: string | number | Date; 
-}
-
-
-
 export default function Home() {
   const [pharmacyData, setPharmacyData] = useState<PharmacyData[]>([]); 
   const [loadingError, setLoadingError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchExcelData = async () => {
       setLoadingError(null); 
@@ -40,12 +31,40 @@ export default function Home() {
           throw new Error(`ファイルが見つからないか、読み込めませんでした: ${response.status} - ${response.statusText}`);
         }
         const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+        // cellDates: true を指定することで、Excelの日付は可能な限りDateオブジェクトとして読み込まれます
+        const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true }); 
         const sheetName = workbook.SheetNames[0]; 
         const worksheet = workbook.Sheets[sheetName];
         const jsonData: Record<string, unknown>[] = XLSX.utils.sheet_to_json(worksheet);
 
         const processedData: PharmacyData[] = jsonData.map((item: Record<string, unknown>) => {
+          let formattedDateString = '';
+          const rawDateValue = item.lastDispenseDate; // rawDateValue を取得
+
+          // ★ここから修正点★
+          if (rawDateValue instanceof Date) {
+            // JavaScriptのDateオブジェクトの場合
+            formattedDateString = dayjs(rawDateValue).format('YYYY/MM/DD');
+          } else if (typeof rawDateValue === 'number') {
+            // Excelのシリアル値（数値）の場合
+            // Excelの日付は1900年1月1日を1とするシリアル値。
+            // JavaScriptのDateオブジェクトのUnixエポック（1970年1月1日）との差を考慮して変換します。
+            // 25569は1900年1月1日から1970年1月1日までの日数（Excelの1900年閏年バグ調整済み）
+            if (!isNaN(rawDateValue)) { // 有効な数値か確認
+              const date = new Date(Math.round((rawDateValue - 25569) * 86400 * 1000));
+              if (!isNaN(date.getTime())) { // 変換された日付が有効か確認
+                formattedDateString = dayjs(date).format('YYYY/MM/DD');
+              }
+            }
+          } else if (typeof rawDateValue === 'string' && rawDateValue !== '') {
+            // 文字列（例: "YYYY-MM-DD"形式）の場合
+            const parsedDay = dayjs(rawDateValue, 'YYYY-MM-DD'); // 指定したフォーマットで解析
+            if (parsedDay.isValid()) { // 有効な日付として解析できたか確認
+              formattedDateString = parsedDay.format('YYYY/MM/DD');
+            }
+          }
+          // ★ここまで修正点★
+
           const processedItem: PharmacyData = {
             drugName: (item.drugName as string) || '', 
             price: Number(item.price), 
@@ -53,18 +72,18 @@ export default function Home() {
             distance: Number(item.distance), 
             dispenseCount: Number(item.dispenseCount), 
             dispenseAmount: Number(item.dispenseAmount), 
-            lastDispenseDate: Number(item.lastDispenseDate), 
+            lastDispenseDate: formattedDateString, // 変換済みの文字列をセット
           };
           return processedItem;
       });
-      setPharmacyData(processedData); // 処理したデータをStateにセット
+      setPharmacyData(processedData); 
       } catch (error: unknown) {
         console.error("Excelファイルの読み込み中にエラーが発生しました:", error);
         const errorMessage = error instanceof Error ? error.message : '不明なエラーが発生しました';
         setLoadingError(`データの読み込みに失敗しました: ${errorMessage}`);
       }
     };
-    fetchExcelData(); // コンポーネントが最初に画面に表示されたときに、この関数を実行する
+    fetchExcelData(); 
   }, []);
 
   const [selectedGroup, setSelectedGroup] = useState({ id: '', name: 'Group' });
@@ -202,11 +221,8 @@ export default function Home() {
         </div>
           <div className="mt-8 w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm"> 
           <table className="min-w-full divide-y divide-gray-200"> 
-            {/* ★thead の代わりに PharmacyTableHead コンポーネントを使用★ */}
             <PharmacyTableHead /> 
             <tbody className="bg-white divide-y divide-gray-200"> 
-              {/* pharmacyData が空の場合はメッセージを表示 */}
-              {/* loadingError も考慮して、読み込み中メッセージも表示 */}
               {loadingError ? (
                 <tr>
                   <td colSpan={8} className="px-4 py-8 text-center text-red-500">
@@ -220,9 +236,8 @@ export default function Home() {
                   </td>
                 </tr>
               ) : (
-                // dummyData.map から pharmacyData.map に変更
-                pharmacyData.map((pharmacy) => (
-                  <tr key={pharmacy.drugName}> 
+                pharmacyData.map((pharmacy, index) => ( 
+                  <tr key={index}> 
                     <td className="px-4 py-4 text-sm font-medium text-gray-900 w-[10%]">
                       {pharmacy.drugName} 
                     </td>
@@ -250,25 +265,6 @@ export default function Home() {
             </tbody>
           </table>
         </div>
-
-      {/*<div className="
-      flex w-full
-      bg-gray-100 border-b border-gray-200
-      py-3 px-4
-      mt-8
-      font-bold text-gray-600 text-sm
-      ">
-        <div className="w-1/4">医薬品名</div>
-        <div className="w-1/4">薬価</div>
-        <div className="w-1/4">施設名</div>
-        <div className="w-1/4">距離</div>
-        <div className="w-1/4">調剤数</div>
-        <div className="w-1/4">調剤量</div>
-        <div className="w-1/4">最終調剤日</div>
-      </div>
-      */}
-      
-
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a
