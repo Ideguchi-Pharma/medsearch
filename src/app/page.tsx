@@ -56,9 +56,10 @@ export default function Home() {
           return processedItem;
       });
       setPharmacyData(processedData); // 処理したデータをStateにセット
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Excelファイルの読み込み中にエラーが発生しました:", error);
-        setLoadingError(`データの読み込みに失敗しました: ${error.message}`);
+        const errorMessage = error instanceof Error ? error.message : '不明なエラーが発生しました';
+        setLoadingError(`データの読み込みに失敗しました: ${errorMessage}`);
       }
     };
     fetchExcelData(); // コンポーネントが最初に画面に表示されたときに、この関数を実行する
