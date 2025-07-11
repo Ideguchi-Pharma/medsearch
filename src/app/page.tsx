@@ -1,5 +1,3 @@
-// src/app/page.tsx
-
 'use client';
 
 import Image from "next/image";
@@ -17,9 +15,25 @@ dayjs.extend(customParseFormat);
 import PharmacyTableHead from "@/components/PharmacyTableHead";
 import * as XLSX from 'xlsx';
 
+// ★追加：ひらがなをカタカナに変換する関数★
+function convertHiraganaToKatakana(text: string): string {
+  if (!text) return '';
+  return text.split('').map(char => {
+    const code = char.charCodeAt(0);
+    // ひらがなのUnicode範囲: U+3041 ('ぁ') から U+3096 ('ヶ')
+    if (code >= 0x3041 && code <= 0x3096) {
+      // カタカナへのオフセット: 0x60
+      return String.fromCharCode(code + 0x60); 
+    }
+    return char;
+  }).join('');
+}
+
 export default function Home() {
   const [pharmacyData, setPharmacyData] = useState<PharmacyData[]>([]); 
   const [loadingError, setLoadingError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>(''); // ★追加：検索キーワード用のState★
+  const [filteredPharmacyData, setFilteredPharmacyData] = useState<PharmacyData[]>([]); // ★追加：フィルターされたデータ用のState★
 
   useEffect(() => {
     const fetchExcelData = async () => {
@@ -85,6 +99,27 @@ export default function Home() {
     };
     fetchExcelData(); 
   }, []);
+
+  useEffect(() => {
+    let results: PharmacyData[] = [];
+    if (searchTerm.length === 0) {
+      // 検索キーワードが空の場合は結果を表示しない（"Please Search"を表示させるため）
+      results = [];
+    } else if (searchTerm.length < 2) {
+      // 検索キーワードが2文字未満の場合は結果を表示しない
+      results = [];
+    } else {
+      // 検索キーワードを小文字のカタカナに変換して正規化
+      const normalizedSearchTerm = convertHiraganaToKatakana(searchTerm.toLowerCase());
+      
+      results = pharmacyData.filter(pharmacy => {
+        // 医薬品名も小文字のカタカナに変換して正規化し、検索キーワードと比較
+        const normalizedDrugName = convertHiraganaToKatakana(pharmacy.drugName.toLowerCase());
+        return normalizedDrugName.includes(normalizedSearchTerm);
+      });
+    }
+    setFilteredPharmacyData(results);
+  }, [searchTerm, pharmacyData]); 
 
   const [selectedGroup, setSelectedGroup] = useState({ id: '', name: 'Group' });
   const groups = [ 
@@ -213,6 +248,8 @@ export default function Home() {
               border border-gray-500 rounded-md
               focus:outline-none
               text-gray-700"
+              value={searchTerm} // ★追加：検索ボックスの値をStateと連携★
+              onChange={(e) => setSearchTerm(e.target.value)} // ★追加：入力値の変更をStateに反映★
             />
             <div className="absolute left-112 top-75 -translate-y-1/2 text-gray-400 w-4 h-4">
             <MagnifyingGlassIcon />
@@ -229,14 +266,26 @@ export default function Home() {
                     {loadingError}
                   </td>
                 </tr>
-              ) : pharmacyData.length === 0 ? (
+              ) : filteredPharmacyData.length === 0 && searchTerm === '' ? ( // ★修正：filteredPharmacyData を使用。searchTerm も見て、初回ロード中か検索結果なしかを区別★
                 <tr>
                   <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
-                    データを読み込み中です...
+                  Please Search
                   </td>
                 </tr>
+                ) : searchTerm === '' ? ( // ★追加：検索キーワードが入力されていない場合★
+                  <tr>
+                    <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                      Please Search
+                    </td>
+                  </tr>
+                ) : filteredPharmacyData.length === 0 && searchTerm !== '' ? ( // ★追加：検索結果がない場合のメッセージ★
+                  <tr>
+                    <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                      検索結果が見つかりません。
+                    </td>
+                  </tr>
               ) : (
-                pharmacyData.map((pharmacy, index) => ( 
+                filteredPharmacyData.map((pharmacy, index) => ( // ★修正：filteredPharmacyData を使用。key は仮にindexとしています★
                   <tr key={index}> 
                     <td className="px-4 py-4 text-sm font-medium text-gray-900 w-[10%]">
                       {pharmacy.drugName} 
@@ -266,53 +315,6 @@ export default function Home() {
           </table>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          blank
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          blank
-        </a>
-        <a
-          className="flex items-center gap-2 py-16 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-         blank
-        </a>
-      </footer>
     </div>
   );
 }
