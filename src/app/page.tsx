@@ -9,7 +9,9 @@ import { useState, useEffect } from 'react';
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption, Input } from '@headlessui/react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja'; 
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.locale('ja'); 
+dayjs.extend(customParseFormat);
 import PharmacyTableHead from "@/components/PharmacyTableHead";
 import * as XLSX from 'xlsx';
 
@@ -20,7 +22,7 @@ interface PharmacyData {
   distance: number | string; 
   dispenseCount: number | string; 
   dispenseAmount: number | string; 
-  lastDispenseDate: string | number; 
+  lastDispenseDate: string | number | Date; 
 }
 
 
