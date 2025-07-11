@@ -55,7 +55,6 @@ export default function Home() {
           let formattedDateString = '';
           const rawDateValue = item.lastDispenseDate; // rawDateValue を取得
 
-          // ★ここから修正点★
           if (rawDateValue instanceof Date) {
             // JavaScriptのDateオブジェクトの場合
             formattedDateString = dayjs(rawDateValue).format('YYYY/MM/DD');
@@ -77,7 +76,6 @@ export default function Home() {
               formattedDateString = parsedDay.format('YYYY/MM/DD');
             }
           }
-          // ★ここまで修正点★
 
           const processedItem: PharmacyData = {
             drugName: (item.drugName as string) || '', 
@@ -128,10 +126,21 @@ export default function Home() {
     { id: 'groupB', name: 'グッピー薬局グループ' },
     { id: 'groupC', name: 'ナマズ市薬剤師会' },
   ];
-
   const handleGroupChange = (person: { id: string; name: string; }) => {
     setSelectedGroup(person);
   };
+  const NoDataDisplay = ({ message }: { message: string }) => (
+    <div className="flex flex-col items-center justify-center py-8">
+      <Image 
+        src="https://stage.pharmacloud.jp/assets/illustrations/illustration_empty_content.svg" // public フォルダに配置した画像パス
+        alt="No Data" 
+        width={250} 
+        height={250} 
+        className="mb-4 opacity-50" // 画像を少し薄くする
+      />
+      <p className="text-gray-800 text-lg font-bold">{message}</p>
+    </div>
+  );
   return (
        <div className="w-full flex-col min-h-screen">       
         <header className="
@@ -180,8 +189,8 @@ export default function Home() {
             </p>
             <div className="
             relative flex items-start 
-            space-x-2 px-4 py-2 rounded-lg w-full" 
-            style={{ backgroundColor: "#e0f7fa" }}>
+            space-x-2 px-4 py-3 rounded-lg w-full" 
+            style={{ backgroundColor: "#cbfbf1" }}>
              <p className="
              text-black px-0.5 py-0.5 
              text-sm text-gray-800 pl-10 
@@ -189,7 +198,9 @@ export default function Home() {
              ">
              グループに共有されている在庫状況を検索します。対象グループを選択して、医薬品名を入力してください。
              </p>
-              <div className="absolute left-6 top-5 -translate-y-1/2 text-cyan-600 rounded-full w-6 h-6 text-2xl">
+              <div className="
+              absolute left-5 top-6 -translate-y-1/2 text-cyan-500 rounded-full w-6 h-6 text-2xl
+              ">
               <InformationCircleIcon />
               </div>
             </div>
@@ -239,7 +250,7 @@ export default function Home() {
               )}
             </Listbox>
 
-          <div className="flex-grow">
+          <div className="flex-grow relative">
             <Input
               type="text"
               placeholder="search..."
@@ -251,8 +262,8 @@ export default function Home() {
               value={searchTerm} // ★追加：検索ボックスの値をStateと連携★
               onChange={(e) => setSearchTerm(e.target.value)} // ★追加：入力値の変更をStateに反映★
             />
-            <div className="absolute left-112 top-75 -translate-y-1/2 text-gray-400 w-4 h-4">
-            <MagnifyingGlassIcon />
+            <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+            <MagnifyingGlassIcon className = "h-4 w-4 text-gray-400" />
             </div>
           </div>
         </div>
@@ -269,43 +280,43 @@ export default function Home() {
               ) : filteredPharmacyData.length === 0 && searchTerm === '' ? ( // ★修正：filteredPharmacyData を使用。searchTerm も見て、初回ロード中か検索結果なしかを区別★
                 <tr>
                   <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
-                  Please Search
+                  <NoDataDisplay message="No Data" />
                   </td>
                 </tr>
                 ) : searchTerm === '' ? ( // ★追加：検索キーワードが入力されていない場合★
                   <tr>
                     <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
-                      Please Search
+                    <NoDataDisplay message="No Data" />
                     </td>
                   </tr>
                 ) : filteredPharmacyData.length === 0 && searchTerm !== '' ? ( // ★追加：検索結果がない場合のメッセージ★
                   <tr>
                     <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
-                      検索結果が見つかりません。
+                    <NoDataDisplay message="No Data" /> {/* 検索結果なし */}
                     </td>
                   </tr>
               ) : (
                 filteredPharmacyData.map((pharmacy, index) => ( // ★修正：filteredPharmacyData を使用。key は仮にindexとしています★
                   <tr key={index}> 
-                    <td className="px-4 py-4 text-sm font-medium text-gray-900 w-[10%]">
+                    <td className="px-4 py-4 text-sm font-bold text-gray-900 w-[10%]">
                       {pharmacy.drugName} 
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 w-[10%]">
                       {pharmacy.price}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 w-[20%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 w-[20%]">
                       {pharmacy.facilityName}
                     </td>
-                    <td className="px-4 py-4 text-sm text-blue-600 font-medium w-[10%]"> 
+                    <td className="px-4 py-4 text-sm text-gray-800 font-medium w-[10%]"> 
                       {pharmacy.distance}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 text-center w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 text-center w-[10%]">
                       {pharmacy.dispenseCount}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 text-center w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 text-center w-[10%]">
                       {pharmacy.dispenseAmount} 
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-500 text-right w-[10%]"> 
+                    <td className="px-4 py-4 text-sm text-gray-800 text-right w-[10%]"> 
                       {pharmacy.lastDispenseDate} 
                     </td>
                   </tr>

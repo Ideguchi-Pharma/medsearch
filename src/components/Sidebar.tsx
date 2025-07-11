@@ -33,7 +33,13 @@ const Sidebar = () => {
 
         {/* サービスカテゴリ */}
         <p className="mt-4 text-xs sm:text-xs text-gray-400 items-left px-4 py-2">サービス</p>
-        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-cyan-600 font-bold bg-cyan-50 hover:bg-cyan-100 border-l-4 border-cyan-600 rounded-md">
+        <a href="#" className="
+        flex flex-col 
+        items-center 
+        sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 
+        gap-2 text-gray-600 
+        bg-[#cbfbf1] hover:bg-[#96f7e4] rounded-md
+        "> {/* "border-l-4 border-cyan-600" を追加すると、メニュー項目の左に線が出て何を選んでいるかわかりやすい */}
           <span className="text-xs sm:text-base hidden sm:inline">メドサーチ</span>
         </a>
         <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
