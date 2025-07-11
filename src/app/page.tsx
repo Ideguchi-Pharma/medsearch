@@ -10,7 +10,6 @@ import { Listbox, ListboxButton, ListboxOptions, ListboxOption, Input } from '@h
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja'; 
 dayjs.locale('ja'); 
-import { dummyData } from "@/data/dummyData";
 import PharmacyTableHead from "@/components/PharmacyTableHead";
 import * as XLSX from 'xlsx';
 
