@@ -267,7 +267,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-          <div className="mt-8 w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm"> 
+          <div className="mt-8 w-full overflow-x-visible border border-gray-200 rounded-lg shadow-sm"> 
           <table className="min-w-full divide-y divide-gray-200"> 
             <PharmacyTableHead /> 
             <tbody className="bg-white divide-y divide-gray-200"> 
@@ -301,19 +301,19 @@ export default function Home() {
                     <td className="px-4 py-4 text-sm font-bold text-gray-900 w-[10%]">
                       {pharmacy.drugName} 
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 w-[10%]">
-                      {pharmacy.price}
+                    <td className="px-4 py-4 text-sm text-gray-800 text-right w-[10%]">
+                      {pharmacy.price}円
                     </td>
                     <td className="px-4 py-4 text-sm text-gray-800 w-[20%]">
                       {pharmacy.facilityName}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 font-medium w-[10%]"> 
-                      {pharmacy.distance}
+                    <td className="px-4 py-4 text-sm text-gray-800 font-medium text-right w-[10%]"> 
+                      {pharmacy.distance}km
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 text-center w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 text-center text-right w-[10%]">
                       {pharmacy.dispenseCount}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 text-center w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 text-center text-right w-[10%]">
                       {pharmacy.dispenseAmount} 
                     </td>
                     <td className="px-4 py-4 text-sm text-gray-800 text-right w-[10%]"> 
