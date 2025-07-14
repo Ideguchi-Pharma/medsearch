@@ -20,8 +20,8 @@ const tableHeaders: TableHeaderItem[] = [
   { key: 'drugName', label: '医薬品名', align: 'left', width: 'w-[20%]' },
   { key: 'price', label: '薬価', align: 'left', width: 'w-[10%]' },
   { key: 'facilityName', label: '施設名', align: 'left', width: 'w-[20%]' },
-  { key: 'distance', label: '距離', align: 'center', width: 'w-[15%]', tooltip: '対象施設までの直線距離' },
-  { key: 'dispenseCount', label: '調剤回数', align: 'center', width: 'w-[10%]', tooltip: '月当たりの平均調剤回数' },
+  { key: 'distance', label: '距離', align: 'center', width: 'w-[10%]', tooltip: '対象施設までの直線距離' },
+  { key: 'dispenseCount', label: '調剤回数', align: 'center', width: 'w-[15%]', tooltip: '月当たりの平均調剤回数' },
   { key: 'dispenseAmount', label: '調剤量', align: 'center', width: 'w-[10%]', tooltip: '月当たりの平均調剤量' },
   { key: 'lastDispenseDate', label: '最終調剤日', align: 'right', width: 'w-[15%]' },
 ];
