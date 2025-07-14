@@ -6,7 +6,11 @@ import {
   MagnifyingGlassIcon
 } from "@heroicons/react/24/solid";
 import { useState, useEffect } from 'react';
-import { Listbox, ListboxButton, ListboxOptions, ListboxOption, Input } from '@headlessui/react';
+import { 
+  Listbox, ListboxButton, ListboxOptions, ListboxOption, 
+  Input,
+  Menu, MenuButton, MenuItems, MenuItem,
+ } from '@headlessui/react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja'; 
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -14,6 +18,14 @@ dayjs.locale('ja');
 dayjs.extend(customParseFormat);
 import PharmacyTableHead from "@/components/PharmacyTableHead";
 import * as XLSX from 'xlsx';
+
+import {
+  ArchiveBoxXMarkIcon,
+  ChevronDownIcon,
+  PencilIcon,
+  Square2StackIcon,
+  TrashIcon,
+} from '@heroicons/react/16/solid'
 
 // ★追加：ひらがなをカタカナに変換する関数★
 function convertHiraganaToKatakana(text: string): string {
@@ -148,7 +160,7 @@ export default function Home() {
         bg-white bg-opacity-50 
         border-b border-gray-200 
         p-4 
-        shadow-sm fixed top-0 z-50 
+        shadow-sm fixed top-0 z-49
         backdrop-blur-sm
         relative
       ">
@@ -176,7 +188,7 @@ export default function Home() {
             PREVIEW
           </span>
         </div>
-        {/* 右端：出口 - 絶対位置で配置 */}
+        {/* 絶対位置で配置 */}
         <div className="
           absolute top-4 right-4
           flex items-center justify-center
@@ -186,11 +198,55 @@ export default function Home() {
           cursor-pointer select-none
           border border-gray-300
           shadow-lg
-          z-10
+          z-50
         ">
-          出口
-        </div>
-      </header> 
+        <Menu>
+          <MenuButton className="flex items-center justify-center 
+            w-8 h-8 rounded-full 
+            bg-gray-300 text-xs text-gray-800
+            shadow-inner shadow-white/10
+            focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white
+            data-hover:bg-gray-400 data-open:bg-gray-400
+            ">
+              出口
+          </MenuButton>
+
+          <MenuItems
+            transition
+            anchor="bottom end"
+            className="-52 origin-top-right rounded-xl border border-gray-200 bg-white p-1 text-sm/6 text-gray-900 shadow-lg ring-none ring-black ring-opacity-5 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0 z-50"
+          >
+            <MenuItem>
+              <p className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5"> 
+                出口大靖
+              </p>
+            </MenuItem>
+            <MenuItem>
+              <p className="group flex w-full items-center rounded-lg px-3 text-gray-500"> 
+                ideguchi@pharmacloud.jp
+              </p>
+            </MenuItem>
+            <div className="my-1 h-px bg-gray-200" />
+            <MenuItem>
+              <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100"> 
+                ホーム
+              </button>
+            </MenuItem> 
+            <MenuItem>
+              <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100"> 
+                アカウントの管理
+              </button>
+            </MenuItem>
+            <div className="my-1 h-px bg-gray-200" />
+            <MenuItem>
+              <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100">
+                ログアウト
+              </button>
+            </MenuItem>
+          </MenuItems>
+        </Menu>
+      </div>
+    </header>
            <main className="
            w-full flex flex-col 
            gap-[8px] row-start-1 
