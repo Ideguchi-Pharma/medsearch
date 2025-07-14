@@ -3,13 +3,15 @@
 import Image from "next/image";
 import {
   InformationCircleIcon,
-  MagnifyingGlassIcon
+  MagnifyingGlassIcon,
+  UserCircleIcon
 } from "@heroicons/react/24/solid";
 import { useState, useEffect } from 'react';
 import { 
   Listbox, ListboxButton, ListboxOptions, ListboxOption, 
   Input,
   Menu, MenuButton, MenuItems, MenuItem,
+  Description, Dialog, DialogPanel, DialogTitle, Button
  } from '@headlessui/react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja'; 
@@ -46,6 +48,17 @@ export default function Home() {
   const [loadingError, setLoadingError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>(''); // ★追加：検索キーワード用のState★
   const [filteredPharmacyData, setFilteredPharmacyData] = useState<PharmacyData[]>([]); // ★追加：フィルターされたデータ用のState★
+  const [isOpenDemoDialog, setIsOpenDemoDialog] = useState(false)
+
+  // ダイアログを閉じる関数
+  function closeDemoDialog() {
+    setIsOpenDemoDialog(false);
+  }
+
+  // ダイアログを開く関数
+  function openDemoDialog() {
+    setIsOpenDemoDialog(true);
+  }
 
   useEffect(() => {
     const fetchExcelData = async () => {
@@ -160,22 +173,26 @@ export default function Home() {
         bg-white bg-opacity-50 
         border-b border-gray-200 
         p-4 
-        shadow-sm fixed top-0 z-49
+        shadow-sm fixed top-0 z-50
         backdrop-blur-sm
         relative
       ">
         {/* 左端：デモ薬局とPREVIEW */}
-        <div className="flex items-center gap-4">
-          <div className="
-            flex items-center justify-center
-            px-1 py-1 
-            border border-green-500 rounded-lg
-            text-green-600 font-bold text-sm
-            min-w-[60px] sm:min-w-[80px]
-            cursor-pointer select-none
-          ">
+        <div className="flex items-center gap-4 relative z-10">
+        <Button
+            onClick={openDemoDialog}
+            className="
+              flex items-center justify-center
+              px-1 py-1
+              border border-green-500 rounded-lg
+              text-green-600 font-bold text-sm
+              min-w-[60px] sm:min-w-[80px]
+              cursor-pointer select-none
+              focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-green-50 // ボタンのフォーカス・ホバー時のスタイル
+            "
+          >
             デモ薬局
-          </div>
+          </Button>
           <span className="
             flex items-center justify-center
             bg-orange-300 text-gray-800 
@@ -198,7 +215,7 @@ export default function Home() {
           cursor-pointer select-none
           border border-gray-300
           shadow-lg
-          z-50
+          z-20
         ">
         <Menu>
           <MenuButton className="flex items-center justify-center 
@@ -214,7 +231,7 @@ export default function Home() {
           <MenuItems
             transition
             anchor="bottom end"
-            className="-52 origin-top-right rounded-xl border border-gray-200 bg-white p-1 text-sm/6 text-gray-900 shadow-lg ring-none ring-black ring-opacity-5 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0 z-50"
+            className="-52 origin-top-right rounded-xl border border-gray-200 bg-white p-1 text-sm/6 text-gray-900 shadow-lg ring-none ring-black ring-opacity-5 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0 z-[9999]"
           >
             <MenuItem>
               <p className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5"> 
@@ -398,6 +415,53 @@ export default function Home() {
           </table>
         </div>
       </main>
+      <Dialog open={isOpenDemoDialog} as="div" className="relative z-[9999] focus:outline-none" onClose={closeDemoDialog}>
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/60" aria-hidden="true" /> {/* 半透明の背景を追加 */}
+
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4">
+            <DialogPanel
+              transition
+              className="w-full max-w-md rounded-xl bg-white p-6 text-left align-middle shadow-xl
+                duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0" // アニメーションクラスをここに
+            >
+              <DialogTitle as="h3" className="text-lg text-center font-bold leading-6 text-[#00a63e]">
+                サービスを利用する施設を選んでください
+              </DialogTitle>
+              <div className="flex items-start gap-2 mt-4 text-gray-800 text-lg hover:bg-gray-100 hover:rounded-lg">
+               {/* アイコンは左に固定、上端に揃える */}
+               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" /> {/* shrink-0 でアイコンが縮まないように調整、mt-1で少し下に */}
+               <div className="flex flex-col"> {/* flex-col で子要素を縦並びにする */}
+                 <span>テトラ薬局</span> {/* 施設名はspanで囲むか、pタグでも可 */}
+                 <p className="mt-1 text-sm text-gray-500"> {/* 住所（注釈） */}
+                   福岡県新宮市
+                 </p>
+               </div>
+             </div>
+             <div className="flex items-start gap-2 mt-4 text-gray-800 text-lg hover:bg-gray-100 hover:rounded-lg">
+               {/* アイコンは左に固定、上端に揃える */}
+               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" /> {/* shrink-0 でアイコンが縮まないように調整、mt-1で少し下に */}
+               <div className="flex flex-col"> {/* flex-col で子要素を縦並びにする */}
+                 <span>ベタ薬局</span> {/* 施設名はspanで囲むか、pタグでも可 */}
+                 <p className="mt-1 text-sm text-gray-500"> {/* 住所（注釈） */}
+                   福岡県北九州市
+                 </p>
+               </div>
+             </div>
+             <div className="flex items-start gap-2 mt-4 text-gray-800 text-lg hover:bg-gray-100 hover:rounded-lg">
+               {/* アイコンは左に固定、上端に揃える */}
+               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" /> {/* shrink-0 でアイコンが縮まないように調整、mt-1で少し下に */}
+               <div className="flex flex-col"> {/* flex-col で子要素を縦並びにする */}
+                 <span>サヨリ薬局</span> {/* 施設名はspanで囲むか、pタグでも可 */}
+                 <p className="mt-1 text-sm text-gray-500"> {/* 住所（注釈） */}
+                   福岡県糸島市
+                 </p>
+               </div>
+             </div>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 }
