@@ -4,7 +4,9 @@ import Image from "next/image";
 import {
   InformationCircleIcon,
   MagnifyingGlassIcon,
-  UserCircleIcon
+  UserCircleIcon,
+  ArrowUpIcon, // ★追加
+  ArrowDownIcon // ★追加
 } from "@heroicons/react/24/solid";
 import { useState, useEffect } from 'react';
 import { 
@@ -21,13 +23,16 @@ dayjs.extend(customParseFormat);
 import PharmacyTableHead from "@/components/PharmacyTableHead";
 import * as XLSX from 'xlsx';
 
-import {
-  ArchiveBoxXMarkIcon,
-  ChevronDownIcon,
-  PencilIcon,
-  Square2StackIcon,
-  TrashIcon,
-} from '@heroicons/react/16/solid'
+// ★変更：PharmacyDataインターフェースを直接ここで定義し、型をnumberに統一します
+interface PharmacyData {
+  drugName: string; 
+  price: number; // stringからnumberに変更
+  facilityName: string; 
+  distance: number; // stringからnumberに変更
+  dispenseCount: number; // stringからnumberに変更
+  dispenseAmount: number; // stringからnumberに変更
+  lastDispenseDate: string; 
+}
 
 // ★追加：ひらがなをカタカナに変換する関数★
 function convertHiraganaToKatakana(text: string): string {
@@ -46,9 +51,13 @@ function convertHiraganaToKatakana(text: string): string {
 export default function Home() {
   const [pharmacyData, setPharmacyData] = useState<PharmacyData[]>([]); 
   const [loadingError, setLoadingError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>(''); // ★追加：検索キーワード用のState★
-  const [filteredPharmacyData, setFilteredPharmacyData] = useState<PharmacyData[]>([]); // ★追加：フィルターされたデータ用のState★
-  const [isOpenDemoDialog, setIsOpenDemoDialog] = useState(false)
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const [filteredPharmacyData, setFilteredPharmacyData] = useState<PharmacyData[]>([]);
+  const [isOpenDemoDialog, setIsOpenDemoDialog] = useState(false);
+
+  // ★追加：ソート状態のState★
+  const [sortColumn, setSortColumn] = useState<keyof PharmacyData | null>(null);
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   // ダイアログを閉じる関数
   function closeDemoDialog() {
@@ -70,7 +79,6 @@ export default function Home() {
           throw new Error(`ファイルが見つからないか、読み込めませんでした: ${response.status} - ${response.statusText}`);
         }
         const arrayBuffer = await response.arrayBuffer();
-        // cellDates: true を指定することで、Excelの日付は可能な限りDateオブジェクトとして読み込まれます
         const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true }); 
         const sheetName = workbook.SheetNames[0]; 
         const worksheet = workbook.Sheets[sheetName];
@@ -78,38 +86,32 @@ export default function Home() {
 
         const processedData: PharmacyData[] = jsonData.map((item: Record<string, unknown>) => {
           let formattedDateString = '';
-          const rawDateValue = item.lastDispenseDate; // rawDateValue を取得
+          const rawDateValue = item.lastDispenseDate;
 
           if (rawDateValue instanceof Date) {
-            // JavaScriptのDateオブジェクトの場合
             formattedDateString = dayjs(rawDateValue).format('YYYY/MM/DD');
           } else if (typeof rawDateValue === 'number') {
-            // Excelのシリアル値（数値）の場合
-            // Excelの日付は1900年1月1日を1とするシリアル値。
-            // JavaScriptのDateオブジェクトのUnixエポック（1970年1月1日）との差を考慮して変換します。
-            // 25569は1900年1月1日から1970年1月1日までの日数（Excelの1900年閏年バグ調整済み）
-            if (!isNaN(rawDateValue)) { // 有効な数値か確認
+            if (!isNaN(rawDateValue)) {
               const date = new Date(Math.round((rawDateValue - 25569) * 86400 * 1000));
-              if (!isNaN(date.getTime())) { // 変換された日付が有効か確認
+              if (!isNaN(date.getTime())) {
                 formattedDateString = dayjs(date).format('YYYY/MM/DD');
               }
             }
           } else if (typeof rawDateValue === 'string' && rawDateValue !== '') {
-            // 文字列（例: "YYYY-MM-DD"形式）の場合
-            const parsedDay = dayjs(rawDateValue, 'YYYY-MM-DD'); // 指定したフォーマットで解析
-            if (parsedDay.isValid()) { // 有効な日付として解析できたか確認
+            const parsedDay = dayjs(rawDateValue, 'YYYY-MM-DD');
+            if (parsedDay.isValid()) {
               formattedDateString = parsedDay.format('YYYY/MM/DD');
             }
           }
 
           const processedItem: PharmacyData = {
             drugName: (item.drugName as string) || '', 
-            price: Number(item.price), 
+            price: Number(item.price), // Numberに変換
             facilityName: (item.facilityName as string) || '',
-            distance: Number(item.distance), 
-            dispenseCount: Number(item.dispenseCount), 
-            dispenseAmount: Number(item.dispenseAmount), 
-            lastDispenseDate: formattedDateString, // 変換済みの文字列をセット
+            distance: Number(item.distance), // Numberに変換
+            dispenseCount: Number(item.dispenseCount), // Numberに変換
+            dispenseAmount: Number(item.dispenseAmount), // Numberに変換
+            lastDispenseDate: formattedDateString,
           };
           return processedItem;
       });
@@ -126,23 +128,54 @@ export default function Home() {
   useEffect(() => {
     let results: PharmacyData[] = [];
     if (searchTerm.length === 0) {
-      // 検索キーワードが空の場合は結果を表示しない（"Please Search"を表示させるため）
       results = [];
     } else if (searchTerm.length < 2) {
-      // 検索キーワードが2文字未満の場合は結果を表示しない
       results = [];
     } else {
-      // 検索キーワードを小文字のカタカナに変換して正規化
       const normalizedSearchTerm = convertHiraganaToKatakana(searchTerm.toLowerCase());
       
       results = pharmacyData.filter(pharmacy => {
-        // 医薬品名も小文字のカタカナに変換して正規化し、検索キーワードと比較
         const normalizedDrugName = convertHiraganaToKatakana(pharmacy.drugName.toLowerCase());
         return normalizedDrugName.includes(normalizedSearchTerm);
       });
     }
+
+    // ★追加：ソートロジック★
+    if (sortColumn) {
+      results.sort((a, b) => {
+        const aValue = a[sortColumn];
+        const bValue = b[sortColumn];
+
+        if (typeof aValue === 'number' && typeof bValue === 'number') {
+          return sortOrder === 'asc' ? aValue - bValue : bValue - aValue;
+        } else if (typeof aValue === 'string' && typeof bValue === 'string') {
+          // 日付のソート
+          if (sortColumn === 'lastDispenseDate') {
+            const dateA = dayjs(aValue, 'YYYY/MM/DD');
+            const dateB = dayjs(bValue, 'YYYY/MM/DD');
+            if (dateA.isValid() && dateB.isValid()) {
+              return sortOrder === 'asc' ? dateA.diff(dateB) : dateB.diff(dateA);
+            }
+          }
+          // その他の文字列のソート
+          return sortOrder === 'asc' ? aValue.localeCompare(bValue) : bValue.localeCompare(aValue);
+        }
+        return 0; // 型が一致しない場合はソートしない
+      });
+    }
+
     setFilteredPharmacyData(results);
-  }, [searchTerm, pharmacyData]); 
+  }, [searchTerm, pharmacyData, sortColumn, sortOrder]); // ★修正：依存配列にsortColumnとsortOrderを追加★
+
+  // ★追加：ソートハンドラ関数★
+  const handleSort = (columnKey: keyof PharmacyData) => {
+    if (sortColumn === columnKey) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortColumn(columnKey);
+      setSortOrder('asc');
+    }
+  };
 
   const [selectedGroup, setSelectedGroup] = useState({ id: '', name: 'Group' });
   const groups = [ 
@@ -157,11 +190,11 @@ export default function Home() {
   const NoDataDisplay = ({ message }: { message: string }) => (
     <div className="flex flex-col items-center justify-center py-8">
       <Image 
-        src="https://stage.pharmacloud.jp/assets/illustrations/illustration_empty_content.svg" // public フォルダに配置した画像パス
+        src="https://stage.pharmacloud.jp/assets/illustrations/illustration_empty_content.svg"
         alt="No Data" 
         width={250} 
         height={250} 
-        className="mb-4 opacity-50" // 画像を少し薄くする
+        className="mb-4 opacity-50"
       />
       <p className="text-gray-800 text-lg font-bold">{message}</p>
     </div>
@@ -177,7 +210,6 @@ export default function Home() {
         backdrop-blur-sm
         relative
       ">
-        {/* 左端：デモ薬局とPREVIEW */}
         <div className="flex items-center gap-4 relative z-10">
         <Button
             onClick={openDemoDialog}
@@ -188,7 +220,7 @@ export default function Home() {
               text-green-600 font-bold text-sm
               min-w-[60px] sm:min-w-[80px]
               cursor-pointer select-none
-              focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-green-50 // ボタンのフォーカス・ホバー時のスタイル
+              focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-green-50
             "
           >
             デモ薬局
@@ -205,7 +237,6 @@ export default function Home() {
             PREVIEW
           </span>
         </div>
-        {/* 絶対位置で配置 */}
         <div className="
           absolute top-4 right-4
           flex items-center justify-center
@@ -348,8 +379,8 @@ export default function Home() {
               border border-gray-500 rounded-md
               focus:outline-none
               text-gray-700"
-              value={searchTerm} // ★追加：検索ボックスの値をStateと連携★
-              onChange={(e) => setSearchTerm(e.target.value)} // ★追加：入力値の変更をStateに反映★
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
             <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
             <MagnifyingGlassIcon className = "h-4 w-4 text-gray-400" />
@@ -358,7 +389,12 @@ export default function Home() {
         </div>
           <div className="mt-8 w-full overflow-x-visible border border-gray-200 rounded-lg shadow-sm"> 
           <table className="min-w-full divide-y divide-gray-200"> 
-            <PharmacyTableHead /> 
+            {/* ★修正：PharmacyTableHeadにソート関連のPropsを渡す★ */}
+            <PharmacyTableHead 
+              sortColumn={sortColumn} 
+              sortOrder={sortOrder} 
+              onSort={handleSort} 
+            /> 
             <tbody className="bg-white divide-y divide-gray-200"> 
               {loadingError ? (
                 <tr>
@@ -366,26 +402,26 @@ export default function Home() {
                     {loadingError}
                   </td>
                 </tr>
-              ) : filteredPharmacyData.length === 0 && searchTerm === '' ? ( // ★修正：filteredPharmacyData を使用。searchTerm も見て、初回ロード中か検索結果なしかを区別★
+              ) : filteredPharmacyData.length === 0 && searchTerm === '' ? (
                 <tr>
                   <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
                   <NoDataDisplay message="No Data" />
                   </td>
                 </tr>
-                ) : searchTerm === '' ? ( // ★追加：検索キーワードが入力されていない場合★
+                ) : searchTerm === '' ? (
                   <tr>
                     <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
                     <NoDataDisplay message="No Data" />
                     </td>
                   </tr>
-                ) : filteredPharmacyData.length === 0 && searchTerm !== '' ? ( // ★追加：検索結果がない場合のメッセージ★
+                ) : filteredPharmacyData.length === 0 && searchTerm !== '' ? (
                   <tr>
                     <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
-                    <NoDataDisplay message="No Data" /> {/* 検索結果なし */}
+                    <NoDataDisplay message="No Data" />
                     </td>
                   </tr>
               ) : (
-                filteredPharmacyData.map((pharmacy, index) => ( // ★修正：filteredPharmacyData を使用。key は仮にindexとしています★
+                filteredPharmacyData.map((pharmacy, index) => (
                   <tr key={index}> 
                     <td className="px-4 py-4 text-sm font-bold text-gray-900 w-[10%]">
                       {pharmacy.drugName} 
@@ -416,44 +452,41 @@ export default function Home() {
         </div>
       </main>
       <Dialog open={isOpenDemoDialog} as="div" className="relative z-[9999] focus:outline-none" onClose={closeDemoDialog}>
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/60" aria-hidden="true" /> {/* 半透明の背景を追加 */}
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/60" aria-hidden="true" />
 
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
               transition
               className="w-full max-w-md rounded-xl bg-white p-6 text-left align-middle shadow-xl
-                duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0" // アニメーションクラスをここに
+                duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
             >
               <DialogTitle as="h3" className="text-lg text-center font-bold leading-6 text-[#00a63e]">
                 サービスを利用する施設を選んでください
               </DialogTitle>
               <div className="flex items-start gap-2 mt-4 text-gray-800 text-lg hover:bg-gray-100 hover:rounded-lg">
-               {/* アイコンは左に固定、上端に揃える */}
-               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" /> {/* shrink-0 でアイコンが縮まないように調整、mt-1で少し下に */}
-               <div className="flex flex-col"> {/* flex-col で子要素を縦並びにする */}
-                 <span>テトラ薬局</span> {/* 施設名はspanで囲むか、pタグでも可 */}
-                 <p className="mt-1 text-sm text-gray-500"> {/* 住所（注釈） */}
+               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" />
+               <div className="flex flex-col">
+                 <span>テトラ薬局</span>
+                 <p className="mt-1 text-sm text-gray-500">
                    福岡県新宮市
                  </p>
                </div>
              </div>
              <div className="flex items-start gap-2 mt-4 text-gray-800 text-lg hover:bg-gray-100 hover:rounded-lg">
-               {/* アイコンは左に固定、上端に揃える */}
-               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" /> {/* shrink-0 でアイコンが縮まないように調整、mt-1で少し下に */}
-               <div className="flex flex-col"> {/* flex-col で子要素を縦並びにする */}
-                 <span>ベタ薬局</span> {/* 施設名はspanで囲むか、pタグでも可 */}
-                 <p className="mt-1 text-sm text-gray-500"> {/* 住所（注釈） */}
+               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" />
+               <div className="flex flex-col">
+                 <span>ベタ薬局</span>
+                 <p className="mt-1 text-sm text-gray-500">
                    福岡県北九州市
                  </p>
                </div>
              </div>
              <div className="flex items-start gap-2 mt-4 text-gray-800 text-lg hover:bg-gray-100 hover:rounded-lg">
-               {/* アイコンは左に固定、上端に揃える */}
-               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" /> {/* shrink-0 でアイコンが縮まないように調整、mt-1で少し下に */}
-               <div className="flex flex-col"> {/* flex-col で子要素を縦並びにする */}
-                 <span>サヨリ薬局</span> {/* 施設名はspanで囲むか、pタグでも可 */}
-                 <p className="mt-1 text-sm text-gray-500"> {/* 住所（注釈） */}
+               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" />
+               <div className="flex flex-col">
+                 <span>サヨリ薬局</span>
+                 <p className="mt-1 text-sm text-gray-500">
                    福岡県糸島市
                  </p>
                </div>

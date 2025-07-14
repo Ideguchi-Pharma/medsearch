@@ -9,10 +9,10 @@ declare namespace JSX {
 
 interface PharmacyData {
   drugName: string; 
-  price: number | string; 
+  price: number; // ★修正：numberに統一★
   facilityName: string; 
-  distance: number | string; 
-  dispenseCount: number | string; 
-  dispenseAmount: number | string; 
+  distance: number; // ★修正：numberに統一★
+  dispenseCount: number; // ★修正：numberに統一★
+  dispenseAmount: number; // ★修正：numberに統一★
   lastDispenseDate: string; 
 }

@@ -1,4 +1,5 @@
 import React from 'react'; 
+import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/solid'; // ★追加
 
 interface TableHeaderItem {
   key: string; 
@@ -6,6 +7,13 @@ interface TableHeaderItem {
   align: 'left' | 'center' | 'right';
   width: string; 
   tooltip?: string; 
+}
+
+// ★追加：Propsの型定義★
+interface PharmacyTableHeadProps {
+  sortColumn: string | null;
+  sortOrder: 'asc' | 'desc';
+  onSort: (columnKey: keyof PharmacyData) => void;
 }
 
 const tableHeaders: TableHeaderItem[] = [
@@ -18,12 +26,13 @@ const tableHeaders: TableHeaderItem[] = [
   { key: 'lastDispenseDate', label: '最終調剤日', align: 'right', width: 'w-[15%]' },
 ];
 
-
-const PharmacyTableHead = () => { 
+// ★修正：Propsを受け取るように変更★
+const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadProps) => { 
   return (
     <thead className="bg-gray-100">
       <tr>
       {tableHeaders.map((header) => {
+            const isSorted = sortColumn === header.key;
             return (
           <th 
             key={header.key} 
@@ -32,10 +41,22 @@ const PharmacyTableHead = () => {
               px-4 py-3 text-xs font-bold text-gray-600 uppercase tracking-wider
               ${header.width}
               relative group overflow-visible
+              cursor-pointer hover:bg-gray-200 transition-colors duration-200 // ★追加：クリック可能UI★
             `}
+            onClick={() => onSort(header.key as keyof PharmacyData)} // ★追加：クリックハンドラ★
           >
             <div className={`flex items-center ${header.align === 'right' ? 'justify-end' : header.align === 'center' ? 'justify-center' : 'justify-start'} gap-1 relative w-full h-full`}>
               {header.label}
+              {/* ★追加：ソートインジケーター★ */}
+              {isSorted && (
+                <span className="ml-1">
+                  {sortOrder === 'asc' ? (
+                    <ArrowUpIcon className="h-3 w-3 text-gray-600" />
+                  ) : (
+                    <ArrowDownIcon className="h-3 w-3 text-gray-600" />
+                  )}
+                </span>
+              )}
               {header.tooltip && (
               <div className="
               absolute top-full left-1/2 -translate-x-1/2 mt-3
