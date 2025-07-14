@@ -142,18 +142,20 @@ export default function Home() {
     </div>
   );
   return (
-       <div className="w-full flex-col min-h-screen">       
-        <header className="
-          w-full 
-          bg-white bg-opacity-50 
-          border-b border-gray-200 
-          p-4 flex items-center gap-4 
-          shadow-sm fixed top-0 z-50 
-          backdrop-blur-sm
-        ">
-         <div className="flex items-center gap-4"> 
+    <div className="w-full flex-col min-h-screen">       
+      <header className="
+        w-full 
+        bg-white bg-opacity-50 
+        border-b border-gray-200 
+        p-4 
+        shadow-sm fixed top-0 z-50 
+        backdrop-blur-sm
+        relative
+      ">
+        {/* 左端：デモ薬局とPREVIEW */}
+        <div className="flex items-center gap-4">
           <div className="
-            flex items-center justify-center 
+            flex items-center justify-center
             px-1 py-1 
             border border-green-500 rounded-lg
             text-green-600 font-bold text-sm
@@ -162,19 +164,33 @@ export default function Home() {
           ">
             デモ薬局
           </div>
-           <span className="
-             flex items-center justify-center
-             bg-orange-300 text-gray-800 
-             text-xs font-bold
-             px-1 py-1 rounded-lg
-             uppercase 
-             min-w-[70px] sm:min-w-[70px]
-             cursor-pointer select-none
-            ">
+          <span className="
+            flex items-center justify-center
+            bg-orange-300 text-gray-800 
+            text-xs font-bold
+            px-1 py-1 rounded-lg
+            uppercase 
+            min-w-[70px] sm:min-w-[70px]
+            cursor-pointer select-none
+          ">
             PREVIEW
-           </span>
-         </div>
-          </header> 
+          </span>
+        </div>
+        {/* 右端：出口 - 絶対位置で配置 */}
+        <div className="
+          absolute top-4 right-4
+          flex items-center justify-center
+          bg-gray-100 text-gray-800
+          text-xs font-bold
+          w-8 h-8 rounded-full
+          cursor-pointer select-none
+          border border-gray-300
+          shadow-lg
+          z-10
+        ">
+          出口
+        </div>
+      </header> 
            <main className="
            w-full flex flex-col 
            gap-[8px] row-start-1 
