@@ -325,12 +325,12 @@ export default function Home() {
               </div>
             </div>
 
-        <div className="flex items-center gap-4 mt-8 w-full">
-        <Listbox value={selectedGroup} onChange={handleGroupChange} className="relative flex-grow-0 flex-shrink-0 w-48">
+        <div className="flex flex-col sm:flex-row items-center gap-4 mt-8 w-full">
+        <Listbox value={selectedGroup} onChange={handleGroupChange} className="relative w-full sm:w-48 flex-grow-0 flex-shrink-0">
               {() => (
                 <div>
                   <ListboxButton className={`
-                      relative w-48 cursor-default rounded-md border border-gray-500 bg-white py-2 pl-3 pr-10 text-left 
+                      relative w-full sm:w-48 cursor-default rounded-md border border-gray-500 bg-white py-2 pl-3 pr-10 text-left 
                       shadow-sm focus:outline-none 
                       sm:text-sm
                       ${selectedGroup.id === '' ? 'text-gray-400' : 'text-gray-700'}
@@ -370,7 +370,7 @@ export default function Home() {
               )}
             </Listbox>
 
-          <div className="flex-grow relative">
+          <div className="w-full flex-grow relative">
             <Input
               type="text"
               placeholder="search..."
