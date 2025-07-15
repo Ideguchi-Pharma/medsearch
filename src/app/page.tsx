@@ -210,7 +210,7 @@ export default function Home() {
         backdrop-blur-sm
         relative
       ">
-        <div className="flex items-center gap-4 relative z-10">
+        <div className="ml-14 sm:ml-0 flex items-center gap-4 relative z-10">
         <Button
             onClick={openDemoDialog}
             className="
@@ -298,7 +298,7 @@ export default function Home() {
            <main className="
            w-full flex flex-col 
            gap-[8px] row-start-1 
-           items-center p-8 
+           items-start p-8 
            sm:items-start mt-[64px]
            ">
             <p className="tracking-[-.01em] text-2xl font-bold">
