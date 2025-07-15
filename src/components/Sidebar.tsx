@@ -2,24 +2,48 @@
 
 import { useState } from 'react';
 import Image from "next/image"; 
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
+import { ChevronLeftIcon, ChevronRightIcon, Bars3Icon } from '@heroicons/react/24/outline';
 
-const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export interface SidebarProps {
+  isCollapsed: boolean;
+  setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
+  const toggleMobileMenu = () => { // モバイルメニューの開閉関数
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
   return (
+<>
+      {/* モバイル用ハンバーガーメニューボタン (sm未満で表示) */}
+      <button
+        onClick={toggleMobileMenu}
+        className="fixed top-4 left-4 z-[9999] p-2 rounded-md bg-white border border-gray-300 shadow-md sm:hidden"
+      >
+        <Bars3Icon className="h-6 w-6 text-gray-600" />
+      </button>
+
+      {/* モバイルメニューオーバーレイ (sm未満で表示) */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-25 z-[9998] sm:hidden" onClick={toggleMobileMenu}></div>
+      )}
+
     <aside className={`
-      ${isCollapsed ? "w-20" : "w-48"} {/* ★修正：サイドバーの幅を動的に変更★ */}
-      transition-all duration-300 {/* ★追加：アニメーション効果★ */}
+      ${isCollapsed ? "w-20" : "w-48"}
+      fixed top-0 left-0 h-full z-[9999] transition-transform duration-300
+      ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
+      sm:translate-x-0 sm:relative sm:w-auto sm:sticky sm:top-0
       bg-white border-r border-gray-200 shadow-md
       flex flex-col justify-between
       pt-4 pb-4 
       flex-shrink-0 
-      sticky top-0 h-screen
-      overflow-y-auto relative
+      overflow-y-auto
     `}>
       <nav className="flex flex-col gap-4">
       <div className={`relative ${isCollapsed ? 'ml-2' : 'ml-4'} mb-4`}>
@@ -110,6 +134,7 @@ const Sidebar = () => {
             )}
           </button>
     </aside>
+    </>
   );
 };
 

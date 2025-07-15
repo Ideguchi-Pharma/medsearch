@@ -387,7 +387,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-          <div className="mt-8 w-full overflow-x-visible border border-gray-200 rounded-lg shadow-sm"> 
+          <div className="mt-8 w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm"> 
           <table className="min-w-full divide-y divide-gray-200"> 
             {/* ★修正：PharmacyTableHeadにソート関連のPropsを渡す★ */}
             <PharmacyTableHead 
