@@ -24,7 +24,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       {/* モバイル用ハンバーガーメニューボタン (sm未満で表示) */}
       <button
         onClick={toggleMobileMenu}
-        className="fixed top-4 left-4 z-[9999] p-2 rounded-md bg-white border border-gray-300 shadow-md sm:hidden"
+        className="fixed top-3 left-2 z-[9999] p-2  sm:hidden"
       >
         <Bars3Icon className="h-6 w-6 text-gray-600" />
       </button>

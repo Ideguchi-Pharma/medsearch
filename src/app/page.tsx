@@ -208,7 +208,7 @@ export default function Home() {
         shadow-sm fixed top-0 z-50
         backdrop-blur-sm
       ">
-        <div className="flex flex-row items-center gap-2 w-full ml-14 sm:ml-0">
+        <div className="flex flex-row items-center gap-2 w-full ml-10 sm:ml-0">
           <Button
             onClick={openDemoDialog}
             className="
