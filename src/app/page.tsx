@@ -204,6 +204,7 @@ export default function Home() {
       <header className="
         w-full
         bg-white bg-opacity-50 
+        dark:bg-gray-900
         p-4
         shadow-sm fixed top-0 z-50
         backdrop-blur-sm
@@ -218,7 +219,6 @@ export default function Home() {
               text-green-600 font-bold text-sm
               min-w-[60px] sm:min-w-[80px]
               cursor-pointer select-none
-              focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-green-50
             "
           >
             デモ薬局
@@ -288,6 +288,7 @@ export default function Home() {
            gap-[8px] row-start-1 
            items-start p-8 
            sm:items-start mt-[64px]
+           dark:bg-gray-900
            ">
             <p className="tracking-[-.01em] text-2xl font-bold">
              メドサーチ
@@ -297,17 +298,21 @@ export default function Home() {
             </p>
             <div className="
             relative flex items-start 
-            space-x-2 px-4 py-3 rounded-lg w-full" 
-            style={{ backgroundColor: "#cbfbf1" }}>
+            space-x-2 px-4 py-3 rounded-lg w-full
+            bg-[#cbfbf1] dark:bg-cyan-900
+            ">
              <p className="
              text-black px-0.5 py-0.5 
              text-sm text-gray-800 pl-10 
              rounded font-[family-name:var(--font-geist-mono)]
+             dark:text-white
              ">
              グループに共有されている在庫状況を検索します。対象グループを選択して、医薬品名を入力してください。
              </p>
               <div className="
-              absolute left-5 top-6 -translate-y-1/2 text-cyan-500 rounded-full w-6 h-6 text-2xl
+              absolute left-5 top-6 -translate-y-1/2 
+              text-cyan-500 dark:text-white
+               rounded-full w-6 h-6 text-2xl
               ">
               <InformationCircleIcon />
               </div>
@@ -321,6 +326,7 @@ export default function Home() {
                       relative w-full sm:w-48 cursor-default rounded-md border border-gray-500 bg-white py-2 pl-3 pr-10 text-left 
                       shadow-sm focus:outline-none 
                       sm:text-sm
+                      dark:bg-gray-900 dark:text-white
                       ${selectedGroup.id === '' ? 'text-gray-400' : 'text-gray-700'}
                   `}>
                     <span className="block truncate">{selectedGroup.name}</span>
@@ -366,12 +372,14 @@ export default function Home() {
               w-full py-2 pl-10 sm:text-sm
               border border-gray-500 rounded-md
               focus:outline-none
-              text-gray-700"
+              text-gray-700
+              dark:placeholder:text-white
+              "
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-            <MagnifyingGlassIcon className = "h-4 w-4 text-gray-400" />
+            <MagnifyingGlassIcon className = "h-4 w-4 text-gray-400 dark:text-white" />
             </div>
           </div>
         </div>
@@ -383,7 +391,7 @@ export default function Home() {
               sortOrder={sortOrder} 
               onSort={handleSort} 
             /> 
-            <tbody className="bg-white divide-y divide-gray-200"> 
+            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200"> 
               {loadingError ? (
                 <tr>
                   <td colSpan={8} className="px-4 py-8 text-center text-red-500">
@@ -392,44 +400,44 @@ export default function Home() {
                 </tr>
               ) : filteredPharmacyData.length === 0 && searchTerm === '' ? (
                 <tr>
-                  <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                  <td colSpan={8} className="px-4 py-8 text-center text-gray-500 dark:text-white">
                   <NoDataDisplay message="No Data" />
                   </td>
                 </tr>
                 ) : searchTerm === '' ? (
                   <tr>
-                    <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                    <td colSpan={8} className="px-4 py-8 text-center text-gray-500 dark:text-white">
                     <NoDataDisplay message="No Data" />
                     </td>
                   </tr>
                 ) : filteredPharmacyData.length === 0 && searchTerm !== '' ? (
                   <tr>
-                    <td colSpan={8} className="px-4 py-8 text-center text-gray-500">
+                    <td colSpan={8} className="px-4 py-8 text-center text-gray-500 dark:text-white">
                     <NoDataDisplay message="No Data" />
                     </td>
                   </tr>
               ) : (
                 filteredPharmacyData.map((pharmacy, index) => (
                   <tr key={index}> 
-                    <td className="px-4 py-4 text-sm font-bold text-gray-900 w-[10%]">
+                    <td className="px-4 py-4 text-sm font-bold text-gray-900 dark:text-white w-[10%]">
                       {pharmacy.drugName} 
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 text-right w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-right w-[10%]">
                       {pharmacy.price}円
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 w-[20%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white w-[20%]">
                       {pharmacy.facilityName}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 font-medium text-right w-[10%]"> 
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white font-medium text-right w-[10%]"> 
                       {pharmacy.distance}km
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 text-center text-right w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-center text-right w-[10%]">
                       {pharmacy.dispenseCount}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 text-center text-right w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-center text-right w-[10%]">
                       {pharmacy.dispenseAmount} 
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 text-right w-[10%]"> 
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-right w-[10%]"> 
                       {pharmacy.lastDispenseDate} 
                     </td>
                   </tr>
@@ -447,34 +455,34 @@ export default function Home() {
             <DialogPanel
               transition
               className="w-full max-w-md rounded-xl bg-white p-6 text-left align-middle shadow-xl
-                duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
+                duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 dark:bg-gray-900"
             >
-              <DialogTitle as="h3" className="text-lg text-center font-bold leading-6 text-[#00a63e]">
+              <DialogTitle as="h3" className="text-lg text-center font-bold leading-6 text-[#00a63e] dark:text-green-200">
                 サービスを利用する施設を選んでください
               </DialogTitle>
-              <div className="flex items-start gap-2 mt-4 text-gray-800 text-lg hover:bg-gray-100 hover:rounded-lg">
+              <div className="flex items-start gap-2 mt-4 text-gray-800 dark:text-white text-lg hover:bg-gray-100 dark:hover:bg-gray-800 hover:rounded-lg">
                <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" />
                <div className="flex flex-col">
                  <span>テトラ薬局</span>
-                 <p className="mt-1 text-sm text-gray-500">
+                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
                    福岡県新宮市
                  </p>
                </div>
              </div>
-             <div className="flex items-start gap-2 mt-4 text-gray-800 text-lg hover:bg-gray-100 hover:rounded-lg">
+             <div className="flex items-start gap-2 mt-4 text-gray-800 dark:text-white text-lg hover:bg-gray-100 dark:hover:bg-gray-800 hover:rounded-lg">
                <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" />
                <div className="flex flex-col">
                  <span>ベタ薬局</span>
-                 <p className="mt-1 text-sm text-gray-500">
+                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
                    福岡県北九州市
                  </p>
                </div>
              </div>
-             <div className="flex items-start gap-2 mt-4 text-gray-800 text-lg hover:bg-gray-100 hover:rounded-lg">
+             <div className="flex items-start gap-2 mt-4 text-gray-800 dark:text-white text-lg hover:bg-gray-100 dark:hover:bg-gray-800 hover:rounded-lg">
                <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" />
                <div className="flex flex-col">
                  <span>サヨリ薬局</span>
-                 <p className="mt-1 text-sm text-gray-500">
+                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
                    福岡県糸島市
                  </p>
                </div>

@@ -29,7 +29,7 @@ const tableHeaders: TableHeaderItem[] = [
 // ★修正：Propsを受け取るように変更★
 const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadProps) => { 
   return (
-    <thead className="bg-gray-100">
+    <thead className="bg-gray-100 dark:bg-gray-900">
       <tr>
       {tableHeaders.map((header) => {
             const isSorted = sortColumn === header.key;
@@ -38,10 +38,10 @@ const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadP
             key={header.key} 
             scope="col" 
             className={`
-              px-4 py-3 text-xs font-bold text-gray-600 uppercase tracking-wider
+              px-4 py-3 text-xs font-bold text-gray-600 dark:text-white uppercase tracking-wider
               ${header.width}
               relative group overflow-visible
-              cursor-pointer hover:bg-gray-200 transition-colors duration-200 // ★追加：クリック可能UI★
+              cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors duration-200 // ★追加：クリック可能UI★
             `}
             onClick={() => onSort(header.key as keyof PharmacyData)} // ★追加：クリックハンドラ★
           >
@@ -51,9 +51,9 @@ const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadP
               {isSorted && (
                 <span className="ml-1">
                   {sortOrder === 'asc' ? (
-                    <ArrowUpIcon className="h-3 w-3 text-gray-600" />
+                    <ArrowUpIcon className="h-3 w-3 text-gray-600 dark:text-white" />
                   ) : (
-                    <ArrowDownIcon className="h-3 w-3 text-gray-600" />
+                    <ArrowDownIcon className="h-3 w-3 text-gray-600 dark:text-white" />
                   )}
                 </span>
               )}

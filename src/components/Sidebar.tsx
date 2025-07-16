@@ -39,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       fixed top-0 left-0 h-full z-[9999] transition-transform duration-300
       ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
       sm:translate-x-0 sm:relative sm:w-auto sm:sticky sm:top-0
-      bg-white border-r border-gray-200 shadow-md
+      bg-white dark:bg-gray-900 border-r border-gray-200 shadow-md
       flex flex-col justify-between
       pt-4 pb-4 
       flex-shrink-0 
@@ -57,80 +57,81 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </div>
 
         {/* サービスカテゴリ */}
-        <p className="mt-4 text-xs sm:text-xs text-gray-400 items-left px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}">サービス</p>
+        <p className="mt-4 text-xs sm:text-xs text-gray-400 dark:text-gray-300 items-left px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}">サービス</p>
         <a href="#" className="
         flex flex-col 
         items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 
-        gap-2 text-gray-600 
-        bg-[#cbfbf1] hover:bg-[#96f7e4] rounded-md
+        gap-2 text-gray-600  dark:text-white
+        bg-[#cbfbf1] hover:bg-[#96f7e4] dark:bg-gray-700 dark:hover:bg-gray-800
+        rounded-md
         "> {/* "border-l-4 border-cyan-600" を追加すると、メニュー項目の左に線が出て何を選んでいるかわかりやすい */}
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドサーチ</span>
         </a>
-        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
+        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドオーダー</span>
         </a>
-        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
+        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドシェア</span>
         </a>
 
         {/* 一般カテゴリ */}
-        <p className="text-xs sm:text-xs text-gray-400 items-left px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}">一般</p>
-        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
+        <p className="text-xs sm:text-xs text-gray-400 dark:text-gray-300 items-left px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}">一般</p>
+        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>設定</span>
         </a>
-        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md">
+        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>ドキュメント</span>
         </a>
 
         {/* サービス概要カテゴリ */}
-        <p className="text-xs sm:text-xs text-gray-400 items-left px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}">サービス概要</p>
-        <a href="https://www.pharmacloud.co.jp/" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
+        <p className="text-xs sm:text-xs text-gray-400 dark:text-gray-300 items-left px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}">サービス概要</p>
+        <a href="https://www.pharmacloud.co.jp/" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md " target="_blank" rel="noopener noreferrer">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>ファーマクラウド</span>
         </a>
-        <a href="https://www.pharmacloud.co.jp/service/med-order-middle" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
+        <a href="https://www.pharmacloud.co.jp/service/med-order-middle" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md " target="_blank" rel="noopener noreferrer">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドオーダー</span>
         </a>
-        <a href="https://www.pharmacloud.co.jp/service/med-share" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
+        <a href="https://www.pharmacloud.co.jp/service/med-share" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md " target="_blank" rel="noopener noreferrer">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドシェア</span>
         </a>
-        <a href="https://www.pharmacloud.co.jp/service/med-search" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
+        <a href="https://www.pharmacloud.co.jp/service/med-search" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md " target="_blank" rel="noopener noreferrer">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドサーチ</span>
         </a>
 
         {/* 使い方カテゴリ */}
-        <p className="text-xs sm:text-xs text-gray-400 items-left px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}">使い方</p>
-        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
+        <p className="text-xs sm:text-xs text-gray-400 dark:text-gray-300 items-left px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}">使い方</p>
+        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md ">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドオーダー</span>
         </a>
-        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
+        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md ">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドシェア</span>
         </a>
-        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
+        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md ">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドサーチ</span>
         </a>
 
         {/* 活用事例カテゴリ */}
-        <p className="text-xs sm:text-xs text-gray-400 items-left px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}">活用事例</p>
-        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md ">
+        <p className="text-xs sm:text-xs text-gray-400 dark:text-gray-300 items-left px-4 py-2 ${isCollapsed ? 'hidden' : 'block'}">活用事例</p>
+        <a href="#" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md ">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドオーダー</span>
         </a>
-        <a href="https://www.pharmacloud.co.jp/case" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
+        <a href="https://www.pharmacloud.co.jp/case" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md " target="_blank" rel="noopener noreferrer">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドシェア</span>
         </a>
-        <a href="https://www.pharmacloud.co.jp/case" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 hover:bg-gray-100 rounded-md " target="_blank" rel="noopener noreferrer">
+        <a href="https://www.pharmacloud.co.jp/case" className="flex flex-col items-center sm:flex-row sm:justify-start sm:px-4 sm:py-2 py-2 gap-2 text-gray-600 dark:text-white hover:bg-gray-100  rounded-md " target="_blank" rel="noopener noreferrer">
           <span className={`text-xs sm:text-base ${isCollapsed ? 'hidden' : 'sm:inline'}`}>メドサーチ</span>
         </a>
       </nav>
       {/* ★追加：サイドバー開閉ボタン★ */}
       <button 
             onClick={toggleSidebar}
-            className="absolute left-full -translate-x-1/2 top -translate-y-1/2 p-1 rounded-full bg-white border-none shadow-md"
+            className="absolute left-full -translate-x-1/2 top -translate-y-1/2 p-1 rounded-full bg-white dark:bg-gray-600 border-none shadow-md"
           >
             {isCollapsed ? (
-              <ChevronRightIcon className="h-5 w-5 text-gray-600" />
+              <ChevronRightIcon className="h-5 w-5 text-gray-600 dark:text-white" />
             ) : (
-              <ChevronLeftIcon className="h-5 w-5 text-gray-600" />
+              <ChevronLeftIcon className="h-5 w-5 text-gray-600 dark:text-white" />
             )}
           </button>
     </aside>
