@@ -126,7 +126,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       {/* ★追加：サイドバー開閉ボタン★ */}
       <button 
         onClick={toggleSidebar}
-        className="absolute mt-1 right-[-10px] -translate-y-1/2 p-1 rounded-full bg-white dark:bg-gray-600 border-none shadow-md z-50"
+        className="absolute mt-1 right-[-10px] -translate-y-1/2 p-1 rounded-full bg-white dark:bg-gray-600 border-none  z-50"
       >
         {isCollapsed ? (
           <ChevronRightIcon className="h-5 w-5 text-gray-600 dark:text-white" />

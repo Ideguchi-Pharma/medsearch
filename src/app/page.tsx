@@ -5,8 +5,7 @@ import {
   InformationCircleIcon,
   MagnifyingGlassIcon,
   UserCircleIcon,
-  ArrowUpIcon, // ★追加
-  ArrowDownIcon // ★追加
+  TrashIcon
 } from "@heroicons/react/24/solid";
 import { useState, useEffect } from 'react';
 import { 
@@ -364,23 +363,43 @@ export default function Home() {
               )}
             </Listbox>
 
-          <div className="w-full flex-grow relative">
-            <Input
-              type="text"
-              placeholder="search..."
-              className="
-              w-full py-2 pl-10 sm:text-sm
-              border border-gray-500 rounded-md
-              focus:outline-none
-              text-gray-700 dark:text-white
-              dark:placeholder:text-white
-              "
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-            <MagnifyingGlassIcon className = "h-4 w-4 text-gray-400 dark:text-white" />
+          <div className="w-full flex-grow flex flex-col sm:flex-row relative">
+            <div className="relative flex-grow">
+              <Input
+                type="text"
+                placeholder="search..."
+                className="w-full py-2 pl-10 sm:text-sm border border-gray-500 rounded-md focus:outline-none text-gray-700 dark:text-white dark:placeholder:text-white"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                <MagnifyingGlassIcon className="h-4 w-4 text-gray-400 dark:text-white" />
+              </div>
             </div>
+            {/* PC用クリアボタン（右外） */}
+            {searchTerm.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm('')}
+                className="sm:flex hidden items-center justify-center ml-2 w-28 h-8 px-2 rounded-md text-red-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                aria-label="クリア"
+              >
+                <TrashIcon className="h-4 w-4 mr-1 text-red-500 dark:text-white align-middle" />
+                <span className="align-middle">クリア</span>
+              </button>
+            )}
+            {/* モバイル用クリアボタン（下） */}
+            {searchTerm.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm('')}
+                className="sm:hidden mt-2 flex items-center justify-center py-2 rounded text-red-400"
+                aria-label="クリア"
+              >
+                <TrashIcon className="h-5 w-5 mr-1" />
+                クリア
+              </button>
+            )}
           </div>
         </div>
           <div className="mt-8 w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm "> 
