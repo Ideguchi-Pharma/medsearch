@@ -384,7 +384,7 @@ export default function Home() {
           </div>
         </div>
           <div className="mt-8 w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm"> 
-          <table className="min-w-full divide-y divide-gray-200"> 
+          <table className="w-full min-w-[900px] divide-y divide-gray-200"> 
             {/* ★修正：PharmacyTableHeadにソート関連のPropsを渡す★ */}
             <PharmacyTableHead 
               sortColumn={sortColumn} 
@@ -417,27 +417,27 @@ export default function Home() {
                     </td>
                   </tr>
               ) : (
-                filteredPharmacyData.map((pharmacy, index) => (
+                filteredPharmacyData.map((pharmacy, index) => ( //検索結果テーブル
                   <tr key={index}> 
-                    <td className="px-4 py-4 text-sm font-bold text-gray-900 dark:text-white w-[10%]">
+                    <td className="px-4 py-4 text-sm font-bold text-gray-900 dark:text-white min-w-[105px] ">
                       {pharmacy.drugName} 
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-right w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white w-[80px] text-right">
                       {pharmacy.price}円
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white w-[20%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white min-w-[90px] max-w-[150px] sm:max-w-none ">
                       {pharmacy.facilityName}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white font-medium text-right w-[10%]"> 
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white font-medium text-right w-[80px]"> 
                       {pharmacy.distance}km
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-center text-right w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-right w-[105px]">
                       {pharmacy.dispenseCount}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-center text-right w-[10%]">
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-right w-[90px]">
                       {pharmacy.dispenseAmount} 
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-right w-[10%]"> 
+                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-right w-[115px]"> 
                       {pharmacy.lastDispenseDate} 
                     </td>
                   </tr>
