@@ -249,7 +249,7 @@ export default function Home() {
               <MenuItems
                 transition
                 anchor="bottom end"
-                className="-52 origin-top-right rounded-xl border border-gray-200 bg-white p-1 text-sm/6 text-gray-900 shadow-lg ring-none ring-black ring-opacity-5 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0 z-[9999]"
+                className="-52 origin-top-right rounded-xl border border-gray-200 dark:border-none bg-white dark:bg-gray-800 p-1 text-sm/6 text-gray-900 dark:text-white shadow-lg ring-none ring-black ring-opacity-5 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0 z-[9999]"
               >
                 <MenuItem>
                   <p className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5"> 
@@ -257,24 +257,24 @@ export default function Home() {
                   </p>
                 </MenuItem>
                 <MenuItem>
-                  <p className="group flex w-full items-center rounded-lg px-3 text-gray-500"> 
+                  <p className="group flex w-full items-center rounded-lg px-3 text-gray-500 dark:text-gray-300"> 
                     ideguchi@pharmacloud.jp
                   </p>
                 </MenuItem>
                 <div className="my-1 h-px bg-gray-200" />
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100"> 
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100 dark:data-focus:bg-gray-600"> 
                     ホーム
                   </button>
                 </MenuItem> 
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100"> 
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100 dark:data-focus:bg-gray-600"> 
                     アカウントの管理
                   </button>
                 </MenuItem>
                 <div className="my-1 h-px bg-gray-200" />
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100">
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100 dark:data-focus:bg-gray-600">
                     ログアウト
                   </button>
                 </MenuItem>
@@ -333,14 +333,14 @@ export default function Home() {
                      </ListboxButton>
 
                   <ListboxOptions className="
-                      absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white py-1 text-base shadow-lg ring-black ring-opacity-5 focus:outline-none sm:text-sm
+                      absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white dark:bg-gray-800 py-1 text-base shadow-lg ring-black ring-opacity-5 focus:outline-none sm:text-sm
                   ">
                     {groups.map((group) => (
                       <ListboxOption
                         key={group.id}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 pl-2 pr-2 ${
-                            active ? 'bg-gray-100 bg-opacity-80 rounded-lg bg-rounded-lg border-white ring-opacity-5' : 'text-gray-900'
+                            active ? 'bg-gray-100 dark:bg-gray-700 bg-opacity-80 rounded-lg bg-rounded-lg border-white ring-opacity-5' : 'text-gray-900 dark:text-gray-100'
                           }`
                         }
                         value={group}
@@ -372,7 +372,7 @@ export default function Home() {
               w-full py-2 pl-10 sm:text-sm
               border border-gray-500 rounded-md
               focus:outline-none
-              text-gray-700
+              text-gray-700 dark:text-white
               dark:placeholder:text-white
               "
               value={searchTerm}

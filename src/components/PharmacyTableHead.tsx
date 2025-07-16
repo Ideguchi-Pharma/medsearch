@@ -29,7 +29,7 @@ const tableHeaders: TableHeaderItem[] = [
 // ★修正：Propsを受け取るように変更★
 const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadProps) => { 
   return (
-    <thead className="bg-gray-100 dark:bg-gray-900">
+    <thead className="bg-gray-100 dark:bg-cyan-900">
       <tr>
       {tableHeaders.map((header) => {
             const isSorted = sortColumn === header.key;
