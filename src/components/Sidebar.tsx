@@ -43,7 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       flex flex-col justify-between
       pt-4 pb-4 
       flex-shrink-0 
-      overflow-y-auto
+      overflow-y-auto scrollbar-hide
     `}>
       <nav className="flex flex-col gap-4">
       <div className={`relative ${isCollapsed ? 'ml-2' : 'ml-4'} mb-4`}>
@@ -125,15 +125,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       </nav>
       {/* ★追加：サイドバー開閉ボタン★ */}
       <button 
-            onClick={toggleSidebar}
-            className="absolute left-full -translate-x-1/2 top -translate-y-1/2 p-1 rounded-full bg-white dark:bg-gray-600 border-none shadow-md"
-          >
-            {isCollapsed ? (
-              <ChevronRightIcon className="h-5 w-5 text-gray-600 dark:text-white" />
-            ) : (
-              <ChevronLeftIcon className="h-5 w-5 text-gray-600 dark:text-white" />
-            )}
-          </button>
+        onClick={toggleSidebar}
+        className="absolute mt-1 right-[-10px] -translate-y-1/2 p-1 rounded-full bg-white dark:bg-gray-600 border-none shadow-md z-50"
+      >
+        {isCollapsed ? (
+          <ChevronRightIcon className="h-5 w-5 text-gray-600 dark:text-white" />
+        ) : (
+          <ChevronLeftIcon className="h-5 w-5 text-gray-600 dark:text-white" />
+        )}
+      </button>
     </aside>
     </>
   );
