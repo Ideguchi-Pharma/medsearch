@@ -195,18 +195,18 @@ export default function Home() {
         height={250} 
         className="mb-4 opacity-50"
       />
-      <p className="text-gray-800 text-lg font-bold">{message}</p>
+      <p className="text-lg font-bold">{message}</p>
     </div>
   );
   return (
-    <div className="w-full flex-col min-h-screen">       
-      <header className="
+    <div className="w-full flex-col min-h-screen"> 
+    {/*下記に　dark:bg-gray-900を適用していた */}   
+      <header className=" 
         w-full
-        bg-white bg-opacity-50 
-        dark:bg-gray-900
+        bg-opacity-50 
         p-4
         shadow-sm fixed top-0 z-50
-        backdrop-blur-sm
+        backdrop-blur-sm  
       ">
         <div className="flex flex-row items-center gap-2 w-full ml-10 sm:ml-0">
           <Button
@@ -224,7 +224,7 @@ export default function Home() {
           </Button>
           <span className="
             flex items-center justify-center
-            bg-orange-300 text-gray-800 
+            bg-orange-300
             text-xs font-bold
             px-1 py-1 rounded-lg
             uppercase 
@@ -237,18 +237,17 @@ export default function Home() {
             <Menu>
               <MenuButton className="flex items-center justify-center
                 w-8 h-8 rounded-full 
-                bg-gray-300 text-xs text-gray-800
+                text-xs 
                 shadow-inner shadow-white/10
                 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white
-                data-hover:bg-gray-400 data-open:bg-gray-400
                 ">
                   出口
               </MenuButton>
-
+              {/*下記に　dark:border-none,dark:bg-gray-800,dark:text-whiteを適用していた */} 
               <MenuItems
                 transition
                 anchor="bottom end"
-                className="-52 origin-top-right rounded-xl border border-gray-200 dark:border-none bg-white dark:bg-gray-800 p-1 text-sm/6 text-gray-900 dark:text-white shadow-lg ring-none ring-black ring-opacity-5 transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0 z-[9999]"
+                className="-52 origin-top-right rounded-xl border border-gray-200 p-1 text-sm/6 shadow-lg ring-none ring-black ring-opacity-5 transition duration-100 ease-out secondaly-bg [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0 z-[9999]"
               >
                 <MenuItem>
                   <p className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5"> 
@@ -256,24 +255,28 @@ export default function Home() {
                   </p>
                 </MenuItem>
                 <MenuItem>
-                  <p className="group flex w-full items-center rounded-lg px-3 text-gray-500 dark:text-gray-300"> 
+                {/*下記にdark:text-gray-300を適用していた*/}
+                  <p className="group flex w-full items-center rounded-lg px-3 "> 
                     ideguchi@pharmacloud.jp
                   </p>
                 </MenuItem>
-                <div className="my-1 h-px bg-gray-200" />
+                <div className="my-1 h-px " />
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100 dark:data-focus:bg-gray-600"> 
+                {/*下記にdark:data-focus:bg-gray-600を適用していた*/}
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:"> 
                     ホーム
                   </button>
                 </MenuItem> 
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100 dark:data-focus:bg-gray-600"> 
+                {/*下記にdark:data-focus:bg-gray-600を適用していた*/}
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:"> 
                     アカウントの管理
                   </button>
                 </MenuItem>
-                <div className="my-1 h-px bg-gray-200" />
+                <div className="my-1 h-px " />
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-gray-100 dark:data-focus:bg-gray-600">
+                {/*下記にdark:data-focus:bg-gray-600を適用していた*/}
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:">
                     ログアウト
                   </button>
                 </MenuItem>
@@ -282,12 +285,12 @@ export default function Home() {
           </div>
           </div>
       </header>
+      {/*下記にdark:bg-gray-900を適用していた*/}
            <main className="
            w-full flex flex-col 
            gap-[8px] row-start-1 
            items-start p-8 
            sm:items-start mt-[64px]
-           dark:bg-gray-900
            ">
             <p className="tracking-[-.01em] text-2xl font-bold">
              メドサーチ
@@ -295,23 +298,23 @@ export default function Home() {
             <p className="tracking-[-.01em] mb-8">
              マイページ ・ メドサーチ
             </p>
+            {/*下記にdark:bg-cyan-900を適用していた*/}
             <div className="
             relative flex items-start 
             space-x-2 px-4 py-3 rounded-lg w-full
-            bg-[#cbfbf1] dark:bg-cyan-900
             ">
+              {/*下記にdark:text-whiteを適用していた*/}
              <p className="
-             text-black px-0.5 py-0.5 
-             text-sm text-gray-800 pl-10 
+             px-0.5 py-0.5 
+             text-sm  pl-10 
              rounded font-[family-name:var(--font-geist-mono)]
-             dark:text-white
              ">
              グループに共有されている在庫状況を検索します。対象グループを選択して、医薬品名を入力してください。
              </p>
+             {/*下記にdark:text-whiteを適用していた*/}
               <div className="
               absolute left-5 top-6 -translate-y-1/2 
-              text-cyan-500 dark:text-white
-               rounded-full w-6 h-6 text-2xl
+              rounded-full w-6 h-6 text-2xl
               ">
               <InformationCircleIcon />
               </div>
@@ -321,25 +324,26 @@ export default function Home() {
         <Listbox value={selectedGroup} onChange={handleGroupChange} className="relative w-full sm:w-48 flex-grow-0 flex-shrink-0">
               {() => (
                 <div>
+                  {/*下記にdark:bg-gray-900,dark:text-whiteを適用していた*/}
                   <ListboxButton className={`
-                      relative w-full sm:w-48 cursor-default rounded-md border border-gray-500 bg-white py-2 pl-3 pr-10 text-left 
+                      relative w-full sm:w-48 cursor-default rounded-md border border-gray-500 py-2 pl-3 pr-10 text-left 
                       shadow-sm focus:outline-none 
                       sm:text-sm
-                      dark:bg-gray-900 dark:text-white
-                      ${selectedGroup.id === '' ? 'text-gray-400' : 'text-gray-700'}
+                      ${selectedGroup.id === '' ? '' : ''}
                   `}>
                     <span className="block truncate">{selectedGroup.name}</span>
                      </ListboxButton>
-
+                     {/*下記にdark:bg-gray-800を適用していた*/}
                   <ListboxOptions className="
-                      absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg bg-white dark:bg-gray-800 py-1 text-base shadow-lg ring-black ring-opacity-5 focus:outline-none sm:text-sm
+                      absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg py-1 text-base shadow-lg ring-black ring-opacity-5 focus:outline-none sm:text-sm
                   ">
+                    {/*下記のactive ? にdark:bg-gray-700,dark:text-gray-100を適用していた*/}
                     {groups.map((group) => (
                       <ListboxOption
                         key={group.id}
                         className={({ active }) =>
-                          `relative cursor-default select-none py-2 pl-2 pr-2 ${
-                            active ? 'bg-gray-100 dark:bg-gray-700 bg-opacity-80 rounded-lg bg-rounded-lg border-white ring-opacity-5' : 'text-gray-900 dark:text-gray-100'
+                          `relative cursor-default select-none py-2 pl-2 pr-2 secondaly-bg secondaly-bg hover-bg ${
+                            active ? 'bg-opacity-80 rounded-lg bg-rounded-lg border-white ring-opacity-5' : ''
                           }`
                         }
                         value={group}
@@ -365,26 +369,30 @@ export default function Home() {
 
           <div className="w-full flex-grow flex flex-col sm:flex-row relative">
             <div className="relative flex-grow">
+              {/*下記のclassnameにdark:text-white dark:placeholder:text-whiteを適用していた*/}
               <Input
                 type="text"
                 placeholder="search..."
-                className="w-full py-2 pl-10 sm:text-sm border border-gray-500 rounded-md focus:outline-none text-gray-700 dark:text-white dark:placeholder:text-white"
+                className="w-full py-2 pl-10 sm:text-sm border border-gray-500 rounded-md focus:outline-none"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
+              {/*下記のアイコンにdark:text-whiteを適用していた*/}
               <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
-                <MagnifyingGlassIcon className="h-4 w-4 text-gray-400 dark:text-white" />
+                <MagnifyingGlassIcon className="h-4 w-4" />
               </div>
             </div>
             {/* PC用クリアボタン（右外） */}
+            {/*下記のアイコンにdark:text-white,dark:hover:bg-gray-800を適用していた*/}
             {searchTerm.length > 0 && (
               <button
                 type="button"
                 onClick={() => setSearchTerm('')}
-                className="sm:flex hidden items-center justify-center ml-2 w-28 h-8 px-2 rounded-md text-red-500 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="sm:flex hidden items-center justify-center ml-2 w-28 h-8 px-2 rounded-md"
                 aria-label="クリア"
               >
-                <TrashIcon className="h-4 w-4 mr-1 text-red-500 dark:text-white align-middle" />
+                {/*下記のアイコンにdark:text-whiteを適用していた*/}
+                <TrashIcon className="h-4 w-4 mr-1 align-middle" />
                 <span className="align-middle">クリア</span>
               </button>
             )}
@@ -393,7 +401,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setSearchTerm('')}
-                className="sm:hidden mt-2 flex items-center justify-center py-2 rounded text-red-400"
+                className="sm:hidden mt-2 flex items-center justify-center py-2 rounded"
                 aria-label="クリア"
               >
                 <TrashIcon className="h-5 w-5 mr-1" />
@@ -410,53 +418,64 @@ export default function Home() {
               sortOrder={sortOrder} 
               onSort={handleSort} 
             /> 
-            <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200"> 
+            {/*下記にdark:bg-gray-900を適用していた*/}
+            <tbody className=" divide-y divide-gray-200"> 
               {loadingError ? (
                 <tr>
-                  <td colSpan={8} className="px-4 py-8 text-center text-red-500">
+                  <td colSpan={8} className="px-4 py-8 text-center">
                     {loadingError}
                   </td>
                 </tr>
               ) : filteredPharmacyData.length === 0 && searchTerm === '' ? (
                 <tr>
-                  <td colSpan={8} className="px-4 py-8 text-center text-gray-500 dark:text-white">
+                  {/*下記にdark:text-whiteを適用していた*/}
+                  <td colSpan={8} className="px-4 py-8 text-center">
                   <NoDataDisplay message="No Data" />
                   </td>
                 </tr>
                 ) : searchTerm === '' ? (
                   <tr>
-                    <td colSpan={8} className="px-4 py-8 text-center text-gray-500 dark:text-white">
+                     {/*下記にdark:text-whiteを適用していた*/}
+                    <td colSpan={8} className="px-4 py-8 text-center">
                     <NoDataDisplay message="No Data" />
                     </td>
                   </tr>
                 ) : filteredPharmacyData.length === 0 && searchTerm !== '' ? (
                   <tr>
-                    <td colSpan={8} className="px-4 py-8 text-center text-gray-500 dark:text-white">
+                     {/*下記にdark:text-whiteを適用していた*/}
+                    <td colSpan={8} className="px-4 py-8 text-center">
                     <NoDataDisplay message="No Data" />
                     </td>
                   </tr>
               ) : (
                 filteredPharmacyData.map((pharmacy, index) => ( //検索結果テーブル
                   <tr key={index}> 
-                    <td className="px-4 py-4 text-sm font-bold text-gray-900 dark:text-white min-w-[105px] ">
+                   {/*下記にdark:text-whiteを適用していた*/}
+                    <td className="px-4 py-4 text-sm font-bold min-w-[105px] ">
                       {pharmacy.drugName} 
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white w-[80px] text-right">
+                     {/*下記にdark:text-whiteを適用していた*/}
+                    <td className="px-4 py-4 text-sm w-[80px] text-right">
                       {pharmacy.price}円
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white min-w-[90px] max-w-[150px] sm:max-w-none ">
+                     {/*下記にdark:text-whiteを適用していた*/}
+                    <td className="px-4 py-4 text-sm min-w-[90px] max-w-[150px] sm:max-w-none ">
                       {pharmacy.facilityName}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white font-medium text-right w-[80px]"> 
+                     {/*下記にdark:text-whiteを適用していた*/}
+                    <td className="px-4 py-4 text-sm font-medium text-right w-[80px]"> 
                       {pharmacy.distance}km
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-right w-[105px]">
+                     {/*下記にdark:text-whiteを適用していた*/}
+                    <td className="px-4 py-4 text-sm  text-right w-[105px]">
                       {pharmacy.dispenseCount}
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-right w-[90px]">
+                     {/*下記にdark:text-whiteを適用していた*/}
+                    <td className="px-4 py-4 text-sm text-right w-[90px]">
                       {pharmacy.dispenseAmount} 
                     </td>
-                    <td className="px-4 py-4 text-sm text-gray-800 dark:text-white text-right w-[115px]"> 
+                     {/*下記にdark:text-whiteを適用していた*/}
+                    <td className="px-4 py-4 text-sm text-right w-[115px]"> 
                       {pharmacy.lastDispenseDate} 
                     </td>
                   </tr>
@@ -467,41 +486,49 @@ export default function Home() {
         </div>
       </main>
       <Dialog open={isOpenDemoDialog} as="div" className="relative z-[9999] focus:outline-none" onClose={closeDemoDialog}>
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/60" aria-hidden="true" />
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto " aria-hidden="true" />
 
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
           <div className="flex min-h-full items-center justify-center p-4">
+             {/*下記にdark:bg-gray-900を適用していた*/}
             <DialogPanel
               transition
-              className="w-full max-w-md rounded-xl bg-white p-6 text-left align-middle shadow-xl
-                duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 dark:bg-gray-900"
+              className="w-full max-w-md rounded-xl p-6 text-left align-middle shadow-xl dialog-bg
+                duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 secondaly-bg"
             >
-              <DialogTitle as="h3" className="text-lg text-center font-bold leading-6 text-[#00a63e] dark:text-green-200">
+               {/*下記にdark:text-green-200を適用していた*/}
+              <DialogTitle as="h3" className="text-lg text-center font-bold leading-6">
                 サービスを利用する施設を選んでください
               </DialogTitle>
-              <div className="flex items-start gap-2 mt-4 text-gray-800 dark:text-white text-lg hover:bg-gray-100 dark:hover:bg-gray-800 hover:rounded-lg">
-               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" />
+               {/*下記にdark:text-white,dark:hover:bg-gray-800を適用していた*/}
+              <div className="flex items-start gap-2 mt-4 text-lg hover:rounded-lg hover-bg">
+               <UserCircleIcon className="h-14 w-14 shrink-0" />
                <div className="flex flex-col">
                  <span>テトラ薬局</span>
-                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+                  {/*下記にdark:text-gray-300を適用していた*/}
+                 <p className="mt-1 text-sm">
                    福岡県新宮市
                  </p>
                </div>
              </div>
-             <div className="flex items-start gap-2 mt-4 text-gray-800 dark:text-white text-lg hover:bg-gray-100 dark:hover:bg-gray-800 hover:rounded-lg">
-               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" />
+              {/*下記にdark:text-white,dark:hover:bg-gray-800を適用していた*/}
+             <div className="flex items-start gap-2 mt-4 text-lg hover: hover:rounded-lg hover-bg">
+               <UserCircleIcon className="h-14 w-14 shrink-0" />
                <div className="flex flex-col">
                  <span>ベタ薬局</span>
-                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+                 {/*下記にdark:text-gray-300を適用していた*/}
+                 <p className="mt-1 text-sm">
                    福岡県北九州市
                  </p>
                </div>
              </div>
-             <div className="flex items-start gap-2 mt-4 text-gray-800 dark:text-white text-lg hover:bg-gray-100 dark:hover:bg-gray-800 hover:rounded-lg">
-               <UserCircleIcon className="h-14 w-14 text-[#b8e6fe] shrink-0" />
+             {/*下記にdark:text-white,dark:hover:bg-gray-800を適用していた*/}
+             <div className="flex items-start gap-2 mt-4 text-lg hover: hover:rounded-lg hover-bg">
+               <UserCircleIcon className="h-14 w-14 shrink-0" />
                <div className="flex flex-col">
                  <span>サヨリ薬局</span>
-                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
+                 {/*下記にdark:text-gray-300を適用していた*/}
+                 <p className="mt-1 text-sm">
                    福岡県糸島市
                  </p>
                </div>

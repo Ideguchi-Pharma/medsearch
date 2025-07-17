@@ -28,9 +28,11 @@ const tableHeaders: TableHeaderItem[] = [
 
 // ★修正：Propsを受け取るように変更★
 const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadProps) => { 
+  {/*下記にdark:text-bg-cyab-900を適用していた*/}
   return (
-    <thead className="bg-gray-100 dark:bg-cyan-900">
+    <thead>
       <tr>
+  {/*下記にdark:text-gray-300を適用していた*/}
       {tableHeaders.map((header) => {
             const isSorted = sortColumn === header.key;
             return (
@@ -38,10 +40,10 @@ const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadP
             key={header.key} 
             scope="col" 
             className={`
-              px-4 py-3 text-xs font-bold text-gray-600 dark:text-white uppercase tracking-wider
+              px-4 py-3 text-xs font-bold uppercase tracking-wider
               ${header.width}
               relative group overflow-visible
-              cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 transition-colors duration-200 // ★追加：クリック可能UI★
+              cursor-pointer hover-bg transition-colors duration-200 // ★追加：クリック可能UI★
             `}
             onClick={() => onSort(header.key as keyof PharmacyData)} // ★追加：クリックハンドラ★
           >
@@ -50,10 +52,11 @@ const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadP
               {/* ★追加：ソートインジケーター★ */}
               {isSorted && (
                 <span className="ml-1">
+              {/*下記アイコンにdark:text-whiteを適用していた*/}
                   {sortOrder === 'asc' ? (
-                    <ArrowUpIcon className="h-3 w-3 text-gray-600 dark:text-white" />
+                    <ArrowUpIcon className="h-3 w-3" />
                   ) : (
-                    <ArrowDownIcon className="h-3 w-3 text-gray-600 dark:text-white" />
+                    <ArrowDownIcon className="h-3 w-3" />
                   )}
                 </span>
               )}
@@ -61,9 +64,9 @@ const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadP
               <div className="
               absolute top-full left-1/2 -translate-x-1/2 mt-3
               opacity-0 group-hover:opacity-100 transition-opacity duration-300
-              bg-gray-800 text-white text-xs rounded-lg py-1 px-2
+              text-xs rounded-lg py-1 px-2
               whitespace-nowrap z-50
-              pointer-events-none
+              pointer-events-none secondaly-bg
               ">
             {header.tooltip}
             </div>
