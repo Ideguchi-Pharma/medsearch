@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/solid'; // ★追加
+import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/solid'; 
 
 interface TableHeaderItem {
   key: string; 
@@ -9,7 +9,7 @@ interface TableHeaderItem {
   tooltip?: string; 
 }
 
-// ★追加：Propsの型定義★
+// Propsの型定義
 interface PharmacyTableHeadProps {
   sortColumn: string | null;
   sortOrder: 'asc' | 'desc';
@@ -26,13 +26,11 @@ const tableHeaders: TableHeaderItem[] = [
   { key: 'lastDispenseDate', label: '最終調剤日', align: 'left', width: 'w-[115px]' },
 ];
 
-// ★修正：Propsを受け取るように変更★
+// Propsを受け取るように変更
 const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadProps) => { 
-  {/*下記にdark:text-bg-cyab-900を適用していた*/}
   return (
     <thead>
       <tr>
-  {/*下記にdark:text-gray-300を適用していた*/}
       {tableHeaders.map((header) => {
             const isSorted = sortColumn === header.key;
             return (
@@ -43,16 +41,20 @@ const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadP
               px-4 py-3 text-xs font-bold uppercase tracking-wider
               ${header.width}
               relative group overflow-visible
-              cursor-pointer hover-bg transition-colors duration-200 // ★追加：クリック可能UI★
+              cursor-pointer hover-bg transition-colors duration-200 // 
             `}
-            onClick={() => onSort(header.key as keyof PharmacyData)} // ★追加：クリックハンドラ★
+            onClick={() => onSort(header.key as keyof PharmacyData)} // 
           >
-            <div className={`flex items-center ${header.align === 'right' ? 'justify-end' : header.align === 'center' ? 'justify-center' : 'justify-start'} gap-1 relative w-full h-full`}>
+            <div className={`
+              flex items-center 
+              ${header.align === 'right' ? 'justify-end' : 
+                header.align === 'center' ? 'justify-center' : 'justify-start'} 
+                gap-1 relative w-full h-full
+                `}>
               {header.label}
-              {/* ★追加：ソートインジケーター★ */}
+              {/* ソートインジケーター */}
               {isSorted && (
                 <span className="ml-1">
-              {/*下記アイコンにdark:text-whiteを適用していた*/}
                   {sortOrder === 'asc' ? (
                     <ArrowUpIcon className="h-3 w-3" />
                   ) : (

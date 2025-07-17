@@ -4,7 +4,6 @@ import Sidebar from "@/components/Sidebar";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  {/*下記にdark:bg-gray-900を適用していた*/}
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex flex-grow">
