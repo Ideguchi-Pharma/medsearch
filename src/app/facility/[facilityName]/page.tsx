@@ -1,4 +1,4 @@
-`use cliant`;
+`use client`;
 
 import * as XLSX from "xlsx";
 import { notFound } from "next/navigation";

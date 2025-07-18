@@ -1,5 +1,5 @@
 // medsearch/src/app/facility/[facilityName]/page.tsx
-`use cliant`;
+`use client`;
 
 import { useParams } from "next/navigation";
 
