@@ -27,27 +27,13 @@ export default async function FacilityDetailPage({ params }: { params: { facilit
 
   return (
     <div className="p-8 max-w-xl mx-auto">
-      <h1 className="
-      text-2xl font-bold mb-4
-      ">
-        {facility["facilityName"]}
-      </h1>
-      <table className="
-      min-w-full border border-gray-300
-      ">
+      <h1 className="text-2xl font-bold mb-4">{facility["facilityName"]} の詳細</h1>
+      <table className="min-w-full border border-gray-300">
         <tbody>
           {displayKeys.map((key) => (
             <tr key={key}>
-              <th className="
-              border px-4 py-2 bg-gray-100 text-left
-              ">
-                {key}
-              </th>
-              <td className="
-              border px-4 py-2
-              ">
-                {facility[key]}
-              </td>
+              <th className="border px-4 py-2 bg-gray-100 text-left">{key}</th>
+              <td className="border px-4 py-2">{facility[key]}</td>
             </tr>
           ))}
         </tbody>
