@@ -1,4 +1,6 @@
 // medsearch/src/app/facility/[facilityName]/page.tsx
+`use cliant`;
+
 import { useParams } from "next/navigation";
 
 export default function FacilityDetailPage() {

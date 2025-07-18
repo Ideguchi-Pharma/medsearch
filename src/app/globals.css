@@ -83,21 +83,3 @@ button:hover {
     background: var(--hover-bg);
   }
 }
-
-.main-bg::-webkit-scrollbar {
-  width: 8px;
-  background: var(--background);
-}
-.main-bg::-webkit-scrollbar-thumb {
-  background: var(--hover-bg);
-  border-radius: 4px;
-}
-
-@media (prefers-color-scheme: dark) {
-  .main-bg::-webkit-scrollbar {
-    background: var(--background);
-  }
-  .main-bg::-webkit-scrollbar-thumb {
-    background: var(--hover-bg);
-  }
-}
