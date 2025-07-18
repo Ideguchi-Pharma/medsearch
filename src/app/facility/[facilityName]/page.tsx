@@ -1,3 +1,5 @@
+`use cliant`;
+
 import * as XLSX from "xlsx";
 import { notFound } from "next/navigation";
 
