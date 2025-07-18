@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       <button
         onClick={toggleMobileMenu}
         className="
-        fixed top-3 left-2 z-[9999] p-2  sm:hidden
+        fixed top-3 left-2 z-[9998] p-2  sm:hidden
         ">
         <Bars3Icon className="h-6 w-6" />
       </button>
@@ -37,20 +37,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       {/* モバイルメニューオーバーレイ (sm未満で表示) */}
       {isMobileMenuOpen && (
         <div className="
-        fixed inset-0 bg-gray-500 bg-opacity-25 
-        z-[9998] sm:hidden" 
+        fixed inset-0
+        z-[9999] sm:hidden" 
         onClick={toggleMobileMenu}
         >
         </div>
       )}
-    <aside className=
-    {`${isCollapsed ? "w-20" : "w-48"}
+    <aside className={`
+      ${isCollapsed ? "w-20" : "w-48"}
       fixed top-0 left-0 h-screen z-[9999] transition-transform duration-300
       ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
       sm:translate-x-0 sm:relative sm:w-auto sm:sticky sm:top-0
-      border-r border-gray-200 shadow-md
+      shadow-md
       flex flex-col justify-between pt-4 pb-4 
-      flex-shrink-0 overflow-y-auto
+      flex-shrink-0 overflow-y-auto overflow-x-hidden sidebar-bg
+      onClick={toggleMobileMenu}
     `}>
       <nav className="flex flex-col gap-4">
       <div className=
@@ -74,6 +75,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         ">
           サービス
         </p>
+        {!isCollapsed && (
+          <>
         <a href="#" 
         className="
         flex flex-col 
@@ -114,6 +117,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
             メドシェア
           </span>
         </a>
+        </>
+        )}
         {/* 一般カテゴリ */}
         <p className="
         text-xs sm:text-xs items-left px-4 py-2 
@@ -121,6 +126,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         ">
           一般
         </p>
+        {!isCollapsed && (
+          <>
         <a href="#" 
         className="
         flex flex-col items-center 
@@ -147,6 +154,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
             ドキュメント
           </span>
         </a>
+        </>
+        )}
         {/* サービス概要カテゴリ */}
         <p className="
         text-xs sm:text-xs items-left px-4 py-2 
@@ -154,6 +163,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         ">
           サービス概要
         </p>
+        {!isCollapsed && (
+          <>
         <a href="https://www.pharmacloud.co.jp/" 
         className="
         flex flex-col items-center 
@@ -214,6 +225,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
             メドサーチ
             </span>
         </a>
+        </>
+        )}
         {/* 使い方カテゴリ */}
         <p className="
         text-xs sm:text-xs items-left px-4 py-2 
@@ -221,6 +234,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         ">
           使い方
         </p>
+        {!isCollapsed && (
+          <>
         <a href="#" 
         className="
         flex flex-col items-center 
@@ -260,7 +275,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
             メドサーチ
           </span>
         </a>
-
+        </>
+        )}
         {/* 活用事例カテゴリ */}
         <p className="
         text-xs sm:text-xs items-left px-4 py-2 
@@ -268,6 +284,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         ">
           活用事例
         </p>
+        {!isCollapsed && (
+          <>
         <a href="#" 
         className="
         flex flex-col items-center 
@@ -311,6 +329,8 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
               メドサーチ
               </span>
         </a>
+        </>
+        )}
       </nav>
       {/* ★追加：サイドバー開閉ボタン★ */}
       <button 
@@ -318,6 +338,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         className="
         absolute mt-1 right-[-10px] -translate-y-1/2 
         p-1 rounded-full border-none  z-50
+        hover-none sm:block hidden
         ">
         {isCollapsed ? (
           <ChevronRightIcon className="h-5 w-5" />

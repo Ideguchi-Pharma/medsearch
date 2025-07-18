@@ -41,9 +41,9 @@ const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadP
               px-4 py-3 text-xs font-bold uppercase tracking-wider
               ${header.width}
               relative group overflow-visible
-              cursor-pointer hover-bg transition-colors duration-200 // 
+              cursor-pointer transition-colors duration-200  
             `}
-            onClick={() => onSort(header.key as keyof PharmacyData)} // 
+            onClick={() => onSort(header.key as keyof PharmacyData)} 
           >
             <div className={`
               flex items-center 

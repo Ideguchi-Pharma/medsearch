@@ -216,7 +216,7 @@ export default function Home() {
               border border-green-500 rounded-lg
               text-green-600 font-bold text-sm
               min-w-[60px] sm:min-w-[80px]
-              cursor-pointer select-none
+              cursor-pointer select-none hover-none
             "
           >
             デモ薬局
@@ -239,6 +239,7 @@ export default function Home() {
                 text-xs 
                 shadow-inner shadow-white/10
                 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white
+                secondaly-bg
                 ">
                   出口
               </MenuButton>
@@ -324,7 +325,7 @@ export default function Home() {
             </p>
             <div className="
             relative flex items-start 
-            space-x-2 px-4 py-3 rounded-lg w-full secondaly-bg
+            space-x-2 px-4 py-3 rounded-lg w-full info-bg
             ">
              <p className="
              px-0.5 py-0.5 
@@ -337,7 +338,7 @@ export default function Home() {
               absolute left-5 top-6 -translate-y-1/2 
               rounded-full w-6 h-6 text-2xl
               ">
-              <InformationCircleIcon />
+              <InformationCircleIcon className="text-cyan-500 dark:text-white" />
               </div>
             </div>
 
@@ -355,7 +356,8 @@ export default function Home() {
                   <ListboxButton className={`
                       relative w-full sm:w-48 cursor-default 
                       rounded-md border border-gray-500 py-2 pl-3 pr-10 text-left 
-                      shadow-sm focus:outline-none sm:text-sm
+                      shadow-sm focus:outline-none sm:text-sm 
+                      hover-none cursor-pointer
                       ${selectedGroup.id === '' ? '' : ''}
                   `}>
                     <span className="
@@ -366,14 +368,14 @@ export default function Home() {
                       absolute z-10 mt-1 max-h-60 w-full 
                       overflow-auto rounded-lg py-1 text-base 
                       shadow-lg ring-black ring-opacity-5 
-                      focus:outline-none sm:text-sm
+                      focus:outline-none sm:text-sm secondaly-bg
                   ">
                     {groups.map((group) => (
                       <ListboxOption
                         key={group.id}
                         className={({ active }) =>
                           `relative cursor-default select-none 
-                        py-2 pl-2 pr-2 secondaly-bg secondaly-bg hover-bg ${
+                        py-2 pl-2 pr-2 hover-bg ${
                           active ? 'bg-opacity-80 rounded-lg bg-rounded-lg border-white ring-opacity-5':''
                         }`}
                         value={group}
@@ -533,7 +535,7 @@ export default function Home() {
       onClose={closeDemoDialog}
       >
         <div className="
-        fixed inset-0 z-10 w-screen overflow-y-auto"
+        fixed inset-0 z-10 w-screen overflow-y-auto bg-black/60"
         aria-hidden="true"
         />
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -542,9 +544,10 @@ export default function Home() {
               transition
               className="
               w-full max-w-md rounded-xl p-6 text-left 
-              align-middle shadow-xl dialog-bg
+              align-middle shadow-xl
               duration-300 ease-out 
-              data-closed:transform-[scale(95%)] data-closed:opacity-0 secondaly-bg
+              data-closed:transform-[scale(95%)] data-closed:opacity-0
+              secondaly-bg
               ">
               <DialogTitle as="h3" className="text-lg text-center font-bold leading-6">
                 サービスを利用する施設を選んでください
