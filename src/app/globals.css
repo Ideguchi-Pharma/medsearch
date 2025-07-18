@@ -24,6 +24,24 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+body::-webkit-scrollbar {
+  width: 8px;
+  background: var(--background);
+}
+body::-webkit-scrollbar-thumb {
+  background: var(--hover-bg);
+  border-radius: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  body::-webkit-scrollbar {
+    background: var(--background);
+  }
+  body::-webkit-scrollbar-thumb {
+    background: var(--hover-bg);
+  }
+}
+
 .hover-bg:hover {
   background: var(--hover-bg)
 }
@@ -46,4 +64,40 @@ button:hover {
 
 .sidebar-bg {
   background: var(--background)
+}
+
+.sidebar-bg::-webkit-scrollbar {
+  width: 8px;
+  background: var(--background);
+}
+.sidebar-bg::-webkit-scrollbar-thumb {
+  background: var(--hover-bg);
+  border-radius: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .sidebar-bg::-webkit-scrollbar {
+    background: var(--background);
+  }
+  .sidebar-bg::-webkit-scrollbar-thumb {
+    background: var(--hover-bg);
+  }
+}
+
+.main-bg::-webkit-scrollbar {
+  width: 8px;
+  background: var(--background);
+}
+.main-bg::-webkit-scrollbar-thumb {
+  background: var(--hover-bg);
+  border-radius: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .main-bg::-webkit-scrollbar {
+    background: var(--background);
+  }
+  .main-bg::-webkit-scrollbar-thumb {
+    background: var(--hover-bg);
+  }
 }
