@@ -1,6 +1,7 @@
 'use client';
 
 import Image from "next/image";
+import Link from "next/link";
 import {
   InformationCircleIcon,
   MagnifyingGlassIcon,
@@ -12,7 +13,7 @@ import {
   Listbox, ListboxButton, ListboxOptions, ListboxOption, 
   Input,
   Menu, MenuButton, MenuItems, MenuItem,
-  Description, Dialog, DialogPanel, DialogTitle, Button
+  Dialog, DialogPanel, DialogTitle, Button
  } from '@headlessui/react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja'; 
@@ -509,7 +510,12 @@ export default function Home() {
                       {pharmacy.price}円
                     </td>
                     <td className="px-4 py-4 text-sm min-w-[90px] max-w-[150px] sm:max-w-none ">
-                      {pharmacy.facilityName}
+                      <Link
+                        href={`/facility/${encodeURIComponent(pharmacy.facilityName)}`}
+                        className="text-blue-600 underline hover:text-blue-800"
+                      >
+                        {pharmacy.facilityName}
+                      </Link>
                     </td>
                     <td className="px-4 py-4 text-sm font-medium text-right w-[80px]"> 
                       {pharmacy.distance}km
