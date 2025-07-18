@@ -512,7 +512,7 @@ export default function Home() {
                     <td className="px-4 py-4 text-sm min-w-[90px] max-w-[150px] sm:max-w-none ">
                       <Link
                         href={`/facility/${encodeURIComponent(pharmacy.facilityName)}`}
-                        className="text-blue-600 underline hover:text-blue-800"
+                        className="text-green-600 font-bold hover-bg rounded-md p-2"
                       >
                         {pharmacy.facilityName}
                       </Link>
