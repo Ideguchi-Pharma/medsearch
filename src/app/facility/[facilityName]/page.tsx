@@ -37,6 +37,17 @@ export default function FacilityDetailPage() {
     ? keys.slice(start, end + 1)
     : keys;
 
+  // カラム名と表示名のマッピング
+  const labelMap: Record<string, string> = {
+    facilityNumber: '医療機関番号',
+    postCode: '郵便番号',
+    address: '住所',
+    telNumber: '電話番号',
+    faxNumber: 'FAX番号',
+    hpAddress: 'ホームページ',
+    permitNumber: '開設許可番号',
+  };
+
   return (
     <div className="w-full flex-col min-h-screen">
       <header className="w-full bg-opacity-50 p-4 shadow-sm fixed top-0 z-50 backdrop-blur-sm">
@@ -78,21 +89,35 @@ export default function FacilityDetailPage() {
           </div>
         </div>
       </header>
-      <main className="w-full flex flex-col gap-[8px] row-start-1 items-start p-8 sm:items-start mt-[64px]">
-        <p className="tracking-[-.01em] text-2xl font-bold">メドサーチ</p>
-        <p className="tracking-[-.01em] mb-8">マイページ ・ メドサーチ</p>
-        <div className="mt-8 w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm">
-          <h1 className="text-2xl font-bold mb-4">{facility['facilityName']} の詳細</h1>
-          <table className="min-w-full border border-gray-300">
-            <tbody>
-              {displayKeys.map((key) => (
-                <tr key={key}>
-                  <th className="border px-4 py-2 bg-gray-100 text-left">{key}</th>
-                  <td className="border px-4 py-2">{facility[key]}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <main className="
+      w-full flex flex-col gap-[8px] 
+      row-start-1 items-start p-8 
+      sm:items-start mt-[64px]
+      ">
+        <p className="
+        tracking-[-.01em] text-2xl font-bold
+        ">
+            施設の詳細
+        </p>
+        <p className="
+        tracking-[-.01em] mb-8
+        ">
+            マイページ ・ 在庫状況を調べる ・ 施設の詳細
+        </p>
+        {/* 施設情報ページ */}
+        <div className="mt-8 w-full max-w-xl border border-gray-200 rounded-lg shadow-sm p-6 bg-white">
+          {/* facilityName */}
+          <h1 className="text-lg font-bold mb-4">{facility['facilityName']}</h1>
+          <div className="space-y-3">
+            {displayKeys
+              .filter(key => key !== 'facilityName')
+              .map((key) => (
+                <div key={key} className="flex">
+                  <span className="font-semibold min-w-[120px]">{labelMap[key] || key}：</span>
+                  <span>{facility[key]}</span>
+                </div>
+            ))}
+          </div>
         </div>
       </main>
       <Dialog open={isOpenDemoDialog} as="div" className="relative z-[9999] focus:outline-none" onClose={() => setIsOpenDemoDialog(false)}>
