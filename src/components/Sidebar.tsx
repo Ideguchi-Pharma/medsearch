@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import Image from "next/image"; 
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+
 import { 
   ChevronLeftIcon,
    ChevronRightIcon, 
@@ -45,7 +47,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       )}
     <aside className={`
       ${isCollapsed ? "w-20" : "w-48"}
-      fixed top-0 left-0 h-screen z-[9999] transition-transform duration-300
+      fixed top-0 left-0 h-screen z-[9998] transition-transform duration-300
       ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
       sm:translate-x-0 sm:relative sm:w-auto sm:sticky sm:top-0
       shadow-md
@@ -68,13 +70,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       </div>
 
         {/* サービスカテゴリ */}
-        <p className="
-        mt-4 text-xs sm:text-xs items-left 
-        px-4 py-2 
-        ${isCollapsed ? 'hidden' : 'block'}
+        <Popover>
+        <PopoverButton className="
+        mt-1 text-xs sm:text-xs items-left 
+        px-4 py-2 hover-none outline-none
         ">
           サービス
-        </p>
+        </PopoverButton>
+        <PopoverPanel
+        transition
+        anchor="right"
+        className="
+        rounded-xl text-sm/6 transition 
+        duration-200 ease-in-out 
+        [--anchor-gap:--spacing(5)] z-[9999]
+        data-closed:-translate-x-1 data-closed:opacity-0
+        shadow-sm backdrop-blur-sm bg-white/50
+        ">
+          <div className="p-3">
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドサーチ</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドシェア</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドオーダー</p>
+              </a>
+            </div>
+          </PopoverPanel>
+        </Popover>
         {!isCollapsed && (
           <>
         <a href="#" 
@@ -120,12 +145,33 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </>
         )}
         {/* 一般カテゴリ */}
-        <p className="
-        text-xs sm:text-xs items-left px-4 py-2 
-        ${isCollapsed ? 'hidden' : 'block'}
+        <Popover>
+        <PopoverButton className="
+        mt-1 text-xs sm:text-xs items-left 
+        px-4 py-2 hover-none outline-none
         ">
           一般
-        </p>
+        </PopoverButton>
+        <PopoverPanel
+        transition
+        anchor="right"
+        className="
+        rounded-xl text-sm/6 transition 
+        duration-200 ease-in-out bg-white
+        [--anchor-gap:--spacing(5)] z-[9999]
+        data-closed:-translate-y-1 data-closed:opacity-0
+        shadow-sm backdrop-blur-sm bg-white/50
+        ">
+          <div className="p-3">
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">設定</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">ドキュメント</p>
+              </a>
+            </div>
+          </PopoverPanel>
+        </Popover>
         {!isCollapsed && (
           <>
         <a href="#" 
@@ -157,12 +203,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </>
         )}
         {/* サービス概要カテゴリ */}
-        <p className="
-        text-xs sm:text-xs items-left px-4 py-2 
-        ${isCollapsed ? 'hidden' : 'block'}
+        <Popover>
+        <PopoverButton className="
+        mt-1 text-xs sm:text-xs items-left 
+        px-4 py-2 hover-none outline-none
         ">
           サービス概要
-        </p>
+        </PopoverButton>
+        <PopoverPanel
+        transition
+        anchor="right"
+        className="
+        rounded-xl text-sm/6 transition 
+        duration-200 ease-in-out bg-white
+        [--anchor-gap:--spacing(5)] z-[9999]
+        data-closed:-translate-y-1 data-closed:opacity-0
+        shadow-sm backdrop-blur-sm bg-white/50
+        ">
+          <div className="p-3">
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドサーチ</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドシェア</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドオーダー</p>
+              </a>
+            </div>
+          </PopoverPanel>
+        </Popover>
         {!isCollapsed && (
           <>
         <a href="https://www.pharmacloud.co.jp/" 
@@ -228,12 +298,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </>
         )}
         {/* 使い方カテゴリ */}
-        <p className="
-        text-xs sm:text-xs items-left px-4 py-2 
-        ${isCollapsed ? 'hidden' : 'block'}
+        <Popover>
+        <PopoverButton className="
+        mt-1 text-xs sm:text-xs items-left 
+        px-4 py-2 hover-none outline-none
         ">
           使い方
-        </p>
+        </PopoverButton>
+        <PopoverPanel
+        transition
+        anchor="right"
+        className="
+        rounded-xl text-sm/6 transition 
+        duration-200 ease-in-out bg-white
+        [--anchor-gap:--spacing(5)] z-[9999]
+        data-closed:-translate-y-1 data-closed:opacity-0
+        shadow-sm backdrop-blur-sm bg-white/50
+        ">
+          <div className="p-3">
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドサーチ</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドシェア</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドオーダー</p>
+              </a>
+            </div>
+          </PopoverPanel>
+        </Popover>
         {!isCollapsed && (
           <>
         <a href="#" 
@@ -278,12 +372,36 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </>
         )}
         {/* 活用事例カテゴリ */}
-        <p className="
-        text-xs sm:text-xs items-left px-4 py-2 
-        ${isCollapsed ? 'hidden' : 'block'}
+        <Popover>
+        <PopoverButton className="
+        mt-1 text-xs sm:text-xs items-left 
+        px-4 py-2 hover-none outline-none
         ">
           活用事例
-        </p>
+        </PopoverButton>
+        <PopoverPanel
+        transition
+        anchor="right"
+        className="
+        rounded-xl text-sm/6 transition 
+        duration-200 ease-in-out bg-white
+        [--anchor-gap:--spacing(5)] z-[9999]
+        data-closed:-translate-y-1 data-closed:opacity-0
+        shadow-sm backdrop-blur-sm bg-white/50
+        ">
+          <div className="p-3">
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドサーチ</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドシェア</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">メドオーダー</p>
+              </a>
+            </div>
+          </PopoverPanel>
+        </Popover>
         {!isCollapsed && (
           <>
         <a href="#" 

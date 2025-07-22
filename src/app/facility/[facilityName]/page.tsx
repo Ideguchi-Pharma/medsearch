@@ -18,7 +18,7 @@ export default function FacilityDetailPage() {
       const res = await fetch('/PharmacyData.xlsx');
       const arrayBuffer = await res.arrayBuffer();
       const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-      const sheetName = workbook.SheetNames[1]; // 2シート目
+      const sheetName = workbook.SheetNames[1];
       const worksheet = workbook.Sheets[sheetName];
       const data = XLSX.utils.sheet_to_json(worksheet);
       const found = data.find((item: any) => item.facilityName === facilityName);
@@ -50,23 +50,55 @@ export default function FacilityDetailPage() {
 
   return (
     <div className="w-full flex-col min-h-screen">
-      <header className="w-full bg-opacity-50 p-4 shadow-sm fixed top-0 z-50 backdrop-blur-sm">
+      <header className="
+      w-full bg-opacity-50 p-4 
+      fixed top-0 z-50 
+      backdrop-blur-sm
+      ">
         <div className="flex flex-row items-center gap-2 w-full ml-10 sm:ml-0">
           <Button
             onClick={() => setIsOpenDemoDialog(true)}
-            className="flex items-center justify-center px-1 py-1 border border-green-500 rounded-lg text-green-600 font-bold text-sm min-w-[60px] sm:min-w-[80px] cursor-pointer select-none hover-none"
-          >
+            className="
+            flex items-center justify-center 
+            px-1 py-1 border border-green-500 
+            rounded-lg text-green-600 font-bold 
+            text-sm min-w-[60px] sm:min-w-[80px] 
+            cursor-pointer select-none hover-none
+            ">
             デモ薬局
           </Button>
-          <span className="flex items-center justify-center bg-orange-300 text-xs font-bold px-1 py-1 rounded-lg uppercase min-w-[70px] sm:min-w-[70px] cursor-pointer select-none">
+          <span className="
+          flex items-center justify-center 
+          bg-orange-300 text-xs 
+          font-bold px-1 py-1 rounded-lg 
+          uppercase min-w-[70px] sm:min-w-[70px] 
+          cursor-pointer select-none
+          ">
             PREVIEW
           </span>
           <div className="flex items-center justify-center">
             <Menu>
-              <MenuButton className="flex items-center justify-center w-8 h-8 rounded-full text-xs shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white secondaly-bg">
+              <MenuButton className="
+              flex items-center justify-center 
+              w-8 h-8 rounded-full text-xs 
+              shadow-inner shadow-white/10 
+              focus:not-data-focus:outline-none 
+              data-focus:outline data-focus:outline-white 
+              secondaly-bg cursor-pointer
+              ">
                 出口
               </MenuButton>
-              <MenuItems transition anchor="bottom end" className="origin-top-right rounded-xl border border-gray-200 p-1 text-sm/6 shadow-lg ring-none ring-black ring-opacity-5 transition duration-100 ease-out secondaly-bg [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0 z-[9999]">
+              <MenuItems transition anchor="bottom end" 
+               className="
+               origin-top-right rounded-xl 
+               border border-gray-200 
+               p-1 text-sm/6 shadow-lg 
+               ring-none ring-black ring-opacity-5 
+               transition duration-100 ease-out 
+               secondaly-bg [--anchor-gap:--spacing(1)] 
+               focus:outline-none data-closed:scale-95 
+               data-closed:opacity-0 z-[9999]
+               ">
                 <MenuItem>
                   <p className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5">出口大靖</p>
                 </MenuItem>
@@ -92,7 +124,7 @@ export default function FacilityDetailPage() {
       <main className="
       w-full flex flex-col gap-[8px] 
       row-start-1 items-start p-8 
-      sm:items-start mt-[64px]
+      sm:items-start mt-[64px] text-sm
       ">
         <p className="
         tracking-[-.01em] text-2xl font-bold
@@ -113,7 +145,7 @@ export default function FacilityDetailPage() {
             ・
         </p>
         <p>
-            <Link href="/" className="mb-4 hover:underline">
+            <Link href="/" className="mb-4 hover:underline cursor-pointer">
             在庫状況を調べる
             </Link>
         </p>
@@ -125,10 +157,10 @@ export default function FacilityDetailPage() {
         </p>
         </div>
         {/* 施設情報ページ */}
-        <div className="mt-8 w-full border border-gray-200 rounded-lg shadow-sm p-6 bg-white">
+        <div className="mt-8 w-full border border-gray-200 rounded-lg shadow-sm p-6">
           {/* facilityName */}
           <h1 className="
-          text-lg font-bold mb-4
+          font-bold mb-4
           ">
             {facility['facilityName']}
           </h1>
@@ -136,9 +168,9 @@ export default function FacilityDetailPage() {
             {displayKeys
               .filter(key => key !== 'facilityName')
               .map((key) => (
-                <div key={key} className="flex">
+                <div key={key} className="flex text-sm">
                   <span className="
-                  min-w-[120px]
+                  min-w-[120px] secondaly-fg
                   ">
                     {labelMap[key] || key}：
                   </span>
@@ -148,6 +180,24 @@ export default function FacilityDetailPage() {
                 </div>
             ))}
           </div>
+          <div className="
+            relative flex items-start 
+            space-x-2 px-4 py-3 rounded-lg w-full info-bg mt-4
+            ">
+             <p className="
+             px-0.5 py-0.5 
+             text-sm  pl-10 
+             rounded font-[family-name:var(--font-geist-mono)]
+             ">
+             開設許可証が登録されていません
+             </p>
+              <div className="
+              absolute left-5 top-6 -translate-y-1/2 
+              rounded-full w-6 h-6 text-2xl
+              ">
+              <InformationCircleIcon className="text-cyan-500 dark:text-white" />
+              </div>
+            </div>
         </div>
       </main>
       <Dialog open={isOpenDemoDialog} as="div" className="relative z-[9999] focus:outline-none" onClose={() => setIsOpenDemoDialog(false)}>

@@ -88,5 +88,6 @@ button:hover {
   .sidebar-bg::-webkit-scrollbar-thumb {
     background: var(--hover-bg);
   }
-}
+} 
 
+/*ボタンごとにCSSを作りたい(@apply？)*/

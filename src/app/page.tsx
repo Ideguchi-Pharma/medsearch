@@ -204,8 +204,7 @@ export default function Home() {
       <header className=" 
         w-full
         bg-opacity-50 
-        p-4
-        shadow-sm fixed top-0 z-50
+        p-4 fixed top-0 z-50
         backdrop-blur-sm  
       ">
         <div className="flex flex-row items-center gap-2 w-full ml-10 sm:ml-0">
@@ -240,7 +239,7 @@ export default function Home() {
                 text-xs 
                 shadow-inner shadow-white/10
                 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white
-                secondaly-bg
+                secondaly-bg cursor-pointer
                 ">
                   出口
               </MenuButton>
