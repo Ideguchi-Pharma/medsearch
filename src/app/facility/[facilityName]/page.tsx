@@ -99,22 +99,52 @@ export default function FacilityDetailPage() {
         ">
             施設の詳細
         </p>
-        <p className="
-        tracking-[-.01em] mb-8
+        <div className="
+        w-full flex flex-row gap-[8px] 
+        row-start-1 items-start 
+        sm:items-start
         ">
-            マイページ ・ 在庫状況を調べる ・ 施設の詳細
+        <p className="
+        tracking-[-.01em] mb-4
+        ">
+            マイページ
         </p>
+        <p className="mb-4">
+            ・
+        </p>
+        <p>
+            <Link href="/" className="mb-4 hover:underline">
+            在庫状況を調べる
+            </Link>
+        </p>
+        <p className="mb-4">
+            ・
+        </p>
+        <p className="mb-4 secondaly-fg">
+            施設の詳細
+        </p>
+        </div>
         {/* 施設情報ページ */}
-        <div className="mt-8 w-full max-w-xl border border-gray-200 rounded-lg shadow-sm p-6 bg-white">
+        <div className="mt-8 w-full border border-gray-200 rounded-lg shadow-sm p-6 bg-white">
           {/* facilityName */}
-          <h1 className="text-lg font-bold mb-4">{facility['facilityName']}</h1>
+          <h1 className="
+          text-lg font-bold mb-4
+          ">
+            {facility['facilityName']}
+          </h1>
           <div className="space-y-3">
             {displayKeys
               .filter(key => key !== 'facilityName')
               .map((key) => (
                 <div key={key} className="flex">
-                  <span className="font-semibold min-w-[120px]">{labelMap[key] || key}：</span>
-                  <span>{facility[key]}</span>
+                  <span className="
+                  min-w-[120px]
+                  ">
+                    {labelMap[key] || key}：
+                  </span>
+                  <span>
+                    {facility[key]}
+                  </span>
                 </div>
             ))}
           </div>
