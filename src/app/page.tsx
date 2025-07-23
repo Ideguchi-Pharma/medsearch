@@ -39,17 +39,13 @@ export default function Home() {
       }
         }
         }, [isMounted]);
-        
   useEffect(() => {
           if (isMounted) sessionStorage.setItem('searchTerm', searchTerm);
         }, [searchTerm, isMounted]);
-      
   useEffect(() => {
           if (isMounted) sessionStorage.setItem('selectedGroup', JSON.stringify(selectedGroup));
         }, [selectedGroup, isMounted]);
-
         const filteredPharmacyData = useFilteredPharmacies(pharmacyData, searchTerm, sortColumn, sortOrder);
-
   // ソートハンドラ
   const handleSort = (columnKey: keyof PharmacyData) => {
     if (sortColumn === columnKey) {
