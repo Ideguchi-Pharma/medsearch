@@ -12,7 +12,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       {/* 1. サイドバー */}
       <Sidebar isCollapsed={isSidebarCollapsed} setIsCollapsed={setIsSidebarCollapsed} />
       {/* 2. メインエリア (ヘッダーとコンテンツを縦に並べる箱) */}
-      <div className="flex flex-col flex-1 overflow-y-auto custom-scrollbar">
+      <div className="flex flex-col flex-1 overflow-y-auto custom-scrollbar overflow-x-hidden">
         {/* 2-1. 先ほど作成したヘッダーをここに配置します */}
         <Header />
         {/* 2-2. ここに各ページの内容が表示されます */}

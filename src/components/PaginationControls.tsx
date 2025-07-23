@@ -29,7 +29,7 @@ export default function PaginationControls({
   };
 
   return (
-    <div className="flex items-center justify-end gap-6 mt-4 text-sm secondaly-fg">
+    <div className="flex items-center justify-end gap-6 mt-4 mr-4 text-sm secondaly-fg">
       {/* 表示件数のドロップダウン */}
       <div className="flex items-center gap-2">
         <span>
