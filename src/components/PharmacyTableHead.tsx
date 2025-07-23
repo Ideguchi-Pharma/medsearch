@@ -1,5 +1,6 @@
 import React from 'react'; 
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/solid'; 
+import type { PharmacyData } from '@/hooks/usePharmacyData';
 
 interface TableHeaderItem {
   key: string; 
@@ -29,7 +30,7 @@ const tableHeaders: TableHeaderItem[] = [
 // Propsを受け取るように変更
 const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadProps) => { 
   return (
-    <thead>
+    <thead className="secondaly-bg">
       <tr>
       {tableHeaders.map((header) => {
             const isSorted = sortColumn === header.key;

@@ -10,6 +10,7 @@ import SearchControls from '@/components/SearchControls';
 import PharmacyTable from '@/components/PharmacyTable';
 import { GROUPS } from '@/data/constants';
 import { useFilteredPharmacies } from '@/hooks/useFilteredPharmacies';
+import PaginationControls from '@/components/PaginationControls';
 
 dayjs.locale('ja'); 
 dayjs.extend(customParseFormat);
@@ -18,10 +19,11 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>(''); // デフォルト値を設定
   const [selectedGroup, setSelectedGroup] = useState({ id: '', name: 'Group' });
   const [isMounted, setIsMounted] = useState(false); // マウント状態を管理するフラグ
-  // ソート状態のState
-  const [sortColumn, setSortColumn] = useState<keyof PharmacyData | null>(null);
+  const [sortColumn, setSortColumn] = useState<keyof PharmacyData | null>(null); // ソート状態のState
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const { pharmacyData, loadingError } = usePharmacyData();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5); // デフォルトは5件
 
  // マウント時に一度だけ実行し、isMountedフラグをtrueに設定します
   useEffect(() => {
@@ -46,6 +48,11 @@ export default function Home() {
           if (isMounted) sessionStorage.setItem('selectedGroup', JSON.stringify(selectedGroup));
         }, [selectedGroup, isMounted]);
         const filteredPharmacyData = useFilteredPharmacies(pharmacyData, searchTerm, sortColumn, sortOrder);
+        // 表示するデータを現在のページに合わせて切り出す
+        const paginatedData = filteredPharmacyData.slice(
+        (currentPage - 1) * rowsPerPage,
+        currentPage * rowsPerPage
+        );
   // ソートハンドラ
   const handleSort = (columnKey: keyof PharmacyData) => {
     if (sortColumn === columnKey) {
@@ -68,6 +75,9 @@ export default function Home() {
             ">
              マイページ ・ メドサーチ
             </p>
+
+            <div className="w-full border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm pb-4">
+
             <div className="
             relative flex items-start 
             space-x-2 px-4 py-3 rounded-lg w-full info-bg
@@ -86,6 +96,7 @@ export default function Home() {
               <InformationCircleIcon className="text-cyan-500 dark:text-white" />
               </div>
             </div>
+             <div className="w-full h-px bg-gray-100 dark:bg-gray-700 my-3"></div>
 
         <SearchControls
         searchTerm={searchTerm}
@@ -97,11 +108,21 @@ export default function Home() {
         <PharmacyTable
         loadingError={loadingError}
         searchTerm={searchTerm}
-        filteredPharmacyData={filteredPharmacyData}
+        filteredPharmacyData={paginatedData}
         sortColumn={sortColumn}
         sortOrder={sortOrder}
         onSort={handleSort}
         />
+        {filteredPharmacyData.length > 0 && (
+        <PaginationControls
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        rowsPerPage={rowsPerPage}
+        setRowsPerPage={setRowsPerPage}
+        totalRows={filteredPharmacyData.length}
+        />
+      )}
+       </div>
     </div>
   );
 }

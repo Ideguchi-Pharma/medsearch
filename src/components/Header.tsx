@@ -44,8 +44,15 @@ export default function AppHeader() {
               <MenuItems
                 transition
                 anchor="bottom end"
-                className="origin-top-right rounded-xl border border-gray-200 p-1 text-sm/6 shadow-lg ring-none ring-black ring-opacity-5 transition duration-100 ease-out secondaly-bg [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0 z-[9999]"
-              >
+                className="
+                origin-top-right rounded-xl 
+                border border-gray-200 p-1 text-sm/6 
+                shadow-lg ring-none ring-black ring-opacity-5 
+                transition duration-100 ease-out secondaly-bg 
+                [--anchor-gap:--spacing(1)] 
+                focus:outline-none data-closed:scale-95 
+                data-closed:opacity-0 z-[9999]
+                ">
                 <MenuItem>
                   <p className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5">ファーマ次郎</p>
                 </MenuItem>

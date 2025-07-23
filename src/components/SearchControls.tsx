@@ -21,7 +21,7 @@ export default function SearchControls({
   groups,
 }: SearchControlsProps) {
   return (
-    <div className="flex flex-col sm:flex-row items-center gap-4 mt-8 w-full">
+    <div className="flex flex-col sm:flex-row items-center gap-4 mt-6 px-4 w-full">
       {/* グループ選択のプルダウン */}
       <Listbox value={selectedGroup} onChange={setSelectedGroup} className="relative w-full sm:w-48 flex-grow-0 flex-shrink-0">
         <div>

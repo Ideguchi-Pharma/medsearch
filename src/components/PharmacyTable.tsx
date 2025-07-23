@@ -39,14 +39,14 @@ export default function PharmacyTable({
   onSort,
 }: PharmacyTableProps) {
   return (
-    <div className="mt-8 w-full overflow-x-auto border border-gray-200 rounded-lg shadow-sm">
-      <table className="w-full min-w-[900px] divide-y divide-gray-200">
+    <div className="mt-6 w-full overflow-x-auto border border-gray-200 dark:border-gray-700">
+      <table className="w-full min-w-[900px] divide-y divide-gray-200 dark:divide-gray-700">
         <PharmacyTableHead
           sortColumn={sortColumn}
           sortOrder={sortOrder}
           onSort={onSort}
         />
-        <tbody className="divide-y divide-gray-200">
+        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
           {loadingError ? (
             <tr><td colSpan={7} className="px-4 py-8 text-center">{loadingError}</td></tr>
           ) : searchTerm.length < 2 ? (

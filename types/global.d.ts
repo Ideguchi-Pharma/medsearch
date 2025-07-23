@@ -6,13 +6,3 @@ declare namespace JSX {
     [elemName: string]: any;
   }
 } 
-
-interface PharmacyData {
-  drugName: string; 
-  price: number; 
-  facilityName: string; 
-  distance: number; 
-  dispenseCount: number; 
-  dispenseAmount: number; 
-  lastDispenseDate: string; 
-}
