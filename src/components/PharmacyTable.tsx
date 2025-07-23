@@ -50,9 +50,9 @@ export default function PharmacyTable({
           {loadingError ? (
             <tr><td colSpan={7} className="px-4 py-8 text-center">{loadingError}</td></tr>
           ) : searchTerm.length < 2 ? (
-            <tr><td colSpan={7} className="px-4 py-8 text-center"><NoDataDisplay message="医薬品名を2文字以上入力してください" /></td></tr>
+            <tr><td colSpan={7} className="px-4 py-8 text-center"><NoDataDisplay message="No Data" /></td></tr>
           ) : filteredPharmacyData.length === 0 ? (
-            <tr><td colSpan={7} className="px-4 py-8 text-center"><NoDataDisplay message="検索結果が見つかりませんでした" /></td></tr>
+            <tr><td colSpan={7} className="px-4 py-8 text-center"><NoDataDisplay message="No Data" /></td></tr>
           ) : (
             filteredPharmacyData.map((pharmacy, index) => (
               <tr key={index}>

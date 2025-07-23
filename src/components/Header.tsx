@@ -24,7 +24,7 @@ export default function AppHeader() {
       {/* メインのヘッダー部分です。
         sticky top-0 を追加することで、スクロールしても画面上部に固定されます。
       */}
-      <header className="w-full bg-opacity-50 p-4 backdrop-blur-sm shadow-sm z-10 sticky top-0">
+      <header className="w-full bg-opacity-50 p-4 backdrop-blur-sm z-10 sticky top-0">
         <div className="flex flex-row items-center gap-2 w-full ml-10 sm:ml-0">
           {/* このボタンがクリックされたら、ダイアログを開くようにします */}
           <Button

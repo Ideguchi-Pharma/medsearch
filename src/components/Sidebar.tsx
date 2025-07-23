@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Image from "next/image"; 
 import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
-
 import { 
   ChevronLeftIcon,
    ChevronRightIcon, 
@@ -50,7 +49,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       fixed top-0 left-0 h-screen z-[9999] transition-transform duration-300
       ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"}
       sm:translate-x-0 sm:relative sm:w-auto sm:sticky sm:top-0
-      shadow-md
+      border-r border-gray-200 dark:border-gray-700 border-dashed
       flex flex-col justify-between pt-4 pb-4 
       flex-shrink-0 overflow-y-auto overflow-x-hidden sidebar-bg
       onClick={toggleMobileMenu}

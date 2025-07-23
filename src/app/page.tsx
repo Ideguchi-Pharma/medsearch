@@ -9,7 +9,6 @@ import { usePharmacyData, PharmacyData } from "@/hooks/usePharmacyData"; // 作�
 import SearchControls from '@/components/SearchControls';
 import PharmacyTable from '@/components/PharmacyTable';
 import { GROUPS } from '@/data/constants';
-import { convertHiraganaToKatakana } from '@/utils/converters';
 import { useFilteredPharmacies } from '@/hooks/useFilteredPharmacies';
 
 dayjs.locale('ja'); 
@@ -62,15 +61,9 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full flex-col min-h-screen"> 
-           <main className="
-           w-full flex flex-col 
-           gap-[8px] row-start-1 
-           items-start p-8 
-           sm:items-start mt-[64px]
-           ">
+           <div className="p-8">
             <p className="
-            tracking-[-.01em] text-2xl font-bold
+            tracking-[-.01em] text-2xl font-bold 
             ">
              メドサーチ
             </p>
@@ -113,7 +106,6 @@ export default function Home() {
         sortOrder={sortOrder}
         onSort={handleSort}
         />
-      </main>
     </div>
   );
 }
