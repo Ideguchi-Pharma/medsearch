@@ -1,16 +1,25 @@
 'use client';
 import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
+import Header from "@/components/Header";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   return (
-    <div className="flex flex-col min-h-screen">
-      <div className="flex flex-grow">
-        <Sidebar isCollapsed={isSidebarCollapsed} setIsCollapsed={setIsSidebarCollapsed} />
-        <div className="w-full sm:flex-grow overflow-auto transition-all duration-300">
-          {children}
-        </div>
+    // 画面全体を横に並べる箱にします (サイドバー | メインエリア)
+    <div className="flex h-screen">
+      
+      {/* 1. サイドバー */}
+      <Sidebar isCollapsed={isSidebarCollapsed} setIsCollapsed={setIsSidebarCollapsed} />
+
+      {/* 2. メインエリア (ヘッダーとコンテンツを縦に並べる箱) */}
+      <div className="flex flex-col flex-1 overflow-y-auto">
+        
+        {/* 2-1. 先ほど作成したヘッダーをここに配置します */}
+        <Header />
+
+        {/* 2-2. ここに各ページの内容が表示されます */}
+        {children}
       </div>
     </div>
   );
