@@ -29,7 +29,7 @@ export default function PaginationControls({
   };
 
   return (
-    <div className="flex items-center justify-end gap-6 mt-4 mr-4 text-sm secondaly-fg">
+    <div className="flex items-center justify-end gap-6 mt-4 mr-4 text-sm">
       {/* 表示件数のドロップダウン */}
       <div className="flex items-center gap-2">
         <span>
@@ -38,10 +38,10 @@ export default function PaginationControls({
         <Listbox value={rowsPerPage} onChange={handleRowsPerPageChange}>
           <div className="relative">
             <ListboxButton className="
-            relative w-20 cursor-default rounded-md 
-            border border-gray-500 
+            relative w-20 cursor-default 
             py-1.5 pl-3 pr-8 text-left 
-            shadow-sm focus:outline-none sm:text-sm
+            focus:outline-none sm:text-sm
+            hover-none cursor-pointer
             ">
               <span className="block truncate">{rowsPerPage}</span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
@@ -51,16 +51,15 @@ export default function PaginationControls({
             </ListboxButton>
             <ListboxOptions className="
             absolute bottom-full mb-1 
-            max-h-60 w-full overflow-auto 
-            rounded-md bg-white py-1 text-base 
-            shadow-lg ring-1 ring-black ring-opacity-5 
+            max-h-60 w-full overflow-auto py-1 text-base 
+            shadow-lg rounded-lg 
             focus:outline-none sm:text-sm secondaly-bg
             ">
               {rowsPerPageOptions.map((option) => (
                 <ListboxOption
                   key={option}
                   className={({ active }) =>
-                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                    `relative cursor-default select-none py-2 pl-4 pr-10 ${
                       active ? 'hover-bg' : ''
                     }`
                   }
