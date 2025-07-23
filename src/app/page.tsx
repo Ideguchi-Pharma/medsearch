@@ -50,10 +50,11 @@ function convertHiraganaToKatakana(text: string): string {
 export default function Home() {
   const [pharmacyData, setPharmacyData] = useState<PharmacyData[]>([]); 
   const [loadingError, setLoadingError] = useState<string | null>(null);
-  const [searchTerm, setSearchTerm] = useState<string>('');
   const [filteredPharmacyData, setFilteredPharmacyData] = useState<PharmacyData[]>([]);
   const [isOpenDemoDialog, setIsOpenDemoDialog] = useState(false);
-
+  const [searchTerm, setSearchTerm] = useState<string>(''); // デフォルト値を設定
+  const [selectedGroup, setSelectedGroup] = useState({ id: '', name: 'Group' });
+  const [isMounted, setIsMounted] = useState(false); // ★変更点1: マウント状態を管理するフラグを追加
   // ソート状態のState
   const [sortColumn, setSortColumn] = useState<keyof PharmacyData | null>(null);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -67,6 +68,32 @@ export default function Home() {
   function openDemoDialog() {
     setIsOpenDemoDialog(true);
   }
+
+ // マウント時に一度だけ実行し、isMountedフラグをtrueに設定します
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // マウント後にsessionStorageから値を復元
+  useEffect(() => {
+        if (isMounted) {
+      const savedSearchTerm = sessionStorage.getItem('searchTerm') || '';
+      const savedGroup = sessionStorage.getItem('selectedGroup');
+      setSearchTerm(savedSearchTerm);
+      if (savedGroup) {
+        setSelectedGroup(JSON.parse(savedGroup));
+      }
+        }
+        }, [isMounted]);
+        
+  useEffect(() => {
+          if (isMounted) sessionStorage.setItem('searchTerm', searchTerm);
+        }, [searchTerm, isMounted]);
+      
+  useEffect(() => {
+          if (isMounted) sessionStorage.setItem('selectedGroup', JSON.stringify(selectedGroup));
+        }, [selectedGroup, isMounted]);
+
 
   useEffect(() => {
     const fetchExcelData = async () => {
@@ -177,7 +204,6 @@ export default function Home() {
     }
   };
 
-  const [selectedGroup, setSelectedGroup] = useState({ id: '', name: 'Group' });
   const groups = [ 
     { id: '', name: 'Group' }, 
     { id: 'groupA', name: 'シメサバ薬剤師会' },
