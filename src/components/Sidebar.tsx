@@ -6,7 +6,11 @@ import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
 import { 
   ChevronLeftIcon,
    ChevronRightIcon, 
-   Bars3Icon 
+   Bars3Icon,
+   MapIcon,
+   ShoppingBagIcon,
+   Cog6ToothIcon,
+   DocumentIcon
   } from '@heroicons/react/24/outline';
 
 export interface SidebarProps {
@@ -57,23 +61,35 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       <nav className="flex flex-col gap-4">
       <div className=
       {`relative mb-4
-      ${isCollapsed ? 'ml-2' : 'ml-4'} 
+      ${isCollapsed ? 'flex justify-center' : 'ml-4'} // 閉じた時は中央寄せ、開いた時は左マージン
       `}>
         <Image 
-          className="ml-2 sm:ml-4" 
+          className={`${isCollapsed ? '' : 'ml-2 sm:ml-4'}`}
           src="/pharmacloud_mark.svg" 
           alt="ファーマクラウド" 
           width={35} 
           height={35} 
         />
       </div>
-        {/* サービスカテゴリ */}
+        {/* メドサーチカテゴリ */}
         <Popover>
-        <PopoverButton className="
-        mt-1 text-xs sm:text-xs items-left 
-        px-4 py-2 hover-none outline-none
-        ">
-          サービス
+        <PopoverButton className={`
+        mt-1 text-xs sm:text-xs
+        px-4 py-2 outline-none
+        w-full
+        ${isCollapsed ? 'flex flex-col items-center justify-center hover-bg rounded-lg' : 'flex items-center justify-start gap-2'}
+        `}>
+        {isCollapsed ? (
+                <>
+                  <MapIcon className="h-6 w-6" />
+                  <span className="text-[0.6rem] leading-none font-bold mt-1">メドサーチ</span>
+                </>
+              ) : (
+                <div className="flex items-center gap-2 w-full">
+                  <MapIcon className="h-5 w-5" />
+                  <span>メドサーチ</span>
+                </div>
+              )}
         </PopoverButton>
         <PopoverPanel
         transition
@@ -81,19 +97,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         className="
         rounded-xl text-sm/6 transition 
         duration-200 ease-in-out 
-        [--anchor-gap:--spacing(5)] z-[9999]
+        [--anchor-gap:--spacing(0)] z-[9999]
         data-closed:-translate-x-1 data-closed:opacity-0
         shadow-sm backdrop-blur-sm bg-white/50
         ">
           <div className="p-3">
               <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドサーチ</p>
+                <p className="">メドサーチとは</p>
               </a>
               <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドシェア</p>
+                <p className="">在庫状況を調べる</p>
               </a>
               <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドオーダー</p>
+                <p className="">在庫状況を共有する</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">グループを探す</p>
               </a>
             </div>
           </PopoverPanel>
@@ -111,7 +130,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           text-xs sm:text-base 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
-            メドサーチ
+            メドサーチとは
           </span>
         </a>
         <a href="#" 
@@ -124,7 +143,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           text-xs sm:text-base 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
-            メドオーダー
+            在庫状況を調べる
           </span>
         </a>
         <a href="#"
@@ -137,18 +156,43 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           text-xs sm:text-base 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
-            メドシェア
+            在庫状況を共有する
+          </span>
+        </a>
+        <a href="#"
+        className="
+        flex flex-col items-center 
+        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
+        py-2 gap-2 hover-bg rounded-md
+        ">
+          <span className={`
+          text-xs sm:text-base 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            グループを探す
           </span>
         </a>
         </>
         )}
-        {/* 一般カテゴリ */}
+        {/* メドオーダーカテゴリ */}
         <Popover>
-        <PopoverButton className="
-        mt-1 text-xs sm:text-xs items-left 
-        px-4 py-2 hover-none outline-none
-        ">
-          一般
+        <PopoverButton className={`
+        mt-1 text-xs sm:text-xs
+        px-4 py-2 outline-none
+        w-full
+        ${isCollapsed ? 'flex flex-col items-center justify-center hover-bg rounded-lg' : 'flex items-center justify-start gap-2'}
+        `}>
+          {isCollapsed ? (
+                <div className="flex flex-col items-center">
+                  <ShoppingBagIcon className="h-6 w-6" />
+                  <span className="text-[0.6rem] leading-none font-bold mt-1">メドオーダー</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-start gap-2 w-full">
+                  <ShoppingBagIcon className="h-5 w-5" />
+                  <span>メドオーダー</span>
+                </div>
+              )}
         </PopoverButton>
         <PopoverPanel
         transition
@@ -156,16 +200,31 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         className="
         rounded-xl text-sm/6 transition 
         duration-200 ease-in-out bg-white
-        [--anchor-gap:--spacing(5)] z-[9999]
+        [--anchor-gap:--spacing(0)] z-[9999]
         data-closed:-translate-y-1 data-closed:opacity-0
         shadow-sm backdrop-blur-sm bg-white/50
         ">
           <div className="p-3">
               <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">設定</p>
+                <p className="">メドオーダーとは</p>
               </a>
               <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">ドキュメント</p>
+                <p className="">必要在庫を予想する</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">処方内容を見る</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">注文を管理する</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">レセコンと連携する</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">取引卸を登録する</p>
+              </a>
+              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
+                <p className="">リーダー端末を利用する</p>
               </a>
             </div>
           </PopoverPanel>
@@ -182,7 +241,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           text-xs sm:text-base 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
-            設定
+            メドオーダーとは
           </span>
         </a>
         <a href="#" 
@@ -195,18 +254,95 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           text-xs sm:text-base 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
-            ドキュメント
+            必要在庫を予想する
+          </span>
+        </a>
+        <a href="#" 
+        className="
+        flex flex-col items-center 
+        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
+        py-2 gap-2 hover-bg rounded-md
+        ">
+          <span className={`
+          text-xs sm:text-base 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            処方内容を見る
+          </span>
+        </a>
+        <a href="#" 
+        className="
+        flex flex-col items-center 
+        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
+        py-2 gap-2 hover-bg rounded-md
+        ">
+          <span className={`
+          text-xs sm:text-base 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            注文を管理する
+          </span>
+        </a>
+        <a href="#" 
+        className="
+        flex flex-col items-center 
+        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
+        py-2 gap-2 hover-bg rounded-md
+        ">
+          <span className={`
+          text-xs sm:text-base 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            レセコンと連携する
+          </span>
+        </a>
+        <a href="#" 
+        className="
+        flex flex-col items-center 
+        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
+        py-2 gap-2 hover-bg rounded-md
+        ">
+          <span className={`
+          text-xs sm:text-base 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            取引卸を登録する
+          </span>
+        </a>
+        <a href="#" 
+        className="
+        flex flex-col items-center 
+        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
+        py-2 gap-2 hover-bg rounded-md
+        ">
+          <span className={`
+          text-xs sm:text-base 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            リーダー端末を利用する
           </span>
         </a>
         </>
         )}
-        {/* サービス概要カテゴリ */}
+        {/* 設定カテゴリ */}
         <Popover>
-        <PopoverButton className="
-        mt-1 text-xs sm:text-xs items-left 
-        px-4 py-2 hover-none outline-none
-        ">
-          サービス概要
+        <PopoverButton className={`
+        mt-1 text-xs sm:text-xs
+        px-4 py-2 outline-none
+        w-full
+        ${isCollapsed ? 'flex flex-col items-center justify-center hover-bg rounded-lg' : 'flex items-center justify-start gap-2'}
+        `}>
+          {isCollapsed ? (
+                <div className="flex flex-col items-center">
+                  <Cog6ToothIcon className="h-6 w-6" />
+                  <span className="text-[0.6rem] leading-none font-bold mt-1">設定</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-start gap-2 w-full">
+                  <Cog6ToothIcon className="h-5 w-5" />
+                  <span>設定</span>
+                </div>
+              )}
         </PopoverButton>
         <PopoverPanel
         transition
@@ -214,19 +350,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         className="
         rounded-xl text-sm/6 transition 
         duration-200 ease-in-out bg-white
-        [--anchor-gap:--spacing(5)] z-[9999]
+        [--anchor-gap:--spacing(0)] z-[9999]
         data-closed:-translate-y-1 data-closed:opacity-0
         shadow-sm backdrop-blur-sm bg-white/50
         ">
           <div className="p-3">
               <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドサーチ</p>
+                <p className="">施設を管理する</p>
               </a>
               <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドシェア</p>
+                <p className="">グループを管理する</p>
               </a>
               <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドオーダー</p>
+                <p className="">支払い方法を管理する</p>
               </a>
             </div>
           </PopoverPanel>
@@ -245,7 +381,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           text-xs sm:text-base 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
-            ファーマクラウド
+            施設を管理する
           </span>
         </a>
         <a href="https://www.pharmacloud.co.jp/service/med-order-middle" 
@@ -260,7 +396,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           text-xs sm:text-base 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
-            メドオーダー
+            グループを管理する
           </span>
         </a>
         <a href="https://www.pharmacloud.co.jp/service/med-share" 
@@ -275,33 +411,30 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           text-xs sm:text-base 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
-            メドシェア
-            </span>
-        </a>
-        <a href="https://www.pharmacloud.co.jp/service/med-search" 
-        className="
-        flex flex-col items-center 
-        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
-        "
-        target="_blank" rel="noopener noreferrer"
-        >
-          <span className={`
-          text-xs sm:text-base 
-          ${isCollapsed ? 'hidden' : 'sm:inline'}
-          `}>
-            メドサーチ
+            支払い情報を管理する
             </span>
         </a>
         </>
         )}
-        {/* 使い方カテゴリ */}
+        {/* ドキュメントカテゴリ */}
         <Popover>
-        <PopoverButton className="
-        mt-1 text-xs sm:text-xs items-left 
-        px-4 py-2 hover-none outline-none
-        ">
-          使い方
+        <PopoverButton className={`
+        mt-1 text-xs sm:text-xs
+        px-4 py-2 outline-none
+        w-full
+        ${isCollapsed ? 'flex flex-col items-center justify-center hover-bg rounded-lg' : 'flex items-center justify-start gap-2'}
+        `}>
+          {isCollapsed ? (
+                <div className="flex flex-col items-center">
+                  <DocumentIcon className="h-6 w-6" />
+                  <span className="text-[0.6rem] leading-none font-bold mt-1">ドキュメント</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-start gap-2 w-full">
+                  <DocumentIcon className="h-5 w-5" />
+                  <span>ドキュメント</span>
+                </div>
+              )}
         </PopoverButton>
         <PopoverPanel
         transition
@@ -309,17 +442,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         className="
         rounded-xl text-sm/6 transition 
         duration-200 ease-in-out bg-white
-        [--anchor-gap:--spacing(5)] z-[9999]
+        [--anchor-gap:--spacing(0)] z-[9999]
         data-closed:-translate-y-1 data-closed:opacity-0
         shadow-sm backdrop-blur-sm bg-white/50
         ">
           <div className="p-3">
-              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドサーチ</p>
-              </a>
-              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドシェア</p>
-              </a>
               <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
                 <p className="">メドオーダー</p>
               </a>
@@ -340,110 +467,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           `}>
             メドオーダー
           </span>
-        </a>
-        <a href="#" 
-        className="
-        flex flex-col items-center 
-        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
-        ">
-          <span className={`
-          text-xs sm:text-base 
-          ${isCollapsed ? 'hidden' : 'sm:inline'}
-          `}>
-            メドシェア
-          </span>
-        </a>
-        <a href="#" 
-        className="
-        flex flex-col items-center 
-        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
-        ">
-          <span className=
-          {`text-xs sm:text-base 
-          ${isCollapsed ? 'hidden' : 'sm:inline'}
-          `}>
-            メドサーチ
-          </span>
-        </a>
-        </>
-        )}
-        {/* 活用事例カテゴリ */}
-        <Popover>
-        <PopoverButton className="
-        mt-1 text-xs sm:text-xs items-left 
-        px-4 py-2 hover-none outline-none
-        ">
-          活用事例
-        </PopoverButton>
-        <PopoverPanel
-        transition
-        anchor="right"
-        className="
-        rounded-xl text-sm/6 transition 
-        duration-200 ease-in-out bg-white
-        [--anchor-gap:--spacing(5)] z-[9999]
-        data-closed:-translate-y-1 data-closed:opacity-0
-        shadow-sm backdrop-blur-sm bg-white/50
-        ">
-          <div className="p-3">
-              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドサーチ</p>
-              </a>
-              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドシェア</p>
-              </a>
-              <a className="block rounded-lg p-1 my-1 transition hover-bg" href="#">
-                <p className="">メドオーダー</p>
-              </a>
-            </div>
-          </PopoverPanel>
-        </Popover>
-        {!isCollapsed && (
-          <>
-        <a href="#" 
-        className="
-        flex flex-col items-center 
-        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
-        ">
-          <span className={`
-          text-xs sm:text-base 
-          ${isCollapsed ? 'hidden' : 'sm:inline'}
-          `}>
-            メドオーダー
-          </span>
-        </a>
-        <a href="https://www.pharmacloud.co.jp/case" 
-        className="
-        flex flex-col items-center 
-        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
-        "
-        target="_blank" rel="noopener noreferrer"
-        >
-          <span className={`
-            text-xs sm:text-base 
-            ${isCollapsed ? 'hidden' : 'sm:inline'}
-            `}>
-              メドシェア
-            </span>
-        </a>
-        <a href="https://www.pharmacloud.co.jp/case" 
-        className="f
-        lex flex-col items-center 
-        sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg  rounded-md
-        "
-        target="_blank" rel="noopener noreferrer"
-        >
-          <span className={`
-            text-xs sm:text-base 
-            ${isCollapsed ? 'hidden' : 'sm:inline'}
-            `}>
-              メドサーチ
-              </span>
         </a>
         </>
         )}
