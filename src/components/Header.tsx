@@ -29,11 +29,21 @@ export default function AppHeader() {
           {/* このボタンがクリックされたら、ダイアログを開くようにします */}
           <Button
             onClick={() => setIsOpenDemoDialog(true)}
-            className="flex items-center justify-center px-1 py-1 border border-green-500 rounded-lg text-green-600 font-bold text-sm min-w-[60px] sm:min-w-[80px] cursor-pointer select-none hover-none bg-(--background)"
-          >
+            className="
+            flex items-center justify-center 
+            px-1 py-1 border border-green-500 
+            rounded-lg text-green-600 font-bold 
+            text-sm min-w-[60px] sm:min-w-[80px] 
+            cursor-pointer select-none hover-bg
+            ">
             デモ薬局
           </Button>
-          <span className="flex items-center justify-center bg-orange-300 text-xs font-bold px-1 py-1 rounded-lg uppercase min-w-[70px] sm:min-w-[70px] cursor-pointer select-none">
+          <span className="
+          flex items-center justify-center bg-orange-300 
+          text-xs font-bold px-1 py-1 rounded-lg 
+          uppercase min-w-[70px] sm:min-w-[70px] 
+          cursor-pointer select-none
+          ">
             PREVIEW
           </span>
           <div className="flex items-center justify-center ml-30 sm:ml-auto"> { /* モバイル環境での位置を一時的にml-30で調整 */ }
@@ -44,7 +54,7 @@ export default function AppHeader() {
               shadow-inner shadow-white/10 
               focus:not-data-focus:outline-none 
               data-focus:outline data-focus:outline-white 
-              secondaly-bg cursor-pointer
+              secondaly-bg cursor-pointer hover-bg
               ">
                 デモ
               </MenuButton>

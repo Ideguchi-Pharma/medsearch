@@ -2,7 +2,6 @@
 
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from '@headlessui/react';
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react'
  
 interface PaginationControlsProps {
   currentPage: number;
@@ -10,6 +9,9 @@ interface PaginationControlsProps {
   rowsPerPage: number;
   setRowsPerPage: (rows: number) => void;
   totalRows: number;
+  // スイッチの状態とセッター関数をPropsとして受け取る
+  isCompact: boolean;
+  setIsCompact: (value: boolean) => void;
 }
 
 export default function PaginationControls({
@@ -18,28 +20,35 @@ export default function PaginationControls({
   rowsPerPage,
   setRowsPerPage,
   totalRows,
+  isCompact, 
+  setIsCompact, 
 }: PaginationControlsProps) {
   const totalPages = Math.ceil(totalRows / rowsPerPage);
   const startRow = (currentPage - 1) * rowsPerPage + 1;
   const endRow = Math.min(currentPage * rowsPerPage, totalRows);
   const rowsPerPageOptions = [5, 10, 25];
-  const [enabled, setEnabled] = useState(false)
 
   const handleRowsPerPageChange = (value: number) => {
     setRowsPerPage(value);
     setCurrentPage(1); // ページあたりの件数を変えたら1ページ目に戻す
   };
 
+  // スイッチのonChangeイベントハンドラ
+  const handleSwitchChange = () => {
+    setIsCompact(!isCompact); // 親から受け取ったセッター関数で状態を更新
+  };
+
   return (
     <div className="flex items-center justify-between gap-6 mt-4 mr-4 text-sm">
       <div className="flex items-center justify-center ml-4 ">
       <Switch
-      checked={enabled}
-      onChange={setEnabled}
+      checked={isCompact}
+      onChange={handleSwitchChange}
       className="
       group flex h-6 w-10
       cursor-pointer rounded-full p-1 ease-in-out 
       focus:not-data-focus:outline-none 
+      bg-(--secondaly-bg)
       data-checked:bg-green-500 data-focus:outline 
       data-focus:outline-white
       ">

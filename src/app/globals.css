@@ -58,10 +58,11 @@ body {
 .info-bg {
   background: var(--info-bg)
 }
-
+/*
 button:hover {
   background: var(--hover-bg)
 }
+*/
 
 .hover-none:hover {
   background: var(--background)

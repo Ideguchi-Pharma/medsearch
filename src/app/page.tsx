@@ -24,6 +24,7 @@ export default function Home() {
   const { pharmacyData, loadingError } = usePharmacyData();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5); // デフォルトは5件
+  const [isCompact, setIsCompact] = useState(false);
 
  // マウント時に一度だけ実行し、isMountedフラグをtrueに設定します
   useEffect(() => {
@@ -112,6 +113,7 @@ export default function Home() {
         sortColumn={sortColumn}
         sortOrder={sortOrder}
         onSort={handleSort}
+        isCompact={isCompact}
         />
         {filteredPharmacyData.length > 0 && (
         <PaginationControls
@@ -120,6 +122,8 @@ export default function Home() {
         rowsPerPage={rowsPerPage}
         setRowsPerPage={setRowsPerPage}
         totalRows={filteredPharmacyData.length}
+        isCompact={isCompact}
+        setIsCompact={setIsCompact} 
         />
       )}
        </div>

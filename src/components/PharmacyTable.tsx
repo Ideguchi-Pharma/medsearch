@@ -27,6 +27,7 @@ interface PharmacyTableProps {
   sortColumn: keyof PharmacyData | null;
   sortOrder: 'asc' | 'desc';
   onSort: (columnKey: keyof PharmacyData) => void;
+  isCompact: boolean; // isCompact プロパティ
 }
 
 // これが検索結果の表専門の部品です
@@ -37,6 +38,7 @@ export default function PharmacyTable({
   sortColumn,
   sortOrder,
   onSort,
+  isCompact, // isCompact を受け取る
 }: PharmacyTableProps) {
   return (
     <div className="mt-6 w-full overflow-x-auto border border-gray-200 dark:border-gray-700">
@@ -56,17 +58,17 @@ export default function PharmacyTable({
           ) : (
             filteredPharmacyData.map((pharmacy, index) => (
               <tr key={index}>
-                <td className="px-4 py-4 text-sm font-bold min-w-[105px]">{pharmacy.drugName}</td>
-                <td className="px-4 py-4 text-sm w-[80px] text-right">{pharmacy.price}円</td>
-                <td className="px-4 py-4 text-sm min-w-[90px] max-w-[150px] sm:max-w-none">
+                <td className={`px-4 text-sm font-bold min-w-[105px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.drugName}</td>
+                <td className={`px-4 text-sm w-[80px] ${isCompact ? 'py-3' : 'py-6'} text-right`}>{pharmacy.price}円</td>
+                <td className={`px-4 text-sm min-w-[90px] max-w-[150px] ${isCompact ? 'py-3' : 'py-6'} sm:max-w-none`}>
                   <Link href={`/facility/${encodeURIComponent(pharmacy.facilityName)}`} className="text-green-600 font-bold hover-bg rounded-md py-1">
                     {pharmacy.facilityName}
                   </Link>
                 </td>
-                <td className="px-4 py-4 text-sm font-medium text-right w-[80px]">{pharmacy.distance}km</td>
-                <td className="px-4 py-4 text-sm text-right w-[105px]">{pharmacy.dispenseCount}</td>
-                <td className="px-4 py-4 text-sm text-right w-[90px]">{pharmacy.dispenseAmount}</td>
-                <td className="px-4 py-4 text-sm text-right w-[115px]">{pharmacy.lastDispenseDate}</td>
+                <td className={`px-4 text-sm font-medium text-right w-[80px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.distance}km</td>
+                <td className={`px-4 text-sm text-right w-[105px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.dispenseCount}</td>
+                <td className={`px-4 text-sm text-right w-[90px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.dispenseAmount}</td>
+                <td className={`px-4 text-sm text-right w-[115px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.lastDispenseDate}</td>
               </tr>
             ))
           )}
