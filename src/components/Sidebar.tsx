@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import Image from "next/image"; 
-import { Popover, PopoverButton, PopoverPanel } from '@headlessui/react'
+import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react'
 import { 
   ChevronLeftIcon,
    ChevronRightIcon, 
@@ -21,11 +21,22 @@ export interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const [openPopover, setOpenPopover] = useState<string | null>(null);
+
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);
   };
   const toggleMobileMenu = () => { // モバイルメニューの開閉関数
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const popoverEnter = (name: string) => {
+    if (isCollapsed) {
+    setOpenPopover(name);
+    }
+  };
+  const popoverLeave = () => {
+    setOpenPopover(null);
   };
 
   return (
@@ -72,6 +83,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         />
       </div>
         {/* メドサーチカテゴリ */}
+        <div onMouseEnter={() => popoverEnter('medsearch')} onMouseLeave={popoverLeave}>
         <Popover>
         <PopoverButton className={`
         mt-1 text-xs sm:text-xs
@@ -91,7 +103,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
                 </div>
               )}
         </PopoverButton>
+        <Transition show={openPopover === 'medsearch'} as={Fragment}>
         <PopoverPanel
+        static
         transition
         anchor="right"
         className="
@@ -116,7 +130,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
               </a>
             </div>
           </PopoverPanel>
+          </Transition>
         </Popover>
+        </div>
         {!isCollapsed && (
           <>
         <a href="#" 
@@ -199,6 +215,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </>
         )}
         {/* メドオーダーカテゴリ */}
+        <div onMouseEnter={() => popoverEnter('medorder')} onMouseLeave={popoverLeave}>
         <Popover>
         <PopoverButton className={`
         mt-1 text-xs sm:text-xs
@@ -218,7 +235,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
                 </div>
               )}
         </PopoverButton>
+        <Transition show={openPopover === 'medorder'} as={Fragment}>
         <PopoverPanel
+        static
         transition
         anchor="right"
         className="
@@ -252,7 +271,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
               </a>
             </div>
           </PopoverPanel>
+          </Transition>
         </Popover>
+        </div>
         {!isCollapsed && (
           <>
         <a href="#" 
@@ -391,6 +412,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </>
         )}
         {/* 設定カテゴリ */}
+        <div onMouseEnter={() => popoverEnter('setting')} onMouseLeave={popoverLeave}>
         <Popover>
         <PopoverButton className={`
         mt-1 text-xs sm:text-xs
@@ -410,7 +432,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
                 </div>
               )}
         </PopoverButton>
+        <Transition show={openPopover === 'setting'} as={Fragment}>
         <PopoverPanel
+        static
         transition
         anchor="right"
         className="
@@ -432,7 +456,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
               </a>
             </div>
           </PopoverPanel>
+          </Transition>
         </Popover>
+        </div>
         {!isCollapsed && (
           <>
         <a href="https://www.pharmacloud.co.jp/" 
@@ -501,6 +527,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </>
         )}
         {/* ドキュメントカテゴリ */}
+        <div onMouseEnter={() => popoverEnter('document')} onMouseLeave={popoverLeave}>
         <Popover>
         <PopoverButton className={`
         mt-1 text-xs sm:text-xs
@@ -520,7 +547,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
                 </div>
               )}
         </PopoverButton>
+        <Transition show={openPopover === 'document'} as={Fragment}>
         <PopoverPanel
+        static
         transition
         anchor="right"
         className="
@@ -536,7 +565,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
               </a>
             </div>
           </PopoverPanel>
+          </Transition>
         </Popover>
+        </div>
         {!isCollapsed && (
           <>
         <a href="#" 
