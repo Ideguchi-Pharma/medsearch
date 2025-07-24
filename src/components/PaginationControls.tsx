@@ -39,7 +39,7 @@ export default function PaginationControls({
   };
 
   return (
-    <div className="flex items-center justify-between gap-6 mt-4 mr-4 text-sm">
+    <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-y-4 sm:gap-x-6 mt-4 mr-4 text-sm">
       <div className="flex items-center justify-center ml-4 ">
       <Switch
       checked={isCompact}
