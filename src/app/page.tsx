@@ -19,7 +19,7 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>(''); // デフォルト値を設定
   const [selectedGroup, setSelectedGroup] = useState({ id: '', name: 'Group' });
   const [isMounted, setIsMounted] = useState(false); // マウント状態を管理するフラグ
-  const [sortColumn, setSortColumn] = useState<keyof PharmacyData | null>(null); // ソート状態のState
+  const [sortColumn, setSortColumn] = useState<keyof PharmacyData | null>('distance'); // ソート状態のState
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const { pharmacyData, loadingError } = usePharmacyData();
   const [currentPage, setCurrentPage] = useState(1);
