@@ -1,8 +1,9 @@
 'use client';
 
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from '@headlessui/react';
 import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
-
+import { useState } from 'react'
+ 
 interface PaginationControlsProps {
   currentPage: number;
   setCurrentPage: (page: number) => void;
@@ -22,6 +23,7 @@ export default function PaginationControls({
   const startRow = (currentPage - 1) * rowsPerPage + 1;
   const endRow = Math.min(currentPage * rowsPerPage, totalRows);
   const rowsPerPageOptions = [5, 10, 25];
+  const [enabled, setEnabled] = useState(false)
 
   const handleRowsPerPageChange = (value: number) => {
     setRowsPerPage(value);
@@ -29,7 +31,36 @@ export default function PaginationControls({
   };
 
   return (
-    <div className="flex items-center justify-end gap-6 mt-4 mr-4 text-sm">
+    <div className="flex items-center justify-between gap-6 mt-4 mr-4 text-sm">
+      <div className="flex items-center justify-center ml-4 ">
+      <Switch
+      checked={enabled}
+      onChange={setEnabled}
+      className="
+      group flex h-6 w-10
+      cursor-pointer rounded-full p-1 ease-in-out 
+      focus:not-data-focus:outline-none 
+      data-checked:bg-green-500 data-focus:outline 
+      data-focus:outline-white
+      ">
+      <span
+        aria-hidden="true"
+        className="
+        pointer-events-none inline-block 
+        size-4 translate-x-0 rounded-full 
+        bg-white shadow-lg ring-0 transition 
+        duration-200 ease-in-out
+        group-data-checked:translate-x-4
+        "/>
+    </Switch>
+    <div className="flex items-center ml-2">
+        <span>
+            狭く表示
+        </span>
+    </div>
+    </div>
+
+    <div className="flex items-center gap-6">
       {/* 表示件数のドロップダウン */}
       <div className="flex items-center gap-2">
         <span>
@@ -100,6 +131,7 @@ export default function PaginationControls({
             &gt;
           </button>
         </div>
+       </div>
       </div>
     </div>
   );

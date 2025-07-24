@@ -29,7 +29,7 @@ export default function AppHeader() {
           {/* このボタンがクリックされたら、ダイアログを開くようにします */}
           <Button
             onClick={() => setIsOpenDemoDialog(true)}
-            className="flex items-center justify-center px-1 py-1 border border-green-500 rounded-lg text-green-600 font-bold text-sm min-w-[60px] sm:min-w-[80px] cursor-pointer select-none hover-none"
+            className="flex items-center justify-center px-1 py-1 border border-green-500 rounded-lg text-green-600 font-bold text-sm min-w-[60px] sm:min-w-[80px] cursor-pointer select-none hover-none bg-(--background)"
           >
             デモ薬局
           </Button>
