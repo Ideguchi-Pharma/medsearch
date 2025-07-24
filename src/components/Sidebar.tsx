@@ -121,13 +121,19 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           <>
         <a href="#" 
         className="
-        flex flex-col 
+        flex flex-row 
         items-center 
         sm:flex-row sm:justify-start 
-        sm:px-4 sm:py-2 py-2 gap-2
+        sm:px-4 sm:py-2 py-2 gap-2 px-4
         "> 
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             メドサーチとは
@@ -135,12 +141,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="#" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         ">
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             在庫状況を調べる
@@ -148,12 +160,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="#"
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         ">
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             在庫状況を共有する
@@ -161,12 +179,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="#"
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         ">
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             グループを探す
@@ -233,12 +257,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           <>
         <a href="#" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         ">
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             メドオーダーとは
@@ -246,12 +276,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="#" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         ">
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             必要在庫を予想する
@@ -259,12 +295,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="#" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         ">
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             処方内容を見る
@@ -272,12 +314,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="#" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         ">
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             注文を管理する
@@ -285,12 +333,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="#" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         ">
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             レセコンと連携する
@@ -298,12 +352,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="#" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         ">
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             取引卸を登録する
@@ -311,15 +371,21 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="#" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         ">
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
-            リーダー端末を利用する
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            リーダー端末を利用
           </span>
         </a>
         </>
@@ -371,14 +437,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           <>
         <a href="https://www.pharmacloud.co.jp/" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         " 
         target="_blank" rel="noopener noreferrer"
         >
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             施設を管理する
@@ -386,14 +458,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="https://www.pharmacloud.co.jp/service/med-order-middle" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         "
         target="_blank" rel="noopener noreferrer"
         >
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             グループを管理する
@@ -401,14 +479,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </a>
         <a href="https://www.pharmacloud.co.jp/service/med-share" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md
+        py-2 gap-2 hover-bg rounded-md px-4
         "
         target="_blank" rel="noopener noreferrer"
         >
           <span className={`
-          text-xs sm:text-base 
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
+          <span className={`
+          text-xs sm:text-sm
           ${isCollapsed ? 'hidden' : 'sm:inline'}
           `}>
             支払い情報を管理する
@@ -457,10 +541,16 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           <>
         <a href="#" 
         className="
-        flex flex-col items-center 
+        flex flex-row items-center 
         sm:flex-row sm:justify-start sm:px-4 sm:py-2 
-        py-2 gap-2 hover-bg rounded-md"
-        >
+        py-2 gap-2 hover-bg rounded-md px-4
+        ">
+          <span className={`
+          text-xs sm:text-sm 
+          ${isCollapsed ? 'hidden' : 'sm:inline'}
+          `}>
+            ・
+          </span>
           <span className={`
           text-xs sm:text-base 
           ${isCollapsed ? 'hidden' : 'sm:inline'}
