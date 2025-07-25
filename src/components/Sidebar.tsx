@@ -9,9 +9,7 @@ import {
   Disclosure, DisclosureButton, DisclosurePanel
 } from '@headlessui/react'
 import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronDownIcon,
+  ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon,
   Bars3Icon,
   MapIcon,
   ShoppingBagIcon,
@@ -77,7 +75,10 @@ type NavLinksProps = {
 const PopoverLinks = ({ items }: NavLinksProps) => (
   <div className="p-3">
     {items.map((item) => (
-      <a key={item.label} className="block rounded-lg p-1 my-1 transition hover-bg" href={item.href}>
+      <a key={item.label} 
+      className="
+      block rounded-lg p-1 my-1 
+      transition hover-bg" href={item.href}>
         <p>{item.label}</p>
       </a>
     ))}
@@ -91,7 +92,7 @@ const AccordionLinks = ({ items }: NavLinksProps) => (
       <Link key={item.label} href={item.href} 
       className="
       flex flex-row items-center 
-      py-2 gap-2 px-4
+      py-2 gap-2 px-5
       hover-bg rounded-md
       ">
         <span className="text-xs sm:text-sm">・</span>
@@ -113,13 +114,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
   return (
     <>
       {/* モバイル用メニューボタン */}
-      <button onClick={toggleMobileMenu} className="fixed top-3 left-2 z-[9998] p-2 sm:hidden">
+      <button onClick={toggleMobileMenu} 
+      className="fixed top-3 left-2 z-[9998] p-2 sm:hidden">
         <Bars3Icon className="h-6 w-6" />
       </button>
 
       {/* モバイルメニューオーバーレイ */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[9999] sm:hidden" onClick={toggleMobileMenu}></div>
+        <div className="fixed inset-0 z-[9999] sm:hidden" onClick={toggleMobileMenu}>
+        </div>
       )}
 
       <aside className={`
@@ -152,14 +155,22 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
                     <Popover>
                       {/* ▼ isCollapsedの場合PopoverButton、そうでない場合はDisclosureButtonとして機能 */}
                       {isCollapsed ? (
-                        <PopoverButton className="mt-1 text-xs sm:text-xs px-4 py-2 outline-none w-full flex flex-col items-center justify-center hover-bg rounded-lg">
+                        <PopoverButton 
+                        className="
+                        mt-1 text-xs sm:text-xs px-4 py-2 outline-none 
+                        w-full flex flex-col items-center justify-center hover-bg rounded-lg
+                        ">
                           <div className="flex flex-col items-center">
                             <item.icon className="h-6 w-6" />
                             <span className="text-[0.6rem] leading-none font-bold mt-1">{item.label}</span>
                           </div>
                         </PopoverButton>
                       ) : (
-                        <DisclosureButton className="mt-1 text-xs sm:text-xs px-4 py-2 outline-none w-full flex items-center justify-start gap-2">
+                        <DisclosureButton 
+                        className="
+                        mt-1 text-xs sm:text-sm px-4 py-2 
+                        outline-none w-full flex items-center justify-start gap-2
+                        ">
                            <div className="flex items-center justify-between gap-2 w-full">
                               <div className="flex items-center gap-2">
                                 <item.icon className="h-5 w-5" />
@@ -176,7 +187,13 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
                           static
                           transition
                           anchor="right"
-                          className="rounded-xl text-sm/6 transition duration-200 ease-in-out [--anchor-gap:--spacing(0)] z-[9999] data-closed:-translate-x-1 data-closed:opacity-0 shadow-sm backdrop-blur-sm bg-white/50">
+                          className="
+                          rounded-xl text-sm/6 transition 
+                          duration-200 ease-in-out 
+                          [--anchor-gap:--spacing(0)] z-[9999] 
+                          data-closed:-translate-x-1 data-closed:opacity-0 
+                          shadow-sm backdrop-blur-sm bg-white/50
+                          ">
                           <PopoverLinks items={item.links} />
                         </PopoverPanel>
                       </Transition>
@@ -196,7 +213,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         </nav>
 
         {/* サイドバー開閉ボタン */}
-        <button onClick={toggleSidebar} className="absolute mt-1 right-[-10px] -translate-y-1/2 p-1 rounded-full border-none z-50 hover-none sm:block hidden">
+        <button onClick={toggleSidebar} 
+        className="
+        absolute mt-1 right-[-10px] -translate-y-1/2 p-1 
+        rounded-full border-none z-50 hover-none sm:block hidden
+        ">
           {isCollapsed ? <ChevronRightIcon className="h-5 w-5" /> : <ChevronLeftIcon className="h-5 w-5" />}
         </button>
       </aside>

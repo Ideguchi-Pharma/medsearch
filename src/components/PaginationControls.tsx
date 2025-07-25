@@ -1,7 +1,7 @@
 'use client';
 
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from '@headlessui/react';
-import { ChevronUpIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
+import { ChevronUpIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
  
 interface PaginationControlsProps {
   currentPage: number;
@@ -129,7 +129,7 @@ export default function PaginationControls({
             className="rounded p-1 hover-bg disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Previous Page"
           >
-            &lt; 
+            <ChevronLeftIcon className="h-3 w-3" />
           </button> 
           <button
             onClick={() => setCurrentPage(currentPage + 1)}
@@ -137,7 +137,7 @@ export default function PaginationControls({
             className="rounded p-1 hover-bg disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Next Page"
           >
-            &gt;
+            <ChevronRightIcon className="h-3 w-3" />
           </button>
         </div>
        </div>
