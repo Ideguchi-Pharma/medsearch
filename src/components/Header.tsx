@@ -78,14 +78,14 @@ export default function AppHeader() {
                 </MenuItem>
                 <div className="my-1 h-px" />
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5">ホーム</button>
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 hover-bg">ホーム</button>
                 </MenuItem>
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5">アカウントの管理</button>
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 hover-bg">アカウントの管理</button>
                 </MenuItem>
                 <div className="my-1 h-px" />
                 <MenuItem>
-                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5">ログアウト</button>
+                  <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 hover-bg">ログアウト</button>
                 </MenuItem>
               </MenuItems>
             </Menu>

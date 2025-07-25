@@ -129,8 +129,8 @@ export default function PaginationControls({
             className="rounded p-1 hover-bg disabled:opacity-50 disabled:cursor-not-allowed"
             aria-label="Previous Page"
           >
-            &lt;
-          </button>
+            &lt; 
+          </button> 
           <button
             onClick={() => setCurrentPage(currentPage + 1)}
             disabled={currentPage === totalPages || totalRows === 0}
