@@ -1,38 +1,24 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import * as XLSX from 'xlsx';
+import { useData } from '@/contexts/DataContext'; // 作成したuseDataフックをインポート
 
-// 施設のデータ形式を定義
-export interface Facility {
-  facilityName: string;
-  [key: string]: any; // 他にも色々なデータがあるため
-}
+// 施設のデータ形式をエクスポート
+export type { Facility } from '@/contexts/DataContext';
 
 export function useFacilityData(facilityName: string | null) {
-  const [facility, setFacility] = useState<Facility | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  // Contextから全施設データとローディング状態を取得
+  const { facilities, isLoading: isDataLoading } = useData(); 
+  const [facility, setFacility] = useState<any | null>(null);
 
   useEffect(() => {
-    if (!facilityName) {
-        setIsLoading(false);
-        return;
-    };
-
-    const fetchData = async () => {
-      setIsLoading(true);
-      const res = await fetch('/PharmacyData.xlsx');
-      const arrayBuffer = await res.arrayBuffer();
-      const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-      const sheetName = workbook.SheetNames[1]; // 2シート目
-      const worksheet = workbook.Sheets[sheetName];
-      const data = XLSX.utils.sheet_to_json(worksheet);
-      const found = data.find((item: any) => item.facilityName === facilityName);
+    // Contextのデータ読み込みが完了してから、施設を探す
+    if (!isDataLoading && facilityName) {
+      const found = facilities.find((item: any) => item.facilityName === facilityName);
       setFacility(found || null);
-      setIsLoading(false);
-    };
-    fetchData();
-  }, [facilityName]);
+    }
+  }, [facilityName, facilities, isDataLoading]);
 
-  return { facility, isLoading };
+  // ローディング状態はContextのものをそのまま返す
+  return { facility, isLoading: isDataLoading };
 }

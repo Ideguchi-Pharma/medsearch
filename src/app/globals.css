@@ -91,7 +91,7 @@ button:hover {
 }
 
 .animate-blink {
-  animation: blink 1.5s linear infinite;
+  animation: blink 0.5s linear infinite;
 }
 
 /*ボタンごとにCSSを作りたい(@apply？) ⇒ 非推奨*/

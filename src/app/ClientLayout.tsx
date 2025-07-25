@@ -6,7 +6,7 @@ import  Image  from "next/image"
 import PharmaCloudLogo from "../../public/pharmacloud_mark.svg"
 
 const LoadingScreen = () => (
-  <div className="flex items-center justify-center h-screen w-screen bg-[var(--background)] text-[var(--foreground)]">
+  <div className="flex items-center justify-center h-screen w-screen ">
     <Image
       className="animate-blink"
       src={PharmaCloudLogo}
