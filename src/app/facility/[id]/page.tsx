@@ -7,10 +7,10 @@ import { useFacilityData } from '@/hooks/useFacilityData'; // ★作成したフ
 
 export default function FacilityDetailPage() {
   const params = useParams();
-  const facilityName = decodeURIComponent(params.facilityName as string);
+  const facilityId = params.Id as string;
 
   // ★データ取得ロジックがこの一行に！
-  const { facility, isLoading } = useFacilityData(facilityName);
+  const { facility, isLoading } = useFacilityData(facilityId);
 
   if (isLoading) return <div>読み込み中...</div>;
   if (!facility) return <div>施設が見つかりませんでした。</div>;

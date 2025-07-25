@@ -61,7 +61,7 @@ export default function PharmacyTable({
                 <td className={`px-4 text-sm font-bold min-w-[105px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.drugName}</td>
                 <td className={`px-4 text-sm w-[80px] ${isCompact ? 'py-3' : 'py-6'} text-right`}>{pharmacy.price}円</td>
                 <td className={`px-4 text-sm min-w-[90px] max-w-[150px] ${isCompact ? 'py-3' : 'py-6'} sm:max-w-none`}>
-                  <Link href={`/facility/${encodeURIComponent(pharmacy.facilityName)}`} className="text-green-600 font-bold hover-bg rounded-md py-1">
+                  <Link href={`/facility/${pharmacy.facilityId}`} className="text-green-600 font-bold hover-bg rounded-md py-1">
                     {pharmacy.facilityName}
                   </Link>
                 </td>

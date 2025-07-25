@@ -16,10 +16,13 @@ export interface PharmacyData {
   dispenseCount: number;
   dispenseAmount: number;
   lastDispenseDate: string;
+  facilityNumber: string;
+  facilityId: string; // IDの型はstring
 }
 
 // 施設データの型定義
 export interface Facility {
+  id: string; // IDの型はstring
   facilityName: string;
   [key: string]: any;
 }
@@ -51,11 +54,31 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const arrayBuffer = await response.arrayBuffer();
         const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
 
-        // 1シート目：医薬品データ
+        // --- ▼ここからが大きな修正ポイントです ---
+
+        // 1. 先に施設情報（2シート目）を読み込む
+        const facilitySheetName = workbook.SheetNames[1];
+        const facilityWorksheet = workbook.Sheets[facilitySheetName];
+        const facilityJson: any[] = XLSX.utils.sheet_to_json(facilityWorksheet);
+        
+        // 2. ExcelのuniqueId列を'id'として扱い、各施設情報にIDを持たせる
+        const facilitiesWithId = facilityJson.map((facility) => ({
+          ...facility,
+          id: facility.uniqueId, 
+        }));
+        setFacilities(facilitiesWithId);
+        
+        // 3. 「施設名」をキーにして、すぐに施設情報を取り出せる対応表（Map）を作成
+        const facilityMap = new Map(facilitiesWithId.map(f => [f.facilityName, f]));
+
+        // 4. 医薬品情報（1シート目）を読み込み、対応表を使ってIDなどを追加する
         const pharmacySheetName = workbook.SheetNames[0];
         const pharmacyWorksheet = workbook.Sheets[pharmacySheetName];
-        const pharmacyJson: Record<string, unknown>[] = XLSX.utils.sheet_to_json(pharmacyWorksheet);
-        const processedPharmacyData = pharmacyJson.map((item: Record<string, unknown>) => {
+        const pharmacyJsonData: Record<string, unknown>[] = XLSX.utils.sheet_to_json(pharmacyWorksheet);
+        const processedPharmacyData = pharmacyJsonData.map((item: Record<string, unknown>) => {
+            const facilityName = (item.facilityName as string) || '';
+            const facilityInfo = facilityMap.get(facilityName); // 対応表から施設情報を取得
+
             let formattedDateString = '';
             const rawDateValue = item.lastDispenseDate;
             if (rawDateValue instanceof Date) {
@@ -64,20 +87,19 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
             return {
               drugName: (item.drugName as string) || '',
               price: Number(item.price),
-              facilityName: (item.facilityName as string) || '',
+              facilityName: facilityName,
               distance: Number(item.distance),
               dispenseCount: Number(item.dispenseCount),
               dispenseAmount: Number(item.dispenseAmount),
               lastDispenseDate: formattedDateString,
+              // 対応表から取得した情報を追加
+              facilityNumber: facilityInfo?.facilityNumber || '',
+              facilityId: facilityInfo?.id || '',
             };
         });
         setPharmacyData(processedPharmacyData);
 
-        // 2シート目：施設データ
-        const facilitySheetName = workbook.SheetNames[1];
-        const facilityWorksheet = workbook.Sheets[facilitySheetName];
-        const facilityJson: Facility[] = XLSX.utils.sheet_to_json(facilityWorksheet);
-        setFacilities(facilityJson);
+        // --- ▲ここまでが大きな修正ポイントです ---
 
       } catch (err: unknown) {
         console.error("Failed to load data:", err);
