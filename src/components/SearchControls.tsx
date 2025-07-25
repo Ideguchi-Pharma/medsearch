@@ -7,8 +7,8 @@ import { MagnifyingGlassIcon, TrashIcon } from '@heroicons/react/24/solid';
 interface SearchControlsProps {
   searchTerm: string;
   setSearchTerm: (term: string) => void;
-  selectedGroup: { id: string; name: string };
-  setSelectedGroup: (group: { id: string; name: string }) => void;
+  selectedGroup: { id: string; name: string } | null;
+  setSelectedGroup: (group: { id: string; name: string } | null) => void;
   groups: { id: string; name: string }[];
 }
 
@@ -26,7 +26,9 @@ export default function SearchControls({
       <Listbox value={selectedGroup} onChange={setSelectedGroup} className="relative w-full sm:w-48 flex-grow-0 flex-shrink-0">
         <div>
           <ListboxButton className="relative w-full sm:w-48 cursor-default rounded-md border border-gray-500 py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none sm:text-sm hover-none cursor-pointer">
-            <span className="block truncate">{selectedGroup.name}</span>
+          <span className={`block truncate ${!selectedGroup ? 'text-gray-400' : ''}`}>
+              {selectedGroup ? selectedGroup.name : 'Group'}
+            </span>
           </ListboxButton>
           <ListboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-lg py-1 text-base shadow-lg ring-black ring-opacity-5 focus:outline-none sm:text-sm secondaly-bg">
             {groups.map((group) => (
@@ -56,7 +58,7 @@ export default function SearchControls({
           <Input
             type="text"
             placeholder="search..."
-            className="w-full py-2 pl-10 sm:text-sm border border-gray-500 rounded-md focus:outline-none"
+            className="w-full py-2 pl-10 sm:text-sm border border-gray-500 placeholder:text-gray-400 rounded-md focus:outline-none"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

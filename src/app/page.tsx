@@ -17,7 +17,7 @@ dayjs.extend(customParseFormat);
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState<string>(''); // デフォルト値を設定
-  const [selectedGroup, setSelectedGroup] = useState({ id: '', name: 'Group' });
+  const [selectedGroup, setSelectedGroup] = useState<{ id: string; name: string } | null>(null);
   const [isMounted, setIsMounted] = useState(false); // マウント状態を管理するフラグ
   const [sortColumn, setSortColumn] = useState<keyof PharmacyData | null>('distance'); // ソート状態のState
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -37,7 +37,7 @@ export default function Home() {
       const savedSearchTerm = sessionStorage.getItem('searchTerm') || '';
       const savedGroup = sessionStorage.getItem('selectedGroup');
       setSearchTerm(savedSearchTerm);
-      if (savedGroup) {
+      if (savedGroup && savedGroup !== 'null') {
         setSelectedGroup(JSON.parse(savedGroup));
       }
         }

@@ -18,8 +18,13 @@ export const metadata: Metadata = {
   title: "【クローン】メドサーチ",
   description: "薬局間の在庫状況共有システム",
   icons: {
-    icon: "pharmacloud_mark.svg"
-  }
+    icon: [
+      {
+        url: "/pharmacloud_mark.svg",
+        href: "/pharmacloud_mark.svg",
+      },
+    ],
+  },
 };
 
 export const viewport = {
