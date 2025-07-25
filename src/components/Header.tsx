@@ -49,7 +49,7 @@ interface HeaderProps {
           <span className="flex items-center justify-center bg-orange-300 text-xs font-bold px-1 py-1 rounded-lg uppercase min-w-[70px] sm:min-w-[70px] cursor-pointer select-none">
             PREVIEW
           </span>
-          <div className="flex items-center justify-center ml-auto">
+          <div className="flex items-center justify-center ml-30 sm:ml-auto"> { /* モバイル環境での位置を一時的にml-30で調整 */ }
             {/* ▼ ユーザーメニューを別コンポーネントとして呼び出す */}
             <UserMenu user={userData} />
           </div>

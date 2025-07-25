@@ -41,7 +41,7 @@ export default function FacilityDetailPage() {
         <p className="secondaly-fg">施設の詳細</p>
       </div>
 
-      <div className="mt-8 w-full border border-gray-200 rounded-lg shadow-sm p-6">
+      <div className="mt-8 w-full border border-gray-200 rounded-2xl shadow-sm p-6">
         <h1 className="font-bold mb-4">{facility['facilityName']}</h1>
         <div className="space-y-3">
         {displayKeys.filter(key => key !== 'facilityName' && key !== 'id' && key !== 'uniqueId').map((key) => (
@@ -52,7 +52,7 @@ export default function FacilityDetailPage() {
           ))}
         </div>
         <div className="relative flex items-start space-x-2 px-4 py-3 rounded-lg w-full info-bg mt-4">
-          <p className="px-0.5 py-0.5 text-sm pl-10 rounded font-[family-name:var(--font-geist-mono)]">開設許可証が登録されていません</p>
+          <p className="px-0.5 py-0.5 text-sm pl-10 rounded-xl font-[family-name:var(--font-geist-mono)]">開設許可証が登録されていません</p>
           <div className="absolute left-5 top-1/2 -translate-y-1/2 rounded-full w-6 h-6 text-2xl">
             <InformationCircleIcon className="text-cyan-500 dark:text-white" />
           </div>

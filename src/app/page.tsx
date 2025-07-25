@@ -77,16 +77,16 @@ export default function Home() {
              マイページ ・ メドサーチ
             </p>
 
-            <div className="w-full border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm pb-4">
+            <div className="w-full border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm pb-4">
 
             <div className="
             relative flex items-start 
-            space-x-2 px-4 py-3 rounded-lg w-full info-bg
+            space-x-2 px-4 py-3 rounded-2xl w-full info-bg
             ">
              <p className="
              px-0.5 py-0.5 
              text-sm  pl-10 
-             rounded font-[family-name:var(--font-geist-mono)]
+             rounded-2xl font-[family-name:var(--font-geist-mono)]
              ">
              グループに共有されている在庫状況を検索します。対象グループを選択して、医薬品名を入力してください。
              </p>

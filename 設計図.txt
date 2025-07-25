@@ -1,0 +1,22 @@
+【RootLayout】 (アプリ全体の大枠)
+└──【DataProvider】 (データのダム)
+    └──【ClientLayout】 (画面全体のレイアウト)
+        ├──【Sidebar】 (左のメニュー)
+        ├──【Header】 (上のヘッダー)
+        └──【page.tsx / facility/[id]/page.tsx】 (メインコンテンツ)
+            ├──【SearchControls】 (検索ボックス)
+            │
+            ├──【PharmacyTable】 (検索結果の表)
+            │   └──【PharmacyTableHead】 (表のタイトル行)
+            │
+            └──【PaginationControls】 (ページ送りボタン)
+
+フォルダ名	     部屋の役割	     主な部品（ファイル名）	      仕事内容
+src/contexts	貯水ダム        DataContext.tsx	           アプリ起動時に一度だけExcelから全データを読み込み、いつでも使えるように保管しておく場所。
+src/hooks       専門家の道具箱   usePharmacyData.ts	        ダムからデータを簡単に取り出すための専用フック。
+                                useFilteredPharmacies.ts  検索や並び替えのロジックを専門に扱うフック。
+src/components	家具・家電	     Sidebar.tsx, Header.tsx   アプリの見た目の骨格となる部品。
+                                SearchControls.tsx	      検索ボックスやグループ選択の機能を持つ部品。
+                                PharmacyTable.tsx	      検索結果を表として表示する専門の部品。
+src/app	        リビングルーム	 page.tsx	               検索ページの本体。各部品を組み合わせて表示する司令塔。
+                                facility/[id]/page.tsx	  施設の詳細情報を表示するページ。
