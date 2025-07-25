@@ -7,7 +7,7 @@ import { useFacilityData } from '@/hooks/useFacilityData'; // ★作成したフ
 
 export default function FacilityDetailPage() {
   const params = useParams();
-  const facilityId = params.Id as string;
+  const facilityId = params.id as string;
 
   // ★データ取得ロジックがこの一行に！
   const { facility, isLoading } = useFacilityData(facilityId);
@@ -44,7 +44,7 @@ export default function FacilityDetailPage() {
       <div className="mt-8 w-full border border-gray-200 rounded-lg shadow-sm p-6">
         <h1 className="font-bold mb-4">{facility['facilityName']}</h1>
         <div className="space-y-3">
-          {displayKeys.filter(key => key !== 'facilityName').map((key) => (
+        {displayKeys.filter(key => key !== 'facilityName' && key !== 'id' && key !== 'uniqueId').map((key) => (
             <div key={key} className="flex text-sm">
               <span className="min-w-[120px] secondaly-fg">{labelMap[key] || key}：</span>
               <span>{facility[key]}</span>
