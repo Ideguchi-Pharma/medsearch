@@ -84,6 +84,14 @@ button:hover {
   background: var(--hover-bg);
 }
 
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
 
+.animate-blink {
+  animation: blink 1.5s linear infinite;
+}
 
 /*ボタンごとにCSSを作りたい(@apply？) ⇒ 非推奨*/

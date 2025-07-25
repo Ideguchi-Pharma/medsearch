@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@headlessui/react';
 import { UserMenu } from './UserMenu'; // ▼ 新しいコンポーネント
 import { FacilitySelectDialog } from './FacilitySelectDialog'; // ▼ 新しいコンポーネント
@@ -22,26 +22,17 @@ const userData = {
   ],
 };
 
-export default function AppHeader() {
+interface HeaderProps {
+    selectedFacility: string;
+    setSelectedFacility: (name: string) => void;
+  }
+
+  export default function AppHeader({ selectedFacility, setSelectedFacility }: HeaderProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [selectedFacility, setSelectedFacility] = useState('デモ薬局');
-
-  // 1. コンポーネントが最初に読み込まれた時に localStorage から値を取得する
-  useEffect(() => {
-    const savedFacility = localStorage.getItem('selectedFacility');
-    if (savedFacility) {
-      setSelectedFacility(savedFacility);
-    }
-  }, []); // 空の配列を渡すことで、最初の1回だけ実行されます
-
-  // 2. selectedFacility の値が変わるたびに localStorage に保存する
-  useEffect(() => {
-    localStorage.setItem('selectedFacility', selectedFacility);
-  }, [selectedFacility]);
-
-  // 施設が選択されたときの処理
   const handleFacilitySelect = (facilityName: string) => {
-    setSelectedFacility(facilityName);
+        // 親から受け取った関数を使って状態を更新
+        setSelectedFacility(facilityName);
+ 
     setIsDialogOpen(false); // ダイアログを閉じる
   };
 
