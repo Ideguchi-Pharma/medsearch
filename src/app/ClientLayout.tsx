@@ -25,6 +25,11 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   // localStorageからの読み込み
   useEffect(() => {
+    const savedSidebarState = localStorage.getItem('sidebarCollapsed');
+    // localStorageに値があれば、それを元に状態を復元します
+    if (savedSidebarState !== null) {
+      setIsSidebarCollapsed(JSON.parse(savedSidebarState));
+    }
     // 500ミリ秒待つPromiseを作成
     const timer = new Promise(resolve => setTimeout(resolve, 500));
 
@@ -49,6 +54,12 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     }
   }, [selectedFacility, isLoading]);
 
+  useEffect(() => {
+    // 初期ロード中（isLoadingがtrue）は保存しないようにします
+    if (!isLoading) {
+      localStorage.setItem('sidebarCollapsed', JSON.stringify(isSidebarCollapsed));
+    }
+  }, [isSidebarCollapsed, isLoading]);
   // isLoadingがtrueの間はローディング画面を表示
   if (isLoading) {
     return <LoadingScreen />;
