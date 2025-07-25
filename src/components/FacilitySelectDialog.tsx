@@ -13,9 +13,10 @@ interface FacilitySelectDialogProps {
   isOpen: boolean;
   onClose: () => void;
   facilities: Facility[];
+  onFacilitySelect: (name: string) => void;
 }
 
-export const FacilitySelectDialog: React.FC<FacilitySelectDialogProps> = ({ isOpen, onClose, facilities }) => {
+export const FacilitySelectDialog: React.FC<FacilitySelectDialogProps> = ({ isOpen, onClose, facilities, onFacilitySelect }) => {
   return (
     <Dialog open={isOpen} as="div" className="relative z-[9999] focus:outline-none" onClose={onClose}>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/60" aria-hidden="true" />
@@ -36,6 +37,7 @@ export const FacilitySelectDialog: React.FC<FacilitySelectDialogProps> = ({ isOp
             </DialogTitle>
             {facilities.map((facility) => (
               <div key={facility.name} 
+              onClick={() => onFacilitySelect(facility.name)}
               className="flex items-start gap-2 mt-4 text-lg hover:rounded-lg hover-bg p-2 cursor-pointer
               ">
                 <UserCircleIcon className="h-14 w-14 shrink-0" />
