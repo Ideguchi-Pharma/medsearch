@@ -2,11 +2,16 @@
 
 import { useState, Fragment } from 'react';
 import Image from "next/image";
-import Link from "next/link"; // Linkコンポーネントをインポート
-import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react'
+import Link from "next/link"; 
+import { 
+  Popover, PopoverButton, PopoverPanel, 
+  Transition,
+  Disclosure, DisclosureButton, DisclosurePanel
+} from '@headlessui/react'
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronDownIcon,
   Bars3Icon,
   MapIcon,
   ShoppingBagIcon,
@@ -19,7 +24,7 @@ export interface SidebarProps {
   setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// 1. ナビゲーションのデータを一元管理する
+// ナビゲーションのデータを一元管理
 const navItems = {
   medsearch: {
     icon: MapIcon,
@@ -80,17 +85,21 @@ const PopoverLinks = ({ items }: NavLinksProps) => (
 );
 
 // 開いたサイドバー用のリンクコンポーネント
-const ExpandedLinks = ({ items }: NavLinksProps) => (
+const AccordionLinks = ({ items }: NavLinksProps) => (
   <>
     {items.map((item) => (
-      <Link key={item.label} href={item.href} className="flex flex-row items-center sm:px-4 sm:py-2 py-2 gap-2 hover-bg rounded-md px-4">
+      <Link key={item.label} href={item.href} 
+      className="
+      flex flex-row items-center 
+      py-2 gap-2 px-4
+      hover-bg rounded-md
+      ">
         <span className="text-xs sm:text-sm">・</span>
         <span className="text-xs sm:text-sm">{item.label}</span>
       </Link>
     ))}
   </>
 );
-
 
 const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -103,7 +112,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
 
   return (
     <>
-      {/* モバイル用ハンバーガーメニューボタン */}
+      {/* モバイル用メニューボタン */}
       <button onClick={toggleMobileMenu} className="fixed top-3 left-2 z-[9998] p-2 sm:hidden">
         <Bars3Icon className="h-6 w-6" />
       </button>
@@ -133,36 +142,57 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
             />
           </div>
 
-          {/* 3. データとコンポーネントを使ってUIを構築する */}
+          {/* データとコンポーネントを使ってUIを構築 */}
           {Object.entries(navItems).map(([key, item]) => (
             <div key={key} onMouseEnter={() => popoverEnter(key)} onMouseLeave={popoverLeave}>
-              <Popover>
-                <PopoverButton className={`
-                  mt-1 text-xs sm:text-xs px-4 py-2 outline-none w-full
-                  ${isCollapsed ? 'flex flex-col items-center justify-center hover-bg rounded-lg' : 'flex items-center justify-start gap-2'}
-                `}>
-                  {isCollapsed ? (
-                    <div className="flex flex-col items-center">
-                      <item.icon className="h-6 w-6" />
-                      <span className="text-[0.6rem] leading-none font-bold mt-1">{item.label}</span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-start gap-2 w-full">
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.label}</span>
-                    </div>
-                  )}
-                </PopoverButton>
-                <Transition show={openPopover === key} as={Fragment}>
-                  <PopoverPanel static transition anchor="right" className="rounded-xl text-sm/6 transition duration-200 ease-in-out [--anchor-gap:--spacing(0)] z-[9999] data-closed:-translate-x-1 data-closed:opacity-0 shadow-sm backdrop-blur-sm bg-white/50">
-                    <PopoverLinks items={item.links} />
-                  </PopoverPanel>
-                </Transition>
-              </Popover>
-              {!isCollapsed && <ExpandedLinks items={item.links} />}
+              {/* ▼ Disclosureコンポーネントで全体をラップ */}
+              <Disclosure as="div" defaultOpen={key === 'medsearch'}>
+                {({ open }) => (
+                  <>
+                    <Popover>
+                      {/* ▼ isCollapsedの場合PopoverButton、そうでない場合はDisclosureButtonとして機能 */}
+                      {isCollapsed ? (
+                        <PopoverButton className="mt-1 text-xs sm:text-xs px-4 py-2 outline-none w-full flex flex-col items-center justify-center hover-bg rounded-lg">
+                          <div className="flex flex-col items-center">
+                            <item.icon className="h-6 w-6" />
+                            <span className="text-[0.6rem] leading-none font-bold mt-1">{item.label}</span>
+                          </div>
+                        </PopoverButton>
+                      ) : (
+                        <DisclosureButton className="mt-1 text-xs sm:text-xs px-4 py-2 outline-none w-full flex items-center justify-start gap-2">
+                           <div className="flex items-center justify-between gap-2 w-full">
+                              <div className="flex items-center gap-2">
+                                <item.icon className="h-5 w-5" />
+                                <span>{item.label}</span>
+                              </div>
+                              {/* ▼ 開閉状態に応じてアイコンが回転 */}
+                              <ChevronDownIcon className={`w-4 h-4 transition-transform ${open ? 'rotate-180' : ''}`} />
+                            </div>
+                        </DisclosureButton>
+                      )}
+
+                      <Transition show={openPopover === key} as={Fragment}>
+                        <PopoverPanel
+                          static
+                          transition
+                          anchor="right"
+                          className="rounded-xl text-sm/6 transition duration-200 ease-in-out [--anchor-gap:--spacing(0)] z-[9999] data-closed:-translate-x-1 data-closed:opacity-0 shadow-sm backdrop-blur-sm bg-white/50">
+                          <PopoverLinks items={item.links} />
+                        </PopoverPanel>
+                      </Transition>
+                    </Popover>
+
+                    {/* ▼ isCollapsedがfalseの場合のみDisclosurePanelを表示 */}
+                    {!isCollapsed && (
+                      <DisclosurePanel>
+                        <AccordionLinks items={item.links} />
+                      </DisclosurePanel>
+                    )}
+                  </>
+                )}
+              </Disclosure>
             </div>
           ))}
-
         </nav>
 
         {/* サイドバー開閉ボタン */}
