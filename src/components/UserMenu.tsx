@@ -16,7 +16,12 @@ interface UserMenuProps {
 export const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
   return (
     <Menu>
-      <MenuButton className="flex items-center justify-center w-8 h-8 rounded-full text-xs shadow-inner shadow-white/10 focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white secondaly-bg cursor-pointer hover-bg">
+      <MenuButton className="
+      flex items-center justify-center 
+      w-8 h-8 rounded-full text-xs 
+      shadow-inner shadow-white/10 
+      focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white 
+      secondaly-bg cursor-pointer hover-bg">
         デモ
       </MenuButton>
       <MenuItems

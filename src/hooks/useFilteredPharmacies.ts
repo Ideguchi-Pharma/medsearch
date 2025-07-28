@@ -1,22 +1,49 @@
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import { PharmacyData } from './usePharmacyData';
+import { Facility, Group } from '@/contexts/DataContext';
 import { convertHiraganaToKatakana } from '@/utils/converters';
 
-// このフックは、絞り込みと並び替えのロジックを専門に担当します
 export function useFilteredPharmacies(
   pharmacyData: PharmacyData[],
+  facilities: Facility[],
   searchTerm: string,
+  selectedGroup: Group | null,
   sortColumn: keyof PharmacyData | null,
   sortOrder: 'asc' | 'desc'
 ) {
   const [filteredPharmacyData, setFilteredPharmacyData] = useState<PharmacyData[]>([]);
 
   useEffect(() => {
-    let results: PharmacyData[] = [];
-    if (searchTerm.length < 2) {
-      results = [];
-    } else {
+    // ▼▼▼ この部分を修正 ▼▼▼
+    // facilities が配列として準備できていない場合は、処理を中断する
+    if (!Array.isArray(facilities) || !Array.isArray(pharmacyData)) {
+      setFilteredPharmacyData([]);
+      return;
+    }
+    // ▲▲▲ ここまで修正 ▲▲▲
+
+    // フィルタリングの条件があるかを確認
+    if (!selectedGroup && searchTerm.length < 2) {
+      setFilteredPharmacyData([]);
+      return;
+    }
+
+    let results = pharmacyData;
+
+    // 手順1: グループで絞り込む
+    if (selectedGroup) {
+      const facilityIdsInGroup = facilities
+        .filter(f => f.groupId === selectedGroup.id)
+        .map(f => f.id);
+      
+      results = results.filter(pharmacy =>
+        facilityIdsInGroup.includes(pharmacy.facilityId)
+      );
+    }
+
+    // 手順2: 検索キーワードで絞り込む
+    if (searchTerm.length >= 2) {
       const searchKeywords = searchTerm
         .toLowerCase()
         .split(/\s+/)
@@ -24,13 +51,14 @@ export function useFilteredPharmacies(
         .map(term => convertHiraganaToKatakana(term));
 
       if (searchKeywords.length > 0) {
-        results = pharmacyData.filter(pharmacy => {
+        results = results.filter(pharmacy => {
           const normalizedDrugName = convertHiraganaToKatakana(pharmacy.drugName.toLowerCase());
           return searchKeywords.every(keyword => normalizedDrugName.includes(keyword));
         });
       }
     }
 
+    // 手順3: 並び替え
     if (sortColumn) {
       results.sort((a, b) => {
         const aValue = a[sortColumn];
@@ -50,8 +78,9 @@ export function useFilteredPharmacies(
         return 0;
       });
     }
+
     setFilteredPharmacyData(results);
-  }, [searchTerm, pharmacyData, sortColumn, sortOrder]);
+  }, [searchTerm, pharmacyData, facilities, selectedGroup, sortColumn, sortOrder]);
 
   return filteredPharmacyData;
 }

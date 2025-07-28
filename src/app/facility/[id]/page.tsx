@@ -3,13 +3,12 @@
 import { useParams } from 'next/navigation';
 import Link from "next/link";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
-import { useFacilityData } from '@/hooks/useFacilityData'; // ★作成したフックを読み込む
+import { useFacilityData } from '@/hooks/useFacilityData'; 
 
 export default function FacilityDetailPage() {
   const params = useParams();
   const facilityId = params.id as string;
 
-  // ★データ取得ロジックがこの一行に！
   const { facility, isLoading } = useFacilityData(facilityId);
 
   if (isLoading) return <div>読み込み中...</div>;

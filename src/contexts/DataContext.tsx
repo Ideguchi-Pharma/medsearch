@@ -20,10 +20,17 @@ export interface PharmacyData {
   facilityId: string; // IDの型はstring
 }
 
+// グループデータの型定義
+export interface Group {
+  id: string;
+  name: string;
+}
+
 // 施設データの型定義
 export interface Facility {
   id: string; // IDの型はstring
   facilityName: string;
+  groupId: string; // groupIdを追加
   [key: string]: any;
 }
 
@@ -31,6 +38,7 @@ export interface Facility {
 interface DataContextType {
   pharmacyData: PharmacyData[];
   facilities: Facility[];
+  groups: Group[]; // groups を追加
   isLoading: boolean;
   error: string | null;
 }
@@ -42,6 +50,7 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [pharmacyData, setPharmacyData] = useState<PharmacyData[]>([]);
   const [facilities, setFacilities] = useState<Facility[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]); // groups の state を追加
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -65,6 +74,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         const facilitiesWithId = facilityJson.map((facility) => ({
           ...facility,
           id: facility.uniqueId, 
+          groupId: facility.groupId, // groupIdをfacilityオブジェクトに含める
         }));
         setFacilities(facilitiesWithId);
         
@@ -99,7 +109,10 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         });
         setPharmacyData(processedPharmacyData);
 
-        // --- ▲ここまでが大きな修正ポイントです ---
+        const groupSheetName = workbook.SheetNames[2]; // 3番目のシート
+        const groupWorksheet = workbook.Sheets[groupSheetName];
+        const groupJson: Group[] = XLSX.utils.sheet_to_json(groupWorksheet);
+        setGroups(groupJson);
 
       } catch (err: unknown) {
         console.error("Failed to load data:", err);
@@ -111,7 +124,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     fetchExcelData();
   }, []);
 
-  const value = { pharmacyData, facilities, isLoading, error };
+  const value = { pharmacyData, facilities, groups, isLoading, error };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };

@@ -5,10 +5,10 @@ import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ja'; 
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { usePharmacyData, PharmacyData } from "@/hooks/usePharmacyData"; // 作成したカスタムフックを読み込む
+import { usePharmacyData, PharmacyData } from "@/hooks/usePharmacyData";
+import { useData } from "@/contexts/DataContext";  // 作成したカスタムフックを読み込む
 import SearchControls from '@/components/SearchControls';
 import PharmacyTable from '@/components/PharmacyTable';
-import { GROUPS } from '@/data/constants';
 import { useFilteredPharmacies } from '@/hooks/useFilteredPharmacies';
 import PaginationControls from '@/components/PaginationControls';
 
@@ -22,6 +22,7 @@ export default function Home() {
   const [sortColumn, setSortColumn] = useState<keyof PharmacyData | null>('distance'); // ソート状態のState
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const { pharmacyData, loadingError } = usePharmacyData();
+  const { groups } = useData();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5); // デフォルトは5件
   const [isCompact, setIsCompact] = useState(false);
@@ -104,7 +105,7 @@ export default function Home() {
         setSearchTerm={setSearchTerm}
         selectedGroup={selectedGroup}
         setSelectedGroup={setSelectedGroup}
-        groups={GROUPS}
+        groups={groups}
         />
         <PharmacyTable
         loadingError={loadingError}
