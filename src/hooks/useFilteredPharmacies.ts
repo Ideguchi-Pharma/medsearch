@@ -17,11 +17,18 @@ export function useFilteredPharmacies(
     if (searchTerm.length < 2) {
       results = [];
     } else {
-      const normalizedSearchTerm = convertHiraganaToKatakana(searchTerm.toLowerCase());
-      results = pharmacyData.filter(pharmacy => {
-        const normalizedDrugName = convertHiraganaToKatakana(pharmacy.drugName.toLowerCase());
-        return normalizedDrugName.includes(normalizedSearchTerm);
-      });
+      const searchKeywords = searchTerm
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(term => term)
+        .map(term => convertHiraganaToKatakana(term));
+
+      if (searchKeywords.length > 0) {
+        results = pharmacyData.filter(pharmacy => {
+          const normalizedDrugName = convertHiraganaToKatakana(pharmacy.drugName.toLowerCase());
+          return searchKeywords.every(keyword => normalizedDrugName.includes(keyword));
+        });
+      }
     }
 
     if (sortColumn) {
