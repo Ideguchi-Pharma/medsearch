@@ -26,7 +26,7 @@ export default function Home() {
                 <div className="flex flex-col">
                     <Image
                     className="p-12"
-                    src="/medsearch_logo.webp"
+                    src="/medsearch_Logo.webp"
                     alt="medsearch logo"
                     width={750}
                     height={166}
@@ -44,7 +44,7 @@ export default function Home() {
                 <div className="flex flex-col">
                     <Image
                     className="p-12"
-                    src="/medorder_logo.webp"
+                    src="/medorder_Logo.webp"
                     alt="medorder logo"
                     width={750}
                     height={218}
