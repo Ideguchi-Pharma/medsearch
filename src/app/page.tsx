@@ -22,7 +22,7 @@ export default function Home() {
   const [sortColumn, setSortColumn] = useState<keyof PharmacyData | null>('distance'); // ソート状態のState
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const { pharmacyData, loadingError } = usePharmacyData();
-  const { groups } = useData();
+  const { groups, facilities } = useData();
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5); // デフォルトは5件
   const [isCompact, setIsCompact] = useState(false);
@@ -49,7 +49,14 @@ export default function Home() {
   useEffect(() => {
           if (isMounted) sessionStorage.setItem('selectedGroup', JSON.stringify(selectedGroup));
         }, [selectedGroup, isMounted]);
-        const filteredPharmacyData = useFilteredPharmacies(pharmacyData, searchTerm, sortColumn, sortOrder);
+        const filteredPharmacyData = useFilteredPharmacies(
+          pharmacyData, 
+          facilities, 
+          searchTerm, 
+          selectedGroup, 
+          sortColumn, 
+          sortOrder
+        );
         // 表示するデータを現在のページに合わせて切り出す
         const paginatedData = filteredPharmacyData.slice(
         (currentPage - 1) * rowsPerPage,
