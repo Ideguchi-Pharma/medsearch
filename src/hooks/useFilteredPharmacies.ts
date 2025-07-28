@@ -15,34 +15,26 @@ export function useFilteredPharmacies(
   const [filteredPharmacyData, setFilteredPharmacyData] = useState<PharmacyData[]>([]);
 
   useEffect(() => {
-    // ▼▼▼ この部分を修正 ▼▼▼
-    // facilities が配列として準備できていない場合は、処理を中断する
-    if (!Array.isArray(facilities) || !Array.isArray(pharmacyData)) {
-      setFilteredPharmacyData([]);
-      return;
-    }
-    // ▲▲▲ ここまで修正 ▲▲▲
-
-    // フィルタリングの条件があるかを確認
-    if (!selectedGroup && searchTerm.length < 2) {
+    // 1. 前提条件のチェック
+    // データが未準備、またはグループが選択されていない場合は、何も表示しない
+    if (!Array.isArray(facilities) || !Array.isArray(pharmacyData) || !selectedGroup) {
       setFilteredPharmacyData([]);
       return;
     }
 
-    let results = pharmacyData;
+    // --- ここから先は、データが準備完了 & グループが選択されている場合 ---
 
-    // 手順1: グループで絞り込む
-    if (selectedGroup) {
-      const facilityIdsInGroup = facilities
-        .filter(f => f.groupId === selectedGroup.id)
-        .map(f => f.id);
-      
-      results = results.filter(pharmacy =>
-        facilityIdsInGroup.includes(pharmacy.facilityId)
-      );
-    }
+    // 2. グループに所属する施設のIDリストを作成
+    const facilityIdsInGroup = facilities
+      .filter(f => f.groupId === selectedGroup.id)
+      .map(f => f.id);
+    
+    // 3. グループ内の医薬品データに絞り込む
+    let results = pharmacyData.filter(pharmacy =>
+      facilityIdsInGroup.includes(pharmacy.facilityId)
+    );
 
-    // 手順2: 検索キーワードで絞り込む
+    // 4. 検索キーワードでさらに絞り込む (キーワードが入力されている場合のみ)
     if (searchTerm.length >= 2) {
       const searchKeywords = searchTerm
         .toLowerCase()
@@ -58,7 +50,7 @@ export function useFilteredPharmacies(
       }
     }
 
-    // 手順3: 並び替え
+    // 5. 並び替え
     if (sortColumn) {
       results.sort((a, b) => {
         const aValue = a[sortColumn];
