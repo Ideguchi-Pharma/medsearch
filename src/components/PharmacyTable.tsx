@@ -48,7 +48,7 @@ export default function PharmacyTable({
           sortOrder={sortOrder}
           onSort={onSort}
         />
-        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+        <tbody>
           {loadingError ? (
             <tr><td colSpan={7} className="px-4 py-8 text-center">{loadingError}</td></tr>
           ) : searchTerm.length < 2 ? (
@@ -57,11 +57,11 @@ export default function PharmacyTable({
             <tr><td colSpan={7} className="px-4 py-8 text-center"><NoDataDisplay message="No Data" /></td></tr>
           ) : (
             filteredPharmacyData.map((pharmacy, index) => (
-              <tr key={index}>
+              <tr key={index} className="hover:bg-gray-100 dark:hover:bg-gray-800">
                 <td className={`px-4 text-sm font-bold min-w-[105px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.drugName}</td>
                 <td className={`px-4 text-sm w-[80px] ${isCompact ? 'py-3' : 'py-6'} text-right`}>{pharmacy.price}円</td>
                 <td className={`px-4 text-sm min-w-[90px] max-w-[150px] ${isCompact ? 'py-3' : 'py-6'} sm:max-w-none`}>
-                  <Link href={`/facility/${pharmacy.facilityId}`} className="text-green-600 font-bold hover-bg rounded-md py-1">
+                  <Link href={`/facility/${pharmacy.facilityId}`} className="text-green-600 font-bold hover-bg rounded-md p-2">
                     {pharmacy.facilityName}
                   </Link>
                 </td>
