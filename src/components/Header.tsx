@@ -13,8 +13,8 @@ const facilityData = [
 ];
 
 const userData = {
-  name: 'ファーマ次郎',
-  email: 'demo@pharmacloud.jp',
+  name: 'ファーマ玄人',
+  email: 'demosearch@pharmacloud.jp',
   menuItems: [
     { label: 'ホーム', action: () => {} },
     { label: 'アカウントの管理', action: () => {} },

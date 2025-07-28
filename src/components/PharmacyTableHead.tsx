@@ -1,5 +1,5 @@
 import React from 'react'; 
-import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/solid'; 
+import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/outline'; 
 import type { PharmacyData } from '@/hooks/usePharmacyData';
 
 interface TableHeaderItem {
@@ -57,9 +57,9 @@ const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadP
               {isSorted && (
                 <span className="ml-1">
                   {sortOrder === 'asc' ? (
-                    <ArrowUpIcon className="h-3 w-3" />
+                    <ArrowUpIcon className="h-3 w-3" strokeWidth={3} />
                   ) : (
-                    <ArrowDownIcon className="h-3 w-3" />
+                    <ArrowDownIcon className="h-3 w-3" strokeWidth={3} />
                   )}
                 </span>
               )}
@@ -69,7 +69,7 @@ const PharmacyTableHead = ({ sortColumn, sortOrder, onSort }: PharmacyTableHeadP
               opacity-0 group-hover:opacity-100 transition-opacity duration-300
               text-xs rounded-lg py-1 px-2
               whitespace-nowrap z-50
-              pointer-events-none secondaly-bg
+              pointer-events-none tooltip-custom-bg
               ">
             {header.tooltip}
             </div>

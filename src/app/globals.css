@@ -93,5 +93,17 @@ button:hover {
 .animate-blink {
   animation: blink 0.5s linear infinite;
 }
+.tooltip-custom-bg {
+  background-color: #374151; /* ダークグレー */
+  color: #f9fafb; /* 明るい灰色 */
+}
+
+@media (prefers-color-scheme: dark) {
+  .tooltip-custom-bg {
+    background-color: #d1d5db; /* 明るい灰色 */
+    color: #111827;      /* ダークグレー */
+  }
+}
+
 
 /*ボタンごとにCSSを作りたい(@apply？) ⇒ 非推奨*/
