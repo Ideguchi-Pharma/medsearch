@@ -150,15 +150,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
           </div>
 
           <div className={`relative mb-4 ${isCollapsed ? 'hidden' : 'flex'}`}>
-  <button className="flex w-full items-center gap-2 mt-4 rounded-lg secondaly-bg ml-4 mr-2 p-2 cursor-pointer">
-    <UserCircleIcon className="h-10 w-10 shrink-0"/>
-    {/* min-w-0 を追加 */}
-    <div className="flex flex-col items-start flex-1 overflow-hidden min-w-0">
-      <span className="text-sm font-bold">ファーマ玄人</span>
-      <p className="mt-1 text-sm secondaly-fg truncate">demosearch@pharmacloud.jp</p>
-    </div>
-  </button>
-</div>
+            <button className="flex w-full items-center gap-2 mt-4 rounded-lg secondaly-bg ml-4 mr-2 p-2 cursor-pointer">
+            <UserCircleIcon className="h-10 w-10 shrink-0"/>
+            <div className="flex flex-col items-start min-w-0">
+            <span className="text-sm font-bold">ファーマ玄人</span>
+            <p className="mt-1 text-sm secondaly-fg truncate">demo@pharmacloud.jp</p>
+            </div>
+            </button>
+          </div>
 
           {navSections.map((section, sectionIndex) => (
             <div key={section.title}>

@@ -30,7 +30,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
         className="
         origin-top-right rounded-xl border border-gray-200
         p-1 text-sm/6 shadow-lg ring-none ring-black ring-opacity-5 
-        transition duration-100 ease-out secondaly-bg 
+        transition duration-100 ease-out bg-[var(--background)]
         [--anchor-gap:--spacing(1)] focus:outline-none 
         data-closed:scale-95 data-closed:opacity-0 z-[9999]
         ">
@@ -38,9 +38,9 @@ export const UserMenu: React.FC<UserMenuProps> = ({ user }) => {
           <p className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5">{user.name}</p>
         </MenuItem>
         <MenuItem>
-          <p className="group flex w-full items-center rounded-lg px-3">{user.email}</p>
+          <p className="group w-full rounded-lg px-3 secondaly-fg truncate max-w-48 mb-2">{user.email}</p>
         </MenuItem>
-        <div className="my-1 h-px" />
+        <div className="h-px w-full border-gray-300 border-t border-dashed my-2"></div>
         {user.menuItems.map((item) => (
           <MenuItem key={item.label}>
             <button
