@@ -80,7 +80,7 @@ export default function Home() {
             ">
              メドサーチ
             </p>
-            <div className="flex flex-row gap-3">
+            <div className="flex flex-row gap-3 pt-3">
             <Link href={"/mypage"} className="
             tracking-[-.01em] mb-8 hover:underline
             ">

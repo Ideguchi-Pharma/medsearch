@@ -64,7 +64,7 @@ export default function Home() {
                     height={166}
                     priority
                     />
-                    <div className="flex flex-row flex-wrap pl-12 text-sm">
+                    <div className="flex flex-row flex-wrap pl-12 pt-1 text-sm">
                         {menu.medsearch.links.map((link) => (
                             <Link key={link.label} href={link.href} className="p-2 rounded-md button-fg font-semibold">
                                 <span className="flex flex-row items-center gap-2">
@@ -97,8 +97,9 @@ export default function Home() {
                     </div>
                 </div>
             </div>
+
             <div className="
-            flex flex-col items-start justify-start mt-16
+            flex flex-col items-start justify-start mt-8
             space-x-2 px-4 py-6 rounded-2xl w-full shadow-sm
             ">
                 <p className="font-bold pl-6 text-lg">

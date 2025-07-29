@@ -31,7 +31,7 @@ const navSections = [
         icon: MapIcon,
         label: 'メドサーチ',
         links: [
-          { href: '#', label: 'メドサーチとは' },
+          { href: '/medsearch/overview', label: 'メドサーチとは' },
           { href: '/', label: '在庫状況を調べる' },
           { href: '#', label: '在庫状況を共有する' },
           { href: '#', label: 'グループを探す' },
