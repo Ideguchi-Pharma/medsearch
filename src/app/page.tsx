@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
@@ -79,13 +80,25 @@ export default function Home() {
             ">
              メドサーチ
             </p>
+            <div className="flex flex-row gap-3">
+            <Link href={"/mypage"} className="
+            tracking-[-.01em] mb-8 hover:underline
+            ">
+             マイページ
+            </Link>
             <p className="
             tracking-[-.01em] mb-8
             ">
-             マイページ ・ メドサーチ
+              ・
             </p>
+            <p className="
+            tracking-[-.01em] mb-8
+            ">
+              メドサーチ
+            </p>
+            </div>
 
-            <div className="w-full border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm pb-4">
+            <div className="w-full border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xs pb-4">
 
             <div className="
             relative flex items-start 

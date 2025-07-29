@@ -1,5 +1,36 @@
-import { InformationCircleIcon } from "@heroicons/react/24/solid";
+import { 
+    InformationCircleIcon,
+    ArrowRightCircleIcon
+ } from "@heroicons/react/24/solid";
 import Image from "next/image";
+import Link from "next/link";
+
+const menu = {
+    medsearch: {
+        links: [
+            { href: '#', label: 'メドサーチとは' },
+            { href: '/', label: '在庫状況を調べる' },
+            { href: '#', label: '在庫状況を共有する' },
+            { href: '#', label: 'グループを探す' },
+        ],
+    },
+    medorder: {
+        links: [
+            { href: '#', label: 'メドオーダーとは' },
+            { href: '#', label: 'AI無料体験' },
+            { href: '#', label: '導入方法' },
+            { href: '#', label: 'レセコンと連携する' },
+            { href: '#', label: '必要在庫を予想する' },
+        ],
+    },
+    setting: {
+        links: [
+            { href: '#', label: '施設を管理する' },
+            { href: '#', label: 'グループを管理する' },
+            { href: '#', label: '支払い情報を管理する' },
+        ],
+    },
+};
 
 
 export default function Home() {
@@ -18,61 +49,71 @@ export default function Home() {
              <p className="text-sm">
              メドオーダーAI無料体験公開中
              </p>
-             <button className="text-sm py-2 px-4 rounded-xl bg-cyan-500 ml-auto text-white font-bold">
+             <button className="text-sm py-2 px-4 rounded-xl bg-cyan-500 ml-auto text-white font-bold cursor-pointer">
                 AI無料体験
              </button>
             </div>
-            <div className="grid grid-cols-2 gap-20">
+
+            <div className="grid grid-cols-2 gap-18">
                 <div className="flex flex-col">
                     <Image
-                    className="p-12"
+                    className="pt-12 pl-12 pb-11"
                     src="/medsearch_Logo.webp"
                     alt="medsearch logo"
                     width={750}
                     height={166}
                     priority
                     />
-                    <div className="flex flex-row gap-6 pl-12 pt-6 text-sm">
-                        <p>メドサーチとは</p>
-                        <p>在庫状況を調べる</p>
-                    </div>
-                    <div className="flex flex-row gap-6 pl-12 text-sm">
-                        <p>在庫状況を共有する</p>
-                        <p>グループを探す</p>
+                    <div className="flex flex-row flex-wrap pl-12 text-sm">
+                        {menu.medsearch.links.map((link) => (
+                            <Link key={link.label} href={link.href} className="p-2 rounded-md button-fg font-semibold">
+                                <span className="flex flex-row items-center gap-2">
+                                    <ArrowRightCircleIcon className="h-4 w-4"/>
+                                    {link.label}
+                                </span>
+                            </Link>
+                        ))}
                     </div>
                 </div>
+
                 <div className="flex flex-col">
                     <Image
-                    className="p-12"
+                    className="pt-12 pb-4 pr-12"
                     src="/medorder_Logo.webp"
                     alt="medorder logo"
                     width={750}
                     height={218}
                     priority
                     />
-                    <div className="flex flex-row gap-6 pl-12 text-sm">
-                        <p>メドオーダーとは</p>
-                        <p>AI無料体験</p>
-                        <p>導入方法</p>
-                    </div>
-                    <div className="flex flex-row gap-6 pl-12 text-sm">
-                        <p>レセコンと連携する</p>
-                        <p>必要在庫を予想する</p>
+                    <div className="flex flex-row flex-wrap pl-12 text-sm">
+                        {menu.medorder.links.map((link) => (
+                            <Link key={link.label} href={link.href} className="p-2 rounded-md button-fg font-semibold">
+                                <span className="flex flex-row items-center gap-2">
+                                    <ArrowRightCircleIcon className="h-4 w-4"/>
+                                    {link.label}
+                                </span>
+                            </Link>
+                        ))}
                     </div>
                 </div>
             </div>
             <div className="
             flex flex-col items-start justify-start mt-16
-            space-x-2 px-4 py-2 rounded-2xl w-full secondaly-bg
+            space-x-2 px-4 py-6 rounded-2xl w-full shadow-sm
             ">
-                <p className="font-bold">
+                <p className="font-bold pl-6 text-lg">
                     設定
                 </p>
-                <div className="flex flex-row gap-6 text-sm">
-                    <p>施設を管理する</p>
-                    <p>グループを管理する</p>
-                    <p>支払い方法を管理する</p>
-                </div>
+                <div className="flex flex-row flex-wrap pl-6 pt-4 text-sm">
+                        {menu.setting.links.map((link) => (
+                            <Link key={link.label} href={link.href} className="p-2 rounded-md button-fg font-semibold">
+                                <span className="flex flex-row items-center gap-2">
+                                    <ArrowRightCircleIcon className="h-4 w-4"/>
+                                    {link.label}
+                                </span>
+                            </Link>
+                        ))}
+                    </div>
             </div>
         </div>
     )

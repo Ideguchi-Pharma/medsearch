@@ -8,6 +8,8 @@
   --hover-bg    : #e5e7eb; /*gray-200*/
   --info-bg     : #cbfbf1; /*teal-100*/
   --divider-bg  : #6a7282; /*gray-500*/
+  --button-fg   : #00a63e; /*green-600*/
+  --button-bg   : #f0fdf4; /*green-50*/
 }
 
 @media (prefers-color-scheme: dark) { /*ここでダークモード時の背景色、文字色を設定*/
@@ -19,6 +21,8 @@
     --hover-bg    : #6a7282; /*gray-500*/
     --info-bg     : #00bba7; /*teal-500*/
     --divider-bg  : #e5e7eb; /*gray-200*/
+    --button-fg   : #00a63e; /*green-600*/
+    --button-bg   : #f0fdf4; /*green-50*/
   }
 }
 
@@ -109,6 +113,14 @@ button:hover {
 
 .divider-bg {
   background: var(--divider-bg);
+}
+
+.button-fg {
+  color: var(--button-fg)
+}
+
+.button-fg:hover {
+  background: var(--button-bg)
 }
 
 
