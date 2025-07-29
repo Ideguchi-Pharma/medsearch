@@ -7,14 +7,16 @@ import Link from "next/link";
 
 const menu = {
     medsearch: {
+        icon: ArrowRightCircleIcon,
         links: [
-            { href: '#', label: 'メドサーチとは' },
+            { href: '/medsearch/overview', label: 'メドサーチとは' },
             { href: '/', label: '在庫状況を調べる' },
-            { href: '#', label: '在庫状況を共有する' },
-            { href: '#', label: 'グループを探す' },
+            { href: '/medsearch/stock', label: '在庫状況を共有する' },
+            { href: '/medsearch/group', label: 'グループを探す' },
         ],
     },
     medorder: {
+        icon: ArrowRightCircleIcon,
         links: [
             { href: '#', label: 'メドオーダーとは' },
             { href: '#', label: 'AI無料体験' },
@@ -24,6 +26,7 @@ const menu = {
         ],
     },
     setting: {
+        icon: ArrowRightCircleIcon,
         links: [
             { href: '#', label: '施設を管理する' },
             { href: '#', label: 'グループを管理する' },
@@ -54,17 +57,17 @@ export default function Home() {
              </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-18">
+            <div className="grid grid-col-1 sm:grid-cols-2 gap-18">
                 <div className="flex flex-col">
                     <Image
-                    className="pt-12 pl-12 pb-11"
+                    className="pt-12 sm:pl-12 pb-11"
                     src="/medsearch_Logo.webp"
                     alt="medsearch logo"
                     width={750}
                     height={166}
                     priority
                     />
-                    <div className="flex flex-row flex-wrap pl-12 pt-1 text-sm">
+                    <div className="flex flex-row flex-wrap sm:pl-12 pt-1 text-sm">
                         {menu.medsearch.links.map((link) => (
                             <Link key={link.label} href={link.href} className="p-2 rounded-md button-fg font-semibold">
                                 <span className="flex flex-row items-center gap-2">
@@ -78,14 +81,14 @@ export default function Home() {
 
                 <div className="flex flex-col">
                     <Image
-                    className="pt-12 pb-4 pr-12"
+                    className="sm:pt-12 pb-4 sm:pr-12"
                     src="/medorder_Logo.webp"
                     alt="medorder logo"
                     width={750}
                     height={218}
                     priority
                     />
-                    <div className="flex flex-row flex-wrap pl-12 text-sm">
+                    <div className="flex flex-row flex-wrap sm:pl-12 text-sm">
                         {menu.medorder.links.map((link) => (
                             <Link key={link.label} href={link.href} className="p-2 rounded-md button-fg font-semibold">
                                 <span className="flex flex-row items-center gap-2">

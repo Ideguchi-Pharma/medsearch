@@ -59,7 +59,7 @@ return (
             <h2 className="text-2xl font-bold mb-6">1. メドサーチを利用するまでの流れ</h2>
             <ol className="list-decimal list-inside text-sm">
                 <li>まずは、
-                    <Link href="https://www.pharmacloud.co.jp/service/med-search" className="button-fg">サービスの概要</Link>
+                    <Link href="https://www.pharmacloud.co.jp/service/med-search" target="_blank" className="button-fg">サービスの概要</Link>
                     をご覧ください。イラストや動画でメドサーチについてわかりやすく説明しています。</li>
                 <li>「2. 薬局の施設登録（登録無料）」に記載の通り、利用する施設を登録しましょう。</li>
                 <li>

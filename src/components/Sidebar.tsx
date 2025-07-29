@@ -33,8 +33,8 @@ const navSections = [
         links: [
           { href: '/medsearch/overview', label: 'メドサーチとは' },
           { href: '/', label: '在庫状況を調べる' },
-          { href: '#', label: '在庫状況を共有する' },
-          { href: '#', label: 'グループを探す' },
+          { href: '/medsearch/stock', label: '在庫状況を共有する' },
+          { href: '/medsearch/group', label: 'グループを探す' },
         ],
       },
       medorder: {
