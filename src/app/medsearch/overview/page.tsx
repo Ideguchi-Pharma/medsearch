@@ -57,7 +57,7 @@ return (
         </div>
         <div className="flex flex-col pt-10 px-6">
             <h2 className="sm:text-2xl font-bold mb-6">1. メドサーチを利用するまでの流れ</h2>
-            <ol className="list-decimal list-outside text-sm px-6 space-y-3">
+            <ol className="list-decimal list-outside text-sm pl-4 space-y-3">
             <li className="pl-6"> {/* ← ここにパディングを追加 */}
             まずは、<Link href="https://www.pharmacloud.co.jp/service/med-search" target="_blank" rel="noopener noreferrer" className="button-fg hover:underline">サービスの概要</Link>をご覧ください。イラストや動画でメドサーチについてわかりやすく説明しています。
             </li>
@@ -89,12 +89,12 @@ return (
                 画面から簡単に実施可能です。</p>
         </div>
         <div className="flex flex-col pt-10 px-6 pb-4">
-            <h2 className="text-2xl font-bold mb-6">
+            <h2 className="sm:text-2xl font-bold mb-6">
                 {serviceMenu.title}
             </h2>
             <div className="text-sm">
             {serviceMenu.links.map((link => (
-                <div key={link.id} className="flex items-center gap-x-2 sm:gap-x-8 p-2">
+                <div key={link.id} className="flex items-center gap-x-2 sm:gap-x-6 py-2">
                     <div className="w-8 hidden sm:block">
                         {link.id}
                     </div>
