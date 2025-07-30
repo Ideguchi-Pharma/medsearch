@@ -1,3 +1,4 @@
+import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 
 export default function Home() {
@@ -23,6 +24,15 @@ export default function Home() {
                 tracking-[-.01em] mb-8
                 ">
                     グループを探す
+                </p>
+            </div>
+            <div className="
+            flex flex-row items-center justify-start
+            space-x-2 px-4 py-2 rounded-2xl w-full info-bg
+            ">
+                <InformationCircleIcon className="h-6 w-6 text-green-500 dark:text-white hidden sm:block"/>
+                <p className="text-sm ">
+                メドサーチでお互いに在庫状況を共有するグループを探します。
                 </p>
             </div>
         </div>
