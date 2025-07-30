@@ -17,7 +17,7 @@ export interface PharmacyData {
   dispenseAmount: number;
   lastDispenseDate: string;
   facilityNumber: string;
-  facilityId: string; // IDの型はstring
+  facilityId: string; 
 }
 
 // グループデータの型定義
