@@ -30,7 +30,6 @@ interface PharmacyTableProps {
   isCompact: boolean; // isCompact プロパティ
 }
 
-// これが検索結果の表専門の部品です
 export default function PharmacyTable({
   loadingError,
   searchTerm,
