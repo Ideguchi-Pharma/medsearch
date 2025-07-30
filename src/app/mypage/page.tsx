@@ -4,7 +4,6 @@ import {
  } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
-
 const menu = {
     medsearch: {
         icon: ArrowRightCircleIcon,
@@ -61,11 +60,10 @@ export default function Home() {
                 <div className="flex flex-col">
                     <Image
                     className="pt-12 sm:pl-12 pb-11"
-                    src="/medsearch_Logo.webp"
+                    src="/medsearch_holizontal.svg"
                     alt="medsearch logo"
                     width={750}
                     height={166}
-                    priority
                     />
                     <div className="flex flex-row flex-wrap sm:pl-12 pt-1 text-sm">
                         {menu.medsearch.links.map((link) => (
@@ -82,7 +80,7 @@ export default function Home() {
                 <div className="flex flex-col">
                     <Image
                     className="sm:pt-12 pb-4 sm:pr-12"
-                    src="/medorder_Logo.webp"
+                    src="/medorder-middle_holizontal.svg"
                     alt="medorder logo"
                     width={750}
                     height={218}

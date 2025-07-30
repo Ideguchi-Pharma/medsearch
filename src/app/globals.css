@@ -123,5 +123,4 @@ button:hover {
   background: var(--button-bg)
 }
 
-
 /*ボタンごとにCSSを作りたい(@apply？) ⇒ 非推奨*/
