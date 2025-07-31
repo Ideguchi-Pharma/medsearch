@@ -30,8 +30,8 @@ interface GroupTableProps {
 
 export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTerm }) => {
   // 並び替えの状態管理（これは変更なし）
-  const [sortColumn, setSortColumn] = useState<keyof allGroup | null>(null);
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortColumn, setSortColumn] = useState<keyof allGroup | null>('status');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   // 並び替えの操作（これも変更なし）
   const handleSort = (columnKey: keyof allGroup) => {
@@ -63,8 +63,7 @@ export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTer
           sortOrder={sortOrder}
           onSort={handleSort}
         />
-        <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-          {/* ▼▼▼ ここからが、薬局テーブルのロジックを参考にした新しい表示部分 ▼▼▼ */}
+        <tbody>
           {error ? (
             <tr><td colSpan={7} className="px-4 py-8 text-center text-red-500">{error.message}</td></tr>
           ) : sortedGroups.length === 0 ? (
@@ -74,18 +73,45 @@ export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTer
               <tr key={group.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
                 <td className="px-4 py-4 text-sm font-semibold">
                   {/* グループ名をクリックすると詳細ページに飛ぶようにする */}
-                  <Link href={`/medsearch/group/${group.id}`} className="text-blue-600 hover:underline">
+                  <Link href={`/medsearch/group/${group.id}`} className="button-fg">
                     {group.groupName}
                   </Link>
                 </td>
                 <td className="px-4 py-4 text-sm">{group.region}</td>
-                <td className="px-4 py-4 text-sm text-right">{group.memberCount}</td>
+                <td className="px-4 py-4 text-center">
+                    <span className={`
+                    inline-flex items-center justify-center 
+                    rounded-full bg-[#3366FF] text-white text-sm
+                    ${group.memberCount >= 10 ? 'h-8 px-3.5' : 'h-8 w-8'}
+                    `}>
+                        {group.memberCount}
+                    </span>
+                </td>
                 <td className="px-4 py-4 text-sm">
                     <FormattedDate date={group.updateDate} />
                 </td>
-                <td className="px-4 py-4 text-sm">{group.status}</td>
-                <td className="px-4 py-4 text-sm">
-                  <button className="btn btn-sm btn-outline">{group.button}</button>
+                <td className="py-4 pl-6">
+                    {group.status && (
+                        <span className={`
+                            text-sm px-4 py-3 rounded-full 
+                            ${group.status === "申請中" ? 'bg-orange-400' : ''}
+                            ${group.status === "参加中" ? 'bg-[#00B8D9] text-white' : ''}
+                            `}>
+                                {group.status}
+                        </span>
+                    )}
+                </td>
+                <td className="text-sm">
+                    {!group.status && (
+                        <button className="px-4 py-2 rounded-xl border-1 border-green-500 button-fg font-semibold">
+                            参加
+                        </button>
+                    )}
+                    {(group.status === '申請中' || group.status === '参加中') && (
+                        <button className="px-4 py-2 rounded-xl border-1 border-gray-500 font-semibold">
+                            解除
+                        </button>
+                    )}
                 </td>
               </tr>
             ))

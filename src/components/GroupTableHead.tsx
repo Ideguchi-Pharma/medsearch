@@ -11,12 +11,12 @@ interface TableHeaderItem {
 
 // ヘッダーに表示したい項目のリストを作成
 const tableHeaders: TableHeaderItem[] = [
-  { key: 'groupName',   label: 'グループ名',    width: 'w-1/4' },
-  { key: 'region',      label: '地域',         width: 'w-1/4' },
-  { key: 'memberCount', label: '参加数',    width: 'w-1/10' },
-  { key: 'updateDate',  label: '更新日',       width: 'w-2/10' },
-  { key: 'status',      label: 'ステータス',    width: 'w-2/10' },
-  { key: 'button',      label: '',         width: 'w-1/10' },
+  { key: 'groupName',   label: 'グループ名',    width: 'w-[300px]' },
+  { key: 'region',      label: '地域',         width: 'w-[230px]' },
+  { key: 'memberCount', label: '参加数',    width: 'w-[90px]' },
+  { key: 'updateDate',  label: '更新日',       width: 'w-[140px]' },
+  { key: 'status',      label: 'ステータス',    width: 'w-[180px]' },
+  { key: 'button',      label: '',         width: 'w-[110px]' },
 ];
 
 // この部品が必要とする道具（Props）の型を定義

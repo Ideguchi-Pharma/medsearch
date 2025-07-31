@@ -1,18 +1,27 @@
 //グループ検索の絞り込みフィルター部分
 
 import { useMemo } from 'react';
-import { allGroup } from './useGroupData'; //useGroupData.tsで定義した型を再利用
+import { allGroup } from './useGroupData';
+// ★ STEP 1: converters.ts から、ひらがなをカタカナに変換する専門家をインポートする
+import { convertHiraganaToKatakana } from '@/utils/converters'; 
 
-export const useFilteredGroups = (allGroups: allGroup[], searchTerm: string) => { //allGroups:絞り込みたいグループの一覧リスト、searchTerm:ユーザーが入力した検索キーワード
-    const filteredGroups = useMemo(() => { //allGroupsかsearchTermが変更されたときだけ、中の絞り込み処理が行われる
-        if (!searchTerm) {
-            return allGroups; //検索キーワードが空の場合、全リストをそのまま返す
-        }
-        const lowercasedTerm = searchTerm.toLowerCase(); //キーワードを小文字に変換（大文字、小文字の区別しないようにするため）
-        return allGroups.filter(group => 
-            group.groupName.toLowerCase().includes(lowercasedTerm)
-        );
-    },[allGroups, searchTerm]);
-    return filteredGroups;
+export const useFilteredGroups = (allGroups: allGroup[], searchTerm: string) => {
+  const filteredGroups = useMemo(() => {
+    if (!searchTerm) {
+      return allGroups;
+    }
+    
+    // ★ STEP 2: ユーザーが入力したキーワードを、まずカタカナに変換する
+    const katakanaSearchTerm = convertHiraganaToKatakana(searchTerm).toLowerCase();
+
+    return allGroups.filter(group => {
+      // ★ STEP 3: 比較対象のグループ名も、まずカタカナに変換する
+      const katakanaGroupName = convertHiraganaToKatakana(group.groupName).toLowerCase();
+      
+      // ★ STEP 4: カタカナ同士で比較する
+      return katakanaGroupName.includes(katakanaSearchTerm);
+    });
+  }, [allGroups, searchTerm]);
+
+  return filteredGroups;
 };
-
