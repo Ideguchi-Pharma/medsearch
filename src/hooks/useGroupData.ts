@@ -22,6 +22,10 @@ export const useGroupData = () => {
         const fetchData = async () => {
             try {
                 const response = await fetch('/PharmacyData.xlsx'); //Excelデータを取りに行く
+                if (!response.ok) {
+                    throw new Error(`ファイルの取得に失敗しました: ${response.statusText}`);
+                }
+
                 const arrayBuffer = await response.arrayBuffer(); //Excelデータをプログラムで取り扱える形式に変換
                 const workbook = XLSX.read(arrayBuffer, { type: 'buffer' }); 
                 const sheetName = workbook.SheetNames[2]; //Excelの3番目のシートを選ぶ

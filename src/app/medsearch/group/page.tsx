@@ -1,8 +1,46 @@
+'use client';
+
+import React, { useState } from 'react';
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
+import SimpleSearchControls from '@/components/SimpleSearchControls';
+import { GroupTable } from '@/components/GroupTable';
+import { GroupDataProvider, useGroupContext } from '@/contexts/GroupDataContext';
+import { useFilteredGroups } from '@/hooks/useFilteredGroups';
 
-export default function Home() {
+const GroupSearchContext = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+    const { groups, loading, error } = useGroupContext();
+    const filteredGroups = useFilteredGroups(groups, searchTerm);
+
+    if (loading) return
+    <p className="text-center">
+        データを読み込み中...
+    </p>;
+    
+    console.log('エラーの中身を確認:', error);
+
+    if (error) return
+    <p className="text-center text-error">
+        エラーが発生しました: {error.message}
+    </p>;
+
     return (
+        <>
+        <SimpleSearchControls
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        placeholder='Search...'
+        />
+        <div className="divider"></div>
+        <GroupTable groups={filteredGroups} />
+        </>
+    );
+};
+
+export default function GroupPage() { 
+    return (
+        <GroupDataProvider>
         <div className="p-8">
             <p className="
             tracking-[-.01em] text-2xl font-bold 
@@ -35,6 +73,12 @@ export default function Home() {
                 メドサーチでお互いに在庫状況を共有するグループを探します。
                 </p>
             </div>
+            <div className="divider my-6"></div>
+
+            <GroupSearchContext />
+
+
         </div>
+     </GroupDataProvider>
     )
 }
