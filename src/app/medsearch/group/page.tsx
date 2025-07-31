@@ -36,7 +36,11 @@ const GroupSearchContent = () => {
         placeholder='Search...'
         />
         <div className="divider"></div>
-        <GroupTable groups={filteredGroups} />
+        <GroupTable 
+        groups={filteredGroups} 
+        error={error} 
+        searchTerm={searchTerm}
+        />
         </>
     );
 };
