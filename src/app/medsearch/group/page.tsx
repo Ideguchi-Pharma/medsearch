@@ -8,22 +8,25 @@ import { GroupTable } from '@/components/GroupTable';
 import { GroupDataProvider, useGroupContext } from '@/contexts/GroupDataContext';
 import { useFilteredGroups } from '@/hooks/useFilteredGroups';
 
-const GroupSearchContext = () => {
+const GroupSearchContent = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const { groups, loading, error } = useGroupContext();
     const filteredGroups = useFilteredGroups(groups, searchTerm);
 
-    if (loading) return
+    if (loading) { return (
     <p className="text-center">
         データを読み込み中...
-    </p>;
+    </p>
+    );
+}
     
-    console.log('エラーの中身を確認:', error);
 
-    if (error) return
+    if (error && error.message) { return (
     <p className="text-center text-error">
         エラーが発生しました: {error.message}
-    </p>;
+    </p>
+    );
+}
 
     return (
         <>
@@ -75,7 +78,7 @@ export default function GroupPage() {
             </div>
             <div className="divider my-6"></div>
 
-            <GroupSearchContext />
+            <GroupSearchContent />
 
 
         </div>

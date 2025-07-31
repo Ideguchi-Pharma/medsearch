@@ -9,11 +9,10 @@ interface GroupTableProps { //このコンポーネントが受け取る型の�
 
 export const GroupTable: React.FC<GroupTableProps> = ({ groups }) => {
     return (
-        <div className="overflow-x-auto">
-            <table className="table">
+        <div className="mt-6 w-full overflow-x-auto border border-gray-200 dark:border-gray-700">
+            <table className="mt-6 w-full overflow-x-auto border border-gray-200 dark:border-gray-700">
                 <thead>
-                    <tr>
-                        <th>ID</th>
+                    <tr className="px-4 py-8 text-left">
                         <th>グループ名</th>
                         <th>地域</th>
                         <th>メンバー数</th>
@@ -25,7 +24,6 @@ export const GroupTable: React.FC<GroupTableProps> = ({ groups }) => {
                 <tbody>
                     {groups.map((group) => (
                         <tr key={group.id}>
-                            <td>{group.id}</td>
                             <td>{group.groupName}</td>
                             <td>{group.region}</td>
                             <td>{group.memberCount}</td>

@@ -28,7 +28,7 @@ export const useGroupData = () => {
 
                 const arrayBuffer = await response.arrayBuffer(); //Excelデータをプログラムで取り扱える形式に変換
                 const workbook = XLSX.read(arrayBuffer, { type: 'buffer' }); 
-                const sheetName = workbook.SheetNames[2]; //Excelの3番目のシートを選ぶ
+                const sheetName = workbook.SheetNames[3]; //Excelの3番目のシートを選ぶ
                 const worksheet = workbook.Sheets[sheetName];
                 const jsonData: any[] = XLSX.utils.sheet_to_json(worksheet); //シートの中身をJSON形式に変換（オブジェクトの配列）
                 const formattedGroups = jsonData.map(row => ({
