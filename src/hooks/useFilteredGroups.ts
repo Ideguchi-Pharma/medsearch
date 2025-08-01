@@ -4,9 +4,20 @@ import { useMemo } from 'react';
 import { allGroup } from './useGroupData';
 import { convertHiraganaToKatakana } from '@/utils/converters'; 
 
-export const useFilteredGroups = (allGroups: allGroup[], searchTerm: string, selectedRegion: string) => {
+export const useFilteredGroups = (
+  allGroups: allGroup[], 
+  searchTerm: string, 
+  selectedRegion: string,
+  selectedStatus
+) => {
   const filteredGroups = useMemo(() => {
-    const groupsFilteredByRegion = allGroups.filter(group => {
+    const groupsFilteredByStatus = allGroups.filter(group => {
+      if (selectedStatus === '全て')
+        return true;
+      return group.status === selectedStatus;
+    });
+
+    const groupsFilteredByRegion = groupsFilteredByStatus.filter(group => {
       if (selectedRegion === '全て') {
         return true;
       }
@@ -23,7 +34,7 @@ export const useFilteredGroups = (allGroups: allGroup[], searchTerm: string, sel
       const katakanaGroupName = convertHiraganaToKatakana(group.groupName).toLowerCase();
       return katakanaGroupName.includes(katakanaSearchTerm);
     });
-  }, [allGroups, searchTerm, selectedRegion]);
+  }, [allGroups, searchTerm, selectedRegion, selectedStatus]);
 
   return filteredGroups;
 };

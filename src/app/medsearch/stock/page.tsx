@@ -4,12 +4,12 @@ import { CheckCircleIcon } from "@heroicons/react/24/solid";
 const tableHeaders = ["調剤月", "種別", "ステータス", "登録日", ""];
 
 const stockData = [
-    { month: "2026年06月", type: [], status: "未登録", date: ""},
-    { month: "2026年05月", type: [], status: "未登録", date: ""},
-    { month: "2026年04月", type: [], status: "未登録", date: ""},
-    { month: "2026年03月", type: [], status: "未登録", date: ""},
-    { month: "2026年02月", type: ["社保", "国保"], status: "共有中", date: "2025/03/10"},
-    { month: "2026年01月", type: ["国保"], status: "共有中", date: "2025/02/08"},
+    { month: "2025年06月", type: [], status: "未登録", date: ""},
+    { month: "2025年05月", type: [], status: "未登録", date: ""},
+    { month: "2025年04月", type: [], status: "未登録", date: ""},
+    { month: "2025年03月", type: [], status: "未登録", date: ""},
+    { month: "2025年02月", type: ["社保", "国保"], status: "共有中", date: "2025/03/10"},
+    { month: "2025年01月", type: ["国保"], status: "共有中", date: "2025/02/08"},
 ];
 
 const getStatusBadgeClass = (status: string) => {

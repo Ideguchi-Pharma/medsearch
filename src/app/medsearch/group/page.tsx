@@ -11,10 +11,12 @@ import { useFilteredGroups } from '@/hooks/useFilteredGroups';
 const GroupSearchContent = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const regionOptions = ['全て', '近隣', '広域'];
-    const [selectedRegion, setSelectedRegion] =useState(regionOptions[0]);
+    const [selectedRegion, setSelectedRegion] = useState(regionOptions[0]);
+    const statusOptions = ['全て', '参加中', '参加申請中'];
+    const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);
 
     const { groups, loading, error } = useGroupContext();
-    const filteredGroups = useFilteredGroups(groups, searchTerm, selectedRegion);
+    const filteredGroups = useFilteredGroups(groups, searchTerm, selectedRegion, selectedStatus);
     if (loading) { return (
     <p className="text-center">
         データを読み込み中...
@@ -32,6 +34,24 @@ const GroupSearchContent = () => {
 
     return (
         <>
+        <div className="flex space-x-2 border-b mb-4 secondaly-bg">
+            {statusOptions.map(status => (
+                <button
+                    key={status}
+                    onClick={() => setSelectedStatus(status)}
+                    className={`
+                        px-4 py-2 text-sm cursor-pointer
+                        ${selectedStatus === status 
+                            ? 'border-b-2 border-[#00AB55] font-semibold' 
+                            : ''
+                        }
+                    `}
+                >
+                    {status}
+                </button>
+            ))}
+        </div>
+
         <SimpleSearchControls
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
