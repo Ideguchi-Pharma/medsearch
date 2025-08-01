@@ -10,9 +10,11 @@ import { useFilteredGroups } from '@/hooks/useFilteredGroups';
 
 const GroupSearchContent = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const { groups, loading, error } = useGroupContext();
-    const filteredGroups = useFilteredGroups(groups, searchTerm);
+    const regionOptions = ['全て', '近隣', '広域'];
+    const [selectedRegion, setSelectedRegion] =useState(regionOptions[0]);
 
+    const { groups, loading, error } = useGroupContext();
+    const filteredGroups = useFilteredGroups(groups, searchTerm, selectedRegion);
     if (loading) { return (
     <p className="text-center">
         データを読み込み中...
@@ -34,6 +36,9 @@ const GroupSearchContent = () => {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         placeholder='Search...'
+        selectedRegion={selectedRegion}
+        setSelectedRegion={setSelectedRegion}
+        regionOptions={regionOptions}
         />
         <div className="divider"></div>
         <GroupTable 
@@ -50,7 +55,7 @@ export default function GroupPage() {
         <GroupDataProvider>
         <div className="p-8">
             <p className="
-            tracking-[-.01em] text-2xl font-bold 
+            tracking-[-.01em] text-2xl font-bold
             ">
                 グループを探す
             </p>

@@ -2,26 +2,28 @@
 
 import { useMemo } from 'react';
 import { allGroup } from './useGroupData';
-// ★ STEP 1: converters.ts から、ひらがなをカタカナに変換する専門家をインポートする
 import { convertHiraganaToKatakana } from '@/utils/converters'; 
 
-export const useFilteredGroups = (allGroups: allGroup[], searchTerm: string) => {
+export const useFilteredGroups = (allGroups: allGroup[], searchTerm: string, selectedRegion: string) => {
   const filteredGroups = useMemo(() => {
+    const groupsFilteredByRegion = allGroups.filter(group => {
+      if (selectedRegion === '全て') {
+        return true;
+      }
+      return group.region === selectedRegion;
+    });
+
     if (!searchTerm) {
-      return allGroups;
+      return groupsFilteredByRegion;
     }
-    
-    // ★ STEP 2: ユーザーが入力したキーワードを、まずカタカナに変換する
+
     const katakanaSearchTerm = convertHiraganaToKatakana(searchTerm).toLowerCase();
 
-    return allGroups.filter(group => {
-      // ★ STEP 3: 比較対象のグループ名も、まずカタカナに変換する
+    return groupsFilteredByRegion.filter(group => {
       const katakanaGroupName = convertHiraganaToKatakana(group.groupName).toLowerCase();
-      
-      // ★ STEP 4: カタカナ同士で比較する
       return katakanaGroupName.includes(katakanaSearchTerm);
     });
-  }, [allGroups, searchTerm]);
+  }, [allGroups, searchTerm, selectedRegion]);
 
   return filteredGroups;
 };
