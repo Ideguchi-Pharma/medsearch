@@ -50,7 +50,7 @@ const GroupSearchContent = () => {
 
     return (
         <>
-        <div className="flex space-x-2 border-b border-gray-200 dark:border-gray-700 mb-4">
+        <div className="flex space-x-2 border-b border-gray-200 dark:border-gray-700 mb-6 secondaly-bg rounded-t-2xl">
             {statusOptions.map(status => (
                 <button
                     key={status.value}
@@ -144,8 +144,9 @@ export default function GroupPage() {
             </div>
             <div className="divider my-6"></div>
 
+            <div className="w-full border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xs pb-4">
             <GroupSearchContent />
-
+            </div>
 
         </div>
      </GroupDataProvider>
