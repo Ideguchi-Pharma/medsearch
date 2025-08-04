@@ -7,6 +7,7 @@ import SimpleSearchControls from '@/components/SimpleSearchControls';
 import { GroupTable } from '@/components/GroupTable';
 import { GroupDataProvider, useGroupContext } from '@/contexts/GroupDataContext';
 import { useFilteredGroups } from '@/hooks/useFilteredGroups';
+import PaginationControls from '@/components/PaginationControls';
 
 const GroupSearchContent = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -14,9 +15,18 @@ const GroupSearchContent = () => {
     const [selectedRegion, setSelectedRegion] = useState(regionOptions[0]);
     const statusOptions = ['全て', '参加中', '参加申請中'];
     const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);
+    const [currentPage, setCurrentPage] = useState(1); //ページ送りと列高さ縮小のためのstate
+    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [isCompact, setIsCompact] = useState(false);
 
     const { groups, loading, error } = useGroupContext();
     const filteredGroups = useFilteredGroups(groups, searchTerm, selectedRegion, selectedStatus);
+
+    const paginatedData = filteredGroups.slice(
+        (currentPage -1) * rowsPerPage,
+        currentPage * rowsPerPage
+    );
+
     if (loading) { return (
     <p className="text-center">
         データを読み込み中...
@@ -62,10 +72,22 @@ const GroupSearchContent = () => {
         />
         <div className="divider"></div>
         <GroupTable 
-        groups={filteredGroups} 
+        groups={paginatedData} 
         error={error} 
         searchTerm={searchTerm}
+        isCompact={isCompact}
         />
+        {filteredGroups.length > 0 && (
+            <PaginationControls
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
+            totalRows={filteredGroups.length}
+            isCompact={isCompact}
+            setIsCompact={setIsCompact}
+            />
+        )}
         </>
     );
 };
