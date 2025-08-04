@@ -57,7 +57,7 @@ export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTer
   }, [groups, sortColumn, sortOrder]);
 
   return (
-    <div className="mt-6 w-full overflow-x-auto border border-gray-200 dark:border-gray-700 rounded-lg">
+    <div className="mt-6 w-full overflow-x-auto border border-gray-200 dark:border-gray-700">
       <table className="w-full min-w-[900px] divide-y divide-gray-200 dark:divide-gray-700">
         <GroupTableHead
           sortColumn={sortColumn}

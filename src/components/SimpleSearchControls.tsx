@@ -3,7 +3,7 @@
 import React from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption } from '@headlessui/react';
-import { ChevronUpDownIcon } from '@heroicons/react/20/solid';
+import { ChevronUpDownIcon, TrashIcon } from '@heroicons/react/20/solid';
 
 interface SimpleSearchControlsProps {
     searchTerm: string;
@@ -23,7 +23,7 @@ const SimpleSearchControls: React.FC<SimpleSearchControlsProps> =({
     regionOptions
 }) => {
     return (
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full px-4">
             {/* ★ STEP 2: リストボックス（プルダウン）のUIを追加 */}
             <div className="w-full sm:w-48">
                 <Listbox value={selectedRegion} onChange={setSelectedRegion}>
@@ -56,7 +56,8 @@ const SimpleSearchControls: React.FC<SimpleSearchControlsProps> =({
                     </div>
                 </Listbox>
             </div>
-
+        
+        <div className="w-full flex-grow flex flex-col sm:flex-row relative items-center">
         <div className="relative w-full">
             <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                 <MagnifyingGlassIcon className="w-4 h-4" />
@@ -72,6 +73,31 @@ const SimpleSearchControls: React.FC<SimpleSearchControlsProps> =({
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder={placeholder || 'Search...'}
             />
+        </div>
+        {searchTerm.length > 0 && (
+              <>
+                {/* PC用クリアボタン */}
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm('')}
+                  className="sm:flex hidden items-center justify-center ml-2 w-28 h-8 px-2 rounded-md hover-bg"
+                  aria-label="クリア"
+                >
+                  <TrashIcon className="h-4 w-4 mr-1 align-middle" />
+                  <span className="align-middle text-sm">クリア</span>
+                </button>
+                {/* モバイル用クリアボタン */}
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm('')}
+                  className="sm:hidden mt-2 flex items-center justify-center py-2 rounded hover-bg"
+                  aria-label="クリア"
+                >
+                  <TrashIcon className="h-5 w-5 mr-1" />
+                  <span className="text-sm">クリア</span>
+                </button>
+              </>
+            )}
         </div>
     </div>
     );

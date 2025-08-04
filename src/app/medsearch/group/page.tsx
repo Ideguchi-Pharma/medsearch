@@ -13,9 +13,15 @@ const GroupSearchContent = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const regionOptions = ['全て', '近隣', '広域'];
     const [selectedRegion, setSelectedRegion] = useState(regionOptions[0]);
-    const statusOptions = ['全て', '参加中', '参加申請中'];
-    const [selectedStatus, setSelectedStatus] = useState(statusOptions[0]);
-    const [currentPage, setCurrentPage] = useState(1); //ページ送りと列高さ縮小のためのstate
+    
+    const statusOptions = [
+        { display: '全て', value: '全て' },
+        { display: '参加中', value: '参加中' },
+        { display: '参加申請中', value: '申請中' },
+    ];
+    const [selectedStatus, setSelectedStatus] = useState(statusOptions[0].value);
+
+    const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [isCompact, setIsCompact] = useState(false);
 
@@ -23,7 +29,7 @@ const GroupSearchContent = () => {
     const filteredGroups = useFilteredGroups(groups, searchTerm, selectedRegion, selectedStatus);
 
     const paginatedData = filteredGroups.slice(
-        (currentPage -1) * rowsPerPage,
+        (currentPage - 1) * rowsPerPage,
         currentPage * rowsPerPage
     );
 
@@ -44,20 +50,29 @@ const GroupSearchContent = () => {
 
     return (
         <>
-        <div className="flex space-x-2 border-b mb-4 secondaly-bg">
+        <div className="flex space-x-2 border-b border-gray-200 dark:border-gray-700 mb-4">
             {statusOptions.map(status => (
                 <button
-                    key={status}
-                    onClick={() => setSelectedStatus(status)}
+                    key={status.value}
+                    onClick={() => setSelectedStatus(status.value)}
                     className={`
-                        px-4 py-2 text-sm cursor-pointer
-                        ${selectedStatus === status 
-                            ? 'border-b-2 border-[#00AB55] font-semibold' 
-                            : ''
+                        relative px-4 py-2 text-sm cursor-pointer transition-colors duration-200
+                        focus:outline-none
+                        ${selectedStatus === status.value
+                            ? 'font-semibold'
+                            : 'secondaly-fg hover:text-[var(--foreground)]'
                         }
                     `}
                 >
-                    {status}
+                    {status.display}
+                    <span
+                        className={`
+                            absolute bottom-[-1px] left-0 right-0 h-[2px] bg-[#00AB55]
+                            transition-transform duration-300 ease-in-out
+                            origin-center
+                            ${selectedStatus === status.value ? 'scale-x-100' : 'scale-x-0'}
+                        `}
+                    />
                 </button>
             ))}
         </div>

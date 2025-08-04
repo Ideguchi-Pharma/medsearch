@@ -35,7 +35,7 @@ const GroupTableHead = ({ sortColumn, sortOrder, onSort }: GroupTableHeadProps) 
             key={header.key}
             scope="col"
             className={`
-                px-6 py-3 text-sm font-bold uppercase tracking-wider
+                px-6 py-3 text-sm font-bold uppercase tracking-wider 
                 ${header.width}
                 relative group overflow-visible
                 cursor-pointer transition-colors duration-200  
