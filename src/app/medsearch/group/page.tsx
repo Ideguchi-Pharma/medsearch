@@ -56,7 +56,7 @@ const GroupSearchContent = () => {
                     key={status.value}
                     onClick={() => setSelectedStatus(status.value)}
                     className={`
-                        relative px-4 py-2 text-sm cursor-pointer transition-colors duration-200
+                        relative px-4 py-4 text-sm cursor-pointer transition-colors duration-200
                         focus:outline-none
                         ${selectedStatus === status.value
                             ? 'font-semibold'

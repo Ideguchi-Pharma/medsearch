@@ -73,7 +73,6 @@ export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTer
             sortedGroups.map((group) => (
               <tr key={group.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
                 <td className={`px-4 text-sm font-semibold ${isCompact ? 'py-1.5' : 'py-3'}`}>
-                  {/* グループ名をクリックすると詳細ページに飛ぶようにする */}
                   <Link href={`/medsearch/group/${group.id}`} className="button-fg">
                     {group.groupName}
                   </Link>
@@ -94,7 +93,7 @@ export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTer
                 <td className={`pl-6 ${isCompact ? 'py-1.5' : 'py-3'}`}>
                     {group.status && (
                         <span className={`
-                            text-sm px-4 py-3 rounded-full 
+                            text-sm px-4 py-3 rounded-full
                             ${group.status === "申請中" ? 'bg-orange-400' : ''}
                             ${group.status === "参加中" ? 'bg-[#00B8D9] text-white' : ''}
                             `}>
@@ -104,12 +103,12 @@ export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTer
                 </td>
                 <td className={`text-sm ${isCompact ? 'py-1.5' : 'py-3'}`}>
                     {!group.status && (
-                        <button className="px-4 py-2 rounded-xl border-1 border-green-500 button-fg font-semibold">
+                        <button className="px-4 py-2 rounded-xl border-1 border-green-500 button-fg font-semibold cursor-pointer">
                             参加
                         </button>
                     )}
                     {(group.status === '申請中' || group.status === '参加中') && (
-                        <button className="px-4 py-2 rounded-xl border-1 border-gray-500 font-semibold">
+                        <button className="px-4 py-2 rounded-xl border-1 border-gray-500 font-semibold cursor-pointer">
                             解除
                         </button>
                     )}

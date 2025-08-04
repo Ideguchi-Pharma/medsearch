@@ -6,7 +6,7 @@ export interface allGroup {
     groupName: string;
     region: string;
     memberCount: number;
-    updateDate: string; // Day.jsが読める 'YYYY-MM-DD' 形式の文字列が入る
+    updateDate: string; 
     status: string;
     button: string;
 }
