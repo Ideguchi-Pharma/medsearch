@@ -7,7 +7,7 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
 
-// 医薬品データの型定義
+// --- 型定義セクション ---
 export interface PharmacyData {
   drugName: string;
   price: number;
@@ -17,40 +17,63 @@ export interface PharmacyData {
   dispenseAmount: number;
   lastDispenseDate: string;
   facilityNumber: string;
-  facilityId: string; 
+  facilityId: string;
 }
-
-// グループデータの型定義
+export interface Facility {
+  id: string;
+  facilityName: string;
+  groupId: string;
+  [key: string]: any;
+}
 export interface Group {
   id: string;
   name: string;
 }
-
-// 施設データの型定義
-export interface Facility {
-  id: string; // IDの型はstring
-  facilityName: string;
-  groupId: string; // groupIdを追加
-  [key: string]: any;
+export interface AllGroup {
+    id: string;
+    groupName: string;
+    region: string;
+    memberCount: number;
+    updateDate: string;
+    status: string;
+    button: string;
+}
+export interface GroupDetail {
+  groupId: string;
+  groupName: string;
+  postCode: string;
+  address: string;
+  contactAddress: string;
+  explanation: string;
 }
 
-// Contextが持つデータの型定義
+// --- Contextが持つ全データの型定義 ---
 interface DataContextType {
   pharmacyData: PharmacyData[];
   facilities: Facility[];
-  groups: Group[]; // groups を追加
+  groups: Group[];
+  allGroups: AllGroup[];
+  groupDetails: GroupDetail[];
   isLoading: boolean;
   error: string | null;
 }
 
-// Contextの作成
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
-// Contextを他のコンポーネントに提供するProviderコンポーネント
+function convertExcelDate(serial: any, format: string = 'YYYY-MM-DD'): string {
+    if (typeof serial !== 'number' || serial <= 0) {
+        return '';
+    }
+    const date = dayjs('1899-12-30').add(serial, 'day');
+    return date.format(format);
+}
+
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [pharmacyData, setPharmacyData] = useState<PharmacyData[]>([]);
   const [facilities, setFacilities] = useState<Facility[]>([]);
-  const [groups, setGroups] = useState<Group[]>([]); // groups の state を追加
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [allGroups, setAllGroups] = useState<AllGroup[]>([]);
+  const [groupDetails, setGroupDetails] = useState<GroupDetail[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -61,58 +84,66 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         if (!response.ok) throw new Error('Excel file not found');
         
         const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: 'array', cellDates: true });
+        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
 
-        // --- ▼ここからが大きな修正ポイントです ---
-
-        // 1. 先に施設情報（2シート目）を読み込む
+        // 1. 施設情報 (2シート目)
         const facilitySheetName = workbook.SheetNames[1];
         const facilityWorksheet = workbook.Sheets[facilitySheetName];
         const facilityJson: any[] = XLSX.utils.sheet_to_json(facilityWorksheet);
-        
-        // 2. ExcelのuniqueId列を'id'として扱い、各施設情報にIDを持たせる
         const facilitiesWithId = facilityJson.map((facility) => ({
           ...facility,
           id: facility.uniqueId, 
-          groupId: facility.groupId, // groupIdをfacilityオブジェクトに含める
+          groupId: facility.groupId,
         }));
         setFacilities(facilitiesWithId);
-        
-        // 3. 「施設名」をキーにして、すぐに施設情報を取り出せる対応表（Map）を作成
         const facilityMap = new Map(facilitiesWithId.map(f => [f.facilityName, f]));
 
-        // 4. 医薬品情報（1シート目）を読み込み、対応表を使ってIDなどを追加する
+        // 2. 医薬品情報 (1シート目)
         const pharmacySheetName = workbook.SheetNames[0];
         const pharmacyWorksheet = workbook.Sheets[pharmacySheetName];
-        const pharmacyJsonData: Record<string, unknown>[] = XLSX.utils.sheet_to_json(pharmacyWorksheet);
-        const processedPharmacyData = pharmacyJsonData.map((item: Record<string, unknown>) => {
-            const facilityName = (item.facilityName as string) || '';
-            const facilityInfo = facilityMap.get(facilityName); // 対応表から施設情報を取得
-
-            let formattedDateString = '';
-            const rawDateValue = item.lastDispenseDate;
-            if (rawDateValue instanceof Date) {
-              formattedDateString = dayjs(rawDateValue).format('YYYY/MM/DD');
-            }
+        const pharmacyJsonData: any[] = XLSX.utils.sheet_to_json(pharmacyWorksheet);
+        const processedPharmacyData = pharmacyJsonData.map((item) => {
+            const facilityInfo = facilityMap.get(item.facilityName || '');
             return {
               drugName: (item.drugName as string) || '',
-              price: Number(item.price),
-              facilityName: facilityName,
-              distance: Number(item.distance),
-              dispenseCount: Number(item.dispenseCount),
-              dispenseAmount: Number(item.dispenseAmount),
-              lastDispenseDate: formattedDateString,
-              // 対応表から取得した情報を追加
+              price: Number(item.price) || 0,
+              facilityName: item.facilityName || '',
+              distance: Number(item.distance) || 0,
+              dispenseCount: Number(item.dispenseCount) || 0,
+              dispenseAmount: Number(item.dispenseAmount) || 0,
+              lastDispenseDate: convertExcelDate(item.lastDispenseDate, 'YYYY/MM/DD'),
               facilityNumber: facilityInfo?.facilityNumber || '',
               facilityId: facilityInfo?.id || '',
             };
         });
         setPharmacyData(processedPharmacyData);
 
-        const groupSheetName = workbook.SheetNames[2]; // 3番目のシート
+        // 3. グループ情報 (3シート目)
+        const groupSheetName = workbook.SheetNames[2]; 
         const groupWorksheet = workbook.Sheets[groupSheetName];
         const groupJson: Group[] = XLSX.utils.sheet_to_json(groupWorksheet);
         setGroups(groupJson);
+
+        // 4. 全グループ情報 (4シート目)
+        const allGroupsSheetName = workbook.SheetNames[3];
+        const allGroupsWorksheet = workbook.Sheets[allGroupsSheetName];
+        const allGroupsJson: any[] = XLSX.utils.sheet_to_json(allGroupsWorksheet);
+        const formattedAllGroups = allGroupsJson.map(row => ({
+            id: String(row['id'] || ''),
+            groupName: String(row['groupName'] || ''),
+            region: String(row['region'] || ''),
+            memberCount: Number(row['memberCount'] || 0),
+            updateDate: convertExcelDate(row['updateDate']),
+            status: String(row['status'] || ''),
+            button: String(row['button'] || '')
+        }));
+        setAllGroups(formattedAllGroups);
+
+        // 5. グループ詳細情報 (5シート目)
+        const groupDetailsSheetName = workbook.SheetNames[4];
+        const groupDetailsWorksheet = workbook.Sheets[groupDetailsSheetName];
+        const groupDetailsJson: GroupDetail[] = XLSX.utils.sheet_to_json(groupDetailsWorksheet);
+        setGroupDetails(groupDetailsJson);
 
       } catch (err: unknown) {
         console.error("Failed to load data:", err);
@@ -124,12 +155,11 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     fetchExcelData();
   }, []);
 
-  const value = { pharmacyData, facilities, groups, isLoading, error };
+  const value = { pharmacyData, facilities, groups, allGroups, groupDetails, isLoading, error };
 
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
 
-// Contextを簡単に使うためのカスタムフック
 export const useData = () => {
   const context = useContext(DataContext);
   if (context === undefined) {

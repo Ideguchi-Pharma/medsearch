@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
 
-// グループ詳細データの型定義
 export interface GroupDetail {
   groupId: string;
   groupName: string;

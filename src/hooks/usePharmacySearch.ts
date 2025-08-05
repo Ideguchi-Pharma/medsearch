@@ -6,12 +6,9 @@ import { useData } from '@/contexts/DataContext';
 import type { PharmacyData, Facility, Group } from '@/contexts/DataContext';
 import { convertHiraganaToKatakana } from '@/utils/converters';
 
-// このフックがpage.tsxに渡す道具一式の設計図
 export function usePharmacySearch() {
-  // --- データ置き場からデータを取得 ---
   const { pharmacyData, facilities, groups, isLoading: isDataLoading, error: loadingError } = useData();
 
-  // --- page.tsxから引っ越してきた状態管理 ---
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
   const [sortColumn, setSortColumn] = useState<keyof PharmacyData | null>('distance');
@@ -21,14 +18,11 @@ export function usePharmacySearch() {
   const [isCompact, setIsCompact] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  // --- page.tsxから引っ越してきたロジック ---
 
-  // マウント時に一度だけ実行
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  // マウント後にsessionStorageから値を復元
   useEffect(() => {
     if (isMounted) {
       const savedSearchTerm = sessionStorage.getItem('searchTerm') || '';
@@ -40,7 +34,6 @@ export function usePharmacySearch() {
     }
   }, [isMounted]);
 
-  // 状態が変わるたびにsessionStorageに保存
   useEffect(() => {
     if (isMounted) sessionStorage.setItem('searchTerm', searchTerm);
   }, [searchTerm, isMounted]);
@@ -59,7 +52,7 @@ export function usePharmacySearch() {
     }
   };
 
-  // 絞り込みと並び替えの計算（useFilteredPharmacies.tsの仕事をここに統合）
+  // 絞り込みと並び替えの計算（useFilteredPharmacies.tsの役割をここに統合）
   const filteredPharmacyData = useMemo(() => {
     if (isDataLoading || !selectedGroup) {
       return [];

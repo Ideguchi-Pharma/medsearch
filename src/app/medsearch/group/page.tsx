@@ -5,7 +5,7 @@ import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import SimpleSearchControls from '@/components/SimpleSearchControls';
 import { GroupTable } from '@/components/GroupTable';
-import { GroupDataProvider, useGroupContext } from '@/contexts/GroupDataContext';
+import { useData } from '@/contexts/DataContext';
 import { useFilteredGroups } from '@/hooks/useFilteredGroups';
 import PaginationControls from '@/components/PaginationControls';
 
@@ -25,8 +25,8 @@ const GroupSearchContent = () => {
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [isCompact, setIsCompact] = useState(false);
 
-    const { groups, loading, error } = useGroupContext();
-    const filteredGroups = useFilteredGroups(groups, searchTerm, selectedRegion, selectedStatus);
+    const { allGroups, isLoading: loading, error } = useData();
+    const filteredGroups = useFilteredGroups(allGroups, searchTerm, selectedRegion, selectedStatus);
 
     const paginatedData = filteredGroups.slice(
         (currentPage - 1) * rowsPerPage,
@@ -39,11 +39,9 @@ const GroupSearchContent = () => {
     </p>
     );
 }
-    
-
-    if (error && error.message) { return (
+    if (error && error) { return ( // errorがnullでないことを確認
     <p className="text-center text-error">
-        エラーが発生しました: {error.message}
+        エラーが発生しました: {error}
     </p>
     );
 }
@@ -78,29 +76,29 @@ const GroupSearchContent = () => {
         </div>
 
         <SimpleSearchControls
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        placeholder='Search...'
-        selectedRegion={selectedRegion}
-        setSelectedRegion={setSelectedRegion}
-        regionOptions={regionOptions}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            placeholder='Search...'
+            selectedRegion={selectedRegion}
+            setSelectedRegion={setSelectedRegion}
+            regionOptions={regionOptions}
         />
         <div className="divider"></div>
         <GroupTable 
-        groups={paginatedData} 
-        error={error} 
-        searchTerm={searchTerm}
-        isCompact={isCompact}
+            groups={paginatedData} 
+            error={error ? new Error(error) : null} // errorをErrorオブジェクトに変換
+            searchTerm={searchTerm}
+            isCompact={isCompact}
         />
         {filteredGroups.length > 0 && (
             <PaginationControls
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            rowsPerPage={rowsPerPage}
-            setRowsPerPage={setRowsPerPage}
-            totalRows={filteredGroups.length}
-            isCompact={isCompact}
-            setIsCompact={setIsCompact}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                rowsPerPage={rowsPerPage}
+                setRowsPerPage={setRowsPerPage}
+                totalRows={filteredGroups.length}
+                isCompact={isCompact}
+                setIsCompact={setIsCompact}
             />
         )}
         </>
@@ -109,7 +107,6 @@ const GroupSearchContent = () => {
 
 export default function GroupPage() { 
     return (
-        <GroupDataProvider>
         <div className="p-8">
             <p className="
             tracking-[-.01em] text-2xl font-bold
@@ -145,10 +142,8 @@ export default function GroupPage() {
             <div className="divider my-6"></div>
 
             <div className="w-full border border-gray-200 dark:border-gray-700 rounded-2xl shadow-xs pb-4">
-            <GroupSearchContent />
+                <GroupSearchContent />
             </div>
-
         </div>
-     </GroupDataProvider>
     )
 }

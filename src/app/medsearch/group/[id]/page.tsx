@@ -2,20 +2,21 @@
 
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { useGroupDetailData, GroupDetail } from '@/hooks/useGroupDetailData'; // 新しく作ったフックをインポート
+import { useData } from '@/contexts/DataContext';
+import type { GroupDetail } from '@/contexts/DataContext';
 
 export default function GroupDetailPage() {
   const params = useParams();
   const groupId = params.id as string;
 
-  // 新しいフックでデータを取得
-  const { group, isLoading, error } = useGroupDetailData(groupId);
+  const { groupDetails, isLoading, error } = useData();
+
+  const group = isLoading ? null : groupDetails.find(g => g.groupId === groupId);
 
   if (isLoading) return <div className="p-8 text-center">読み込み中...</div>;
   if (error) return <div className="p-8 text-center text-red-500">エラー: {error}</div>;
   if (!group) return <div className="p-8 text-center">グループが見つかりませんでした。</div>;
 
-  // 表示ラベルの対応表
   const labelMap: Record<keyof GroupDetail, string> = {
     groupId: 'グループID',
     groupName: 'グループ名',
@@ -41,7 +42,7 @@ export default function GroupDetailPage() {
         <div className="space-y-3">
           {Object.keys(group).map((key) => {
             const typedKey = key as keyof GroupDetail;
-            if (labelMap[typedKey] && typedKey !== 'groupName' && typedKey !== 'groupId') { //グループ名とIDは表示させない
+            if (labelMap[typedKey] && typedKey !== 'groupName' && typedKey !== 'groupId') {
               return (
                 <div key={key} className="flex">
                   <span className="min-w-[120px] secondaly-fg">{labelMap[typedKey]}：</span>
