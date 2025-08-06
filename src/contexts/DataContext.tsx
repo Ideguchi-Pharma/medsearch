@@ -1,4 +1,4 @@
-// src/contexts/DataContext.tsx (修正後)
+// src/contexts/DataContext.tsx (真の最終解決版)
 
 'use client';
 
@@ -7,17 +7,14 @@ import * as XLSX from 'xlsx';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-// Spannerのライブラリはもう不要なので削除
-// import { Spanner } from '@google-cloud/spanner'; 
-
 dayjs.extend(customParseFormat);
 
-// --- 型定義セクション (変更なし) ---
+// --- 型定義 (FacilityにfacilityNumberを追加) ---
 export interface PharmacyData {
   drugName: string; price: number; facilityName: string; distance: number; dispenseCount: number; dispenseAmount: number; lastDispenseDate: string; facilityNumber: string; facilityId: string;
 }
 export interface Facility {
-  id: string; facilityName: string; groupId: string; [key: string]: any;
+  id: string; facilityName: string; groupId: string; facilityNumber: string; [key: string]: any;
 }
 export interface Group {
   id: string; name: string;
@@ -47,17 +44,15 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     const loadData = async () => {
       try {
         if (process.env.NODE_ENV === 'development') {
-          // --- 開発環境：自作のAPIルートからデータを取得 ---
-          console.log("開発環境を検出しました。/api/data からデータを取得します...");
+          console.log("開発環境：APIからデータを取得します...");
           await loadDataFromApi();
         } else {
-          // --- 本番環境：Excelファイルからデータを取得 ---
-          console.log("本番環境を検出しました。Excelファイルからデータを取得します...");
+          console.log("本番環境：Excelからデータを取得します...");
           await loadDataFromExcel();
         }
       } catch (err: unknown) {
-        console.error("データの読み込みに失敗しました:", err);
-        setError(err instanceof Error ? err.message : '不明なエラーが発生しました');
+        console.error("データ読み込み失敗:", err);
+        setError(err instanceof Error ? err.message : '不明なエラー');
       } finally {
         setIsLoading(false);
       }
@@ -65,31 +60,29 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     loadData();
   }, []);
 
-  // --- APIルートからデータを取得する新しい関数 ---
   const loadDataFromApi = async () => {
-    // Spannerへの接続はAPIルートに任せ、ここでは単純にfetchするだけ
-    const response = await fetch('/api/data');
+    // APIルートは分離した専門サーバー(server.js)を呼び出す
+    const response = await fetch('http://localhost:3001/api/data');
     if (!response.ok) {
-      throw new Error('APIからのデータ取得に失敗しました');
+      throw new Error(`データサーバーからの応答エラー: ${response.statusText}`);
     }
     const data = await response.json();
-
-    // APIから受け取ったデータをstateにセット
+    
+    // APIから受け取ったデータをそのままstateにセット
+    // サーバー側で整形済みなので、フロントでは何もしなくて良い
     setPharmacyData(data.pharmacyData);
     setFacilities(data.facilities);
     setGroups(data.groups);
     setAllGroups(data.allGroups);
     setGroupDetails(data.groupDetails);
   };
-
-  // --- 従来のExcelファイルからデータを取得する関数 (変更なし) ---
+  
+  // (Excelから読み込む関数は変更なし)
   const loadDataFromExcel = async () => {
     const response = await fetch('/PharmacyData.xlsx');
     if (!response.ok) throw new Error('Excel file not found');
     const arrayBuffer = await response.arrayBuffer();
     const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-    
-    // (以下、元のExcel読み込み処理)
     const facilitySheetName = workbook.SheetNames[1];
     const facilityWorksheet = workbook.Sheets[facilitySheetName];
     const facilityJson: any[] = XLSX.utils.sheet_to_json(facilityWorksheet);
@@ -124,7 +117,6 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const value = { pharmacyData, facilities, groups, allGroups, groupDetails, isLoading, error };
-
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
 };
 

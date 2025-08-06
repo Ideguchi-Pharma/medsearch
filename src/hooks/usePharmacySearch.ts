@@ -1,13 +1,15 @@
+// src/hooks/usePharmacySearch.ts (完成版)
+
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
 import dayjs from 'dayjs';
 import { useData } from '@/contexts/DataContext';
-import type { PharmacyData, Facility, Group } from '@/contexts/DataContext';
+import type { PharmacyData, Group } from '@/contexts/DataContext';
 import { convertHiraganaToKatakana } from '@/utils/converters';
 
 export function usePharmacySearch() {
-  const { pharmacyData: rawPharmacyData, facilities, groups, isLoading: isDataLoading, error: loadingError } = useData();
+  const { pharmacyData, facilities, groups, isLoading: isDataLoading, error: loadingError } = useData();
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
@@ -18,36 +20,30 @@ export function usePharmacySearch() {
   const [isCompact, setIsCompact] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  // 2. Spannerから来た日付の「形式」をアプリが使える形に変換（翻訳）します
-  const pharmacyData = useMemo(() => {
-    // rawPharmacyData (Spannerからの元のデータ) がなければ、空の配列を返す
-    if (!rawPharmacyData) return [];
-    
-    // 配列の各要素（item）に対して処理を実行
-    return rawPharmacyData.map(item => {
-      const dateObject = item.lastDispenseDate as any;
-      // Spannerからのデータ（オブジェクト形式）か、Excelからのデータ（文字列）かを判断
-      const dateValue = dateObject && typeof dateObject === 'object' && dateObject.value 
-        ? dateObject.value // オブジェクトなら .value を取り出す
-        : item.lastDispenseDate; // 文字列ならそのまま使う
-
-      return {
-        ...item, // 元のデータはそのままに
-        // lastDispenseDateだけを、整形した文字列で上書きする
-        lastDispenseDate: String(dateValue || 'N/A').replace(/-/g, '/'),
-      };
-    });
-  }, [rawPharmacyData]); // この処理は rawPharmacyData が変わった時だけ実行される
-
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // --- ▼▼▼ このuseEffectブロックを削除しました ▼▼▼ ---
+  //
+  // useEffect(() => {
+  //   if (isMounted && !selectedGroup && groups && groups.length > 0) {
+  //     const savedGroup = sessionStorage.getItem('selectedGroup');
+  //     if (!savedGroup || savedGroup === 'null') {
+  //       setSelectedGroup(groups[0]);
+  //     }
+  //   }
+  // }, [isMounted, groups, selectedGroup]);
+  //
+  // --- ▲▲▲ 自動選択ロジックはここまで ▲▲▲ ---
+
 
   useEffect(() => {
     if (isMounted) {
       const savedSearchTerm = sessionStorage.getItem('searchTerm') || '';
       const savedGroup = sessionStorage.getItem('selectedGroup');
       setSearchTerm(savedSearchTerm);
+      // sessionStorageから選択済みグループを復元するロジックは残します
       if (savedGroup && savedGroup !== 'null') {
         setSelectedGroup(JSON.parse(savedGroup));
       }
@@ -62,7 +58,6 @@ export function usePharmacySearch() {
     if (isMounted) sessionStorage.setItem('selectedGroup', JSON.stringify(selectedGroup));
   }, [selectedGroup, isMounted]);
 
-  // 並び替えの操作
   const handleSort = (columnKey: keyof PharmacyData) => {
     if (sortColumn === columnKey) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
@@ -72,8 +67,8 @@ export function usePharmacySearch() {
     }
   };
 
-  // 絞り込みと並び替えの計算（useFilteredPharmacies.tsの役割をここに統合）
   const filteredPharmacyData = useMemo(() => {
+    // selectedGroup が null の場合、ここで処理が終了し、空の配列が返ります
     if (isDataLoading || !selectedGroup) {
       return [];
     }
@@ -122,7 +117,6 @@ export function usePharmacySearch() {
     return results;
   }, [searchTerm, pharmacyData, facilities, selectedGroup, sortColumn, sortOrder, isDataLoading]);
 
-  // ページネーション用のデータ切り出し
   const paginatedData = useMemo(() => {
     return filteredPharmacyData.slice(
       (currentPage - 1) * rowsPerPage,
@@ -130,8 +124,6 @@ export function usePharmacySearch() {
     );
   }, [filteredPharmacyData, currentPage, rowsPerPage]);
 
-
-  // page.tsxで必要なものをまとめて返す
   return {
     searchTerm,
     setSearchTerm,
