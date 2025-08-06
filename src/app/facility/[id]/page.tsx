@@ -33,7 +33,7 @@ export default function FacilityDetailPage() {
     <div className="p-8 text-sm">
       <p className="tracking-[-.01em] text-2xl font-bold">施設の詳細</p>
       <div className="flex flex-row gap-[8px] items-start mb-4">
-        <p className="tracking-[-.01em]">マイページ</p>
+        <p><Link href="/mypage" className="tracking-[-.01em] hover:underline cursor-pointer">マイページ</Link></p>
         <p>・</p>
         <p><Link href="/" className="hover:underline cursor-pointer">在庫状況を調べる</Link></p>
         <p>・</p>

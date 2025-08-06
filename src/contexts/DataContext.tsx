@@ -1,3 +1,5 @@
+// src/contexts/DataContext.tsx (修正後)
+
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
@@ -5,68 +7,32 @@ import * as XLSX from 'xlsx';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
+// Spannerのライブラリはもう不要なので削除
+// import { Spanner } from '@google-cloud/spanner'; 
+
 dayjs.extend(customParseFormat);
 
-// --- 型定義セクション ---
+// --- 型定義セクション (変更なし) ---
 export interface PharmacyData {
-  drugName: string;
-  price: number;
-  facilityName: string;
-  distance: number;
-  dispenseCount: number;
-  dispenseAmount: number;
-  lastDispenseDate: string;
-  facilityNumber: string;
-  facilityId: string;
+  drugName: string; price: number; facilityName: string; distance: number; dispenseCount: number; dispenseAmount: number; lastDispenseDate: string; facilityNumber: string; facilityId: string;
 }
 export interface Facility {
-  id: string;
-  facilityName: string;
-  groupId: string;
-  [key: string]: any;
+  id: string; facilityName: string; groupId: string; [key: string]: any;
 }
 export interface Group {
-  id: string;
-  name: string;
+  id: string; name: string;
 }
 export interface AllGroup {
-    id: string;
-    groupName: string;
-    region: string;
-    memberCount: number;
-    updateDate: string;
-    status: string;
-    button: string;
+  id: string; groupName: string; region: string; memberCount: number; updateDate: string; status: string; button: string;
 }
 export interface GroupDetail {
-  groupId: string;
-  groupName: string;
-  postCode: string;
-  address: string;
-  contactAddress: string;
-  explanation: string;
+  groupId: string; groupName: string; postCode: string; address: string; contactAddress: string; explanation: string;
 }
-
-// --- Contextが持つ全データの型定義 ---
 interface DataContextType {
-  pharmacyData: PharmacyData[];
-  facilities: Facility[];
-  groups: Group[];
-  allGroups: AllGroup[];
-  groupDetails: GroupDetail[];
-  isLoading: boolean;
-  error: string | null;
+  pharmacyData: PharmacyData[]; facilities: Facility[]; groups: Group[]; allGroups: AllGroup[]; groupDetails: GroupDetail[]; isLoading: boolean; error: string | null;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);
-
-function convertExcelDate(serial: any, format: string = 'YYYY-MM-DD'): string {
-    if (typeof serial !== 'number' || serial <= 0) {
-        return '';
-    }
-    const date = dayjs('1899-12-30').add(serial, 'day');
-    return date.format(format);
-}
 
 export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [pharmacyData, setPharmacyData] = useState<PharmacyData[]>([]);
@@ -78,82 +44,84 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchExcelData = async () => {
+    const loadData = async () => {
       try {
-        const response = await fetch('/PharmacyData.xlsx');
-        if (!response.ok) throw new Error('Excel file not found');
-        
-        const arrayBuffer = await response.arrayBuffer();
-        const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-
-        // 1. 施設情報 (2シート目)
-        const facilitySheetName = workbook.SheetNames[1];
-        const facilityWorksheet = workbook.Sheets[facilitySheetName];
-        const facilityJson: any[] = XLSX.utils.sheet_to_json(facilityWorksheet);
-        const facilitiesWithId = facilityJson.map((facility) => ({
-          ...facility,
-          id: facility.uniqueId, 
-          groupId: facility.groupId,
-        }));
-        setFacilities(facilitiesWithId);
-        const facilityMap = new Map(facilitiesWithId.map(f => [f.facilityName, f]));
-
-        // 2. 医薬品情報 (1シート目)
-        const pharmacySheetName = workbook.SheetNames[0];
-        const pharmacyWorksheet = workbook.Sheets[pharmacySheetName];
-        const pharmacyJsonData: any[] = XLSX.utils.sheet_to_json(pharmacyWorksheet);
-        const processedPharmacyData = pharmacyJsonData.map((item) => {
-            const facilityInfo = facilityMap.get(item.facilityName || '');
-            return {
-              drugName: (item.drugName as string) || '',
-              price: Number(item.price) || 0,
-              facilityName: item.facilityName || '',
-              distance: Number(item.distance) || 0,
-              dispenseCount: Number(item.dispenseCount) || 0,
-              dispenseAmount: Number(item.dispenseAmount) || 0,
-              lastDispenseDate: convertExcelDate(item.lastDispenseDate, 'YYYY/MM/DD'),
-              facilityNumber: facilityInfo?.facilityNumber || '',
-              facilityId: facilityInfo?.id || '',
-            };
-        });
-        setPharmacyData(processedPharmacyData);
-
-        // 3. グループ情報 (3シート目)
-        const groupSheetName = workbook.SheetNames[2]; 
-        const groupWorksheet = workbook.Sheets[groupSheetName];
-        const groupJson: Group[] = XLSX.utils.sheet_to_json(groupWorksheet);
-        setGroups(groupJson);
-
-        // 4. 全グループ情報 (4シート目)
-        const allGroupsSheetName = workbook.SheetNames[3];
-        const allGroupsWorksheet = workbook.Sheets[allGroupsSheetName];
-        const allGroupsJson: any[] = XLSX.utils.sheet_to_json(allGroupsWorksheet);
-        const formattedAllGroups = allGroupsJson.map(row => ({
-            id: String(row['id'] || ''),
-            groupName: String(row['groupName'] || ''),
-            region: String(row['region'] || ''),
-            memberCount: Number(row['memberCount'] || 0),
-            updateDate: convertExcelDate(row['updateDate']),
-            status: String(row['status'] || ''),
-            button: String(row['button'] || '')
-        }));
-        setAllGroups(formattedAllGroups);
-
-        // 5. グループ詳細情報 (5シート目)
-        const groupDetailsSheetName = workbook.SheetNames[4];
-        const groupDetailsWorksheet = workbook.Sheets[groupDetailsSheetName];
-        const groupDetailsJson: GroupDetail[] = XLSX.utils.sheet_to_json(groupDetailsWorksheet);
-        setGroupDetails(groupDetailsJson);
-
+        if (process.env.NODE_ENV === 'development') {
+          // --- 開発環境：自作のAPIルートからデータを取得 ---
+          console.log("開発環境を検出しました。/api/data からデータを取得します...");
+          await loadDataFromApi();
+        } else {
+          // --- 本番環境：Excelファイルからデータを取得 ---
+          console.log("本番環境を検出しました。Excelファイルからデータを取得します...");
+          await loadDataFromExcel();
+        }
       } catch (err: unknown) {
-        console.error("Failed to load data:", err);
-        setError(err instanceof Error ? err.message : 'An unknown error occurred');
+        console.error("データの読み込みに失敗しました:", err);
+        setError(err instanceof Error ? err.message : '不明なエラーが発生しました');
       } finally {
         setIsLoading(false);
       }
     };
-    fetchExcelData();
+    loadData();
   }, []);
+
+  // --- APIルートからデータを取得する新しい関数 ---
+  const loadDataFromApi = async () => {
+    // Spannerへの接続はAPIルートに任せ、ここでは単純にfetchするだけ
+    const response = await fetch('/api/data');
+    if (!response.ok) {
+      throw new Error('APIからのデータ取得に失敗しました');
+    }
+    const data = await response.json();
+
+    // APIから受け取ったデータをstateにセット
+    setPharmacyData(data.pharmacyData);
+    setFacilities(data.facilities);
+    setGroups(data.groups);
+    setAllGroups(data.allGroups);
+    setGroupDetails(data.groupDetails);
+  };
+
+  // --- 従来のExcelファイルからデータを取得する関数 (変更なし) ---
+  const loadDataFromExcel = async () => {
+    const response = await fetch('/PharmacyData.xlsx');
+    if (!response.ok) throw new Error('Excel file not found');
+    const arrayBuffer = await response.arrayBuffer();
+    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+    
+    // (以下、元のExcel読み込み処理)
+    const facilitySheetName = workbook.SheetNames[1];
+    const facilityWorksheet = workbook.Sheets[facilitySheetName];
+    const facilityJson: any[] = XLSX.utils.sheet_to_json(facilityWorksheet);
+    const facilitiesWithId = facilityJson.map((facility) => ({ ...facility, id: facility.uniqueId, groupId: facility.groupId }));
+    setFacilities(facilitiesWithId);
+    const facilityMap = new Map(facilitiesWithId.map(f => [f.facilityName, f]));
+    const pharmacySheetName = workbook.SheetNames[0];
+    const pharmacyWorksheet = workbook.Sheets[pharmacySheetName];
+    const pharmacyJsonData: any[] = XLSX.utils.sheet_to_json(pharmacyWorksheet);
+    const processedPharmacyData = pharmacyJsonData.map((item) => {
+        const facilityInfo = facilityMap.get(item.facilityName || '');
+        return {
+          drugName: (item.drugName as string) || '', price: Number(item.price) || 0, facilityName: item.facilityName || '', distance: Number(item.distance) || 0, dispenseCount: Number(item.dispenseCount) || 0, dispenseAmount: Number(item.dispenseAmount) || 0, lastDispenseDate: convertExcelDate(item.lastDispenseDate, 'YYYY/MM/DD'), facilityNumber: facilityInfo?.facilityNumber || '', facilityId: facilityInfo?.id || '',
+        };
+    });
+    setPharmacyData(processedPharmacyData);
+    const groupSheetName = workbook.SheetNames[2];
+    const groupWorksheet = workbook.Sheets[groupSheetName];
+    const groupJson: Group[] = XLSX.utils.sheet_to_json(groupWorksheet);
+    setGroups(groupJson);
+    const allGroupsSheetName = workbook.SheetNames[3];
+    const allGroupsWorksheet = workbook.Sheets[allGroupsSheetName];
+    const allGroupsJson: any[] = XLSX.utils.sheet_to_json(allGroupsWorksheet);
+    const formattedAllGroups = allGroupsJson.map(row => ({
+        id: String(row['id'] || ''), groupName: String(row['groupName'] || ''), region: String(row['region'] || ''), memberCount: Number(row['memberCount'] || 0), updateDate: convertExcelDate(row['updateDate']), status: String(row['status'] || ''), button: String(row['button'] || '')
+    }));
+    setAllGroups(formattedAllGroups);
+    const groupDetailsSheetName = workbook.SheetNames[4];
+    const groupDetailsWorksheet = workbook.Sheets[groupDetailsSheetName];
+    const groupDetailsJson: GroupDetail[] = XLSX.utils.sheet_to_json(groupDetailsWorksheet);
+    setGroupDetails(groupDetailsJson);
+  };
 
   const value = { pharmacyData, facilities, groups, allGroups, groupDetails, isLoading, error };
 
@@ -162,8 +130,12 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
 export const useData = () => {
   const context = useContext(DataContext);
-  if (context === undefined) {
-    throw new Error('useData must be used within a DataProvider');
-  }
+  if (context === undefined) { throw new Error('useData must be used within a DataProvider'); }
   return context;
 };
+
+function convertExcelDate(serial: any, format: string = 'YYYY-MM-DD'): string {
+    if (typeof serial !== 'number' || serial <= 0) { return ''; }
+    const date = dayjs('1899-12-30').add(serial, 'day');
+    return date.format(format);
+}
