@@ -7,7 +7,7 @@ import type { PharmacyData, Facility, Group } from '@/contexts/DataContext';
 import { convertHiraganaToKatakana } from '@/utils/converters';
 
 export function usePharmacySearch() {
-  const { pharmacyData, facilities, groups, isLoading: isDataLoading, error: loadingError } = useData();
+  const { pharmacyData: rawPharmacyData, facilities, groups, isLoading: isDataLoading, error: loadingError } = useData();
 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
@@ -18,6 +18,26 @@ export function usePharmacySearch() {
   const [isCompact, setIsCompact] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
+  // 2. Spannerから来た日付の「形式」をアプリが使える形に変換（翻訳）します
+  const pharmacyData = useMemo(() => {
+    // rawPharmacyData (Spannerからの元のデータ) がなければ、空の配列を返す
+    if (!rawPharmacyData) return [];
+    
+    // 配列の各要素（item）に対して処理を実行
+    return rawPharmacyData.map(item => {
+      const dateObject = item.lastDispenseDate as any;
+      // Spannerからのデータ（オブジェクト形式）か、Excelからのデータ（文字列）かを判断
+      const dateValue = dateObject && typeof dateObject === 'object' && dateObject.value 
+        ? dateObject.value // オブジェクトなら .value を取り出す
+        : item.lastDispenseDate; // 文字列ならそのまま使う
+
+      return {
+        ...item, // 元のデータはそのままに
+        // lastDispenseDateだけを、整形した文字列で上書きする
+        lastDispenseDate: String(dateValue || 'N/A').replace(/-/g, '/'),
+      };
+    });
+  }, [rawPharmacyData]); // この処理は rawPharmacyData が変わった時だけ実行される
 
   useEffect(() => {
     setIsMounted(true);
