@@ -2,8 +2,9 @@
 
 import Link from 'next/link';
 import PharmacyTableHead from './PharmacyTableHead';
-import type { PharmacyData } from '@/hooks/usePharmacyData';
+import type { PharmacyData } from '@/contexts/DataContext';
 import { NoDataDisplay } from '@/components/NoDataDisplay'; 
+import dayjs from 'dayjs';
 
 interface PharmacyTableProps {
   loadingError: string | null;
@@ -54,7 +55,9 @@ export default function PharmacyTable({
                 <td className={`px-4 text-sm font-medium text-right w-[80px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.distance}km</td>
                 <td className={`px-4 text-sm text-right w-[105px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.dispenseCount}</td>
                 <td className={`px-4 text-sm text-right w-[90px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.dispenseAmount}</td>
-                <td className={`px-4 text-sm text-right w-[115px] ${isCompact ? 'py-3' : 'py-6'}`}>{pharmacy.lastDispenseDate}</td>
+                <td className={`px-4 text-sm text-right w-[115px] ${isCompact ? 'py-3' : 'py-6'}`}>
+                {dayjs(pharmacy.lastDispenseDate).format('YYYY/MM/DD')}
+                </td>
               </tr>
             ))
           )}

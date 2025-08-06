@@ -1,4 +1,4 @@
-// src/contexts/DataContext.tsx (真の最終解決版)
+// src/contexts/DataContext.tsx
 
 'use client';
 
@@ -9,10 +9,11 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
 
-// --- 型定義 (FacilityにfacilityNumberを追加) ---
+// --- 型定義 ---
 export interface PharmacyData {
   drugName: string; price: number; facilityName: string; distance: number; dispenseCount: number; dispenseAmount: number; lastDispenseDate: string; facilityNumber: string; facilityId: string;
 }
+// ▼▼▼ Facilityの型定義に facilityNumber を追加します ▼▼▼
 export interface Facility {
   id: string; facilityName: string; groupId: string; facilityNumber: string; [key: string]: any;
 }
@@ -44,14 +45,20 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     const loadData = async () => {
       try {
         if (process.env.NODE_ENV === 'development') {
-          console.log("開発環境：APIからデータを取得します...");
-          await loadDataFromApi();
+          const response = await fetch('http://localhost:3001/api/data');
+          if (!response.ok) {
+            throw new Error(`データサーバーからの応答エラー: ${response.statusText}`);
+          }
+          const data = await response.json();
+          setPharmacyData(data.pharmacyData);
+          setFacilities(data.facilities);
+          setGroups(data.groups);
+          setAllGroups(data.allGroups);
+          setGroupDetails(data.groupDetails);
         } else {
-          console.log("本番環境：Excelからデータを取得します...");
           await loadDataFromExcel();
         }
       } catch (err: unknown) {
-        console.error("データ読み込み失敗:", err);
         setError(err instanceof Error ? err.message : '不明なエラー');
       } finally {
         setIsLoading(false);
@@ -60,25 +67,8 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     loadData();
   }, []);
 
-  const loadDataFromApi = async () => {
-    // APIルートは分離した専門サーバー(server.js)を呼び出す
-    const response = await fetch('http://localhost:3001/api/data');
-    if (!response.ok) {
-      throw new Error(`データサーバーからの応答エラー: ${response.statusText}`);
-    }
-    const data = await response.json();
-    
-    // APIから受け取ったデータをそのままstateにセット
-    // サーバー側で整形済みなので、フロントでは何もしなくて良い
-    setPharmacyData(data.pharmacyData);
-    setFacilities(data.facilities);
-    setGroups(data.groups);
-    setAllGroups(data.allGroups);
-    setGroupDetails(data.groupDetails);
-  };
-  
-  // (Excelから読み込む関数は変更なし)
   const loadDataFromExcel = async () => {
+    // (この部分は変更ありません)
     const response = await fetch('/PharmacyData.xlsx');
     if (!response.ok) throw new Error('Excel file not found');
     const arrayBuffer = await response.arrayBuffer();

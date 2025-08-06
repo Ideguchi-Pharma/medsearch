@@ -1,4 +1,4 @@
-// src/hooks/usePharmacySearch.ts (完成版)
+// src/hooks/usePharmacySearch.ts (本来あるべきシンプルな状態)
 
 'use client';
 
@@ -9,6 +9,7 @@ import type { PharmacyData, Group } from '@/contexts/DataContext';
 import { convertHiraganaToKatakana } from '@/utils/converters';
 
 export function usePharmacySearch() {
+  // DataContextから受け取るデータは、すでにサーバー側で完璧に整形されている
   const { pharmacyData, facilities, groups, isLoading: isDataLoading, error: loadingError } = useData();
 
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -20,30 +21,17 @@ export function usePharmacySearch() {
   const [isCompact, setIsCompact] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
+  // 日付の翻訳処理は、サーバーが担当するので、ここでは不要
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  // --- ▼▼▼ このuseEffectブロックを削除しました ▼▼▼ ---
-  //
-  // useEffect(() => {
-  //   if (isMounted && !selectedGroup && groups && groups.length > 0) {
-  //     const savedGroup = sessionStorage.getItem('selectedGroup');
-  //     if (!savedGroup || savedGroup === 'null') {
-  //       setSelectedGroup(groups[0]);
-  //     }
-  //   }
-  // }, [isMounted, groups, selectedGroup]);
-  //
-  // --- ▲▲▲ 自動選択ロジックはここまで ▲▲▲ ---
-
 
   useEffect(() => {
     if (isMounted) {
       const savedSearchTerm = sessionStorage.getItem('searchTerm') || '';
       const savedGroup = sessionStorage.getItem('selectedGroup');
       setSearchTerm(savedSearchTerm);
-      // sessionStorageから選択済みグループを復元するロジックは残します
       if (savedGroup && savedGroup !== 'null') {
         setSelectedGroup(JSON.parse(savedGroup));
       }
@@ -68,11 +56,9 @@ export function usePharmacySearch() {
   };
 
   const filteredPharmacyData = useMemo(() => {
-    // selectedGroup が null の場合、ここで処理が終了し、空の配列が返ります
     if (isDataLoading || !selectedGroup) {
       return [];
     }
-
     const facilityIdsInGroup = facilities
       .filter(f => f.groupId === selectedGroup.id)
       .map(f => f.id);
@@ -113,7 +99,6 @@ export function usePharmacySearch() {
         return 0;
       });
     }
-
     return results;
   }, [searchTerm, pharmacyData, facilities, selectedGroup, sortColumn, sortOrder, isDataLoading]);
 

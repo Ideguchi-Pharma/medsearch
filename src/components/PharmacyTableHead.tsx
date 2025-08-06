@@ -1,6 +1,6 @@
 import React from 'react'; 
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/outline'; 
-import type { PharmacyData } from '@/hooks/usePharmacyData';
+import type { PharmacyData } from '@/contexts/DataContext';
 
 interface TableHeaderItem {
   key: string; 
