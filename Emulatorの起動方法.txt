@@ -1,0 +1,27 @@
+Spanner Emulatorの起動(新しいターミナルで起動)
+docker run -p 9010:9010 -p 9020:9020 gcr.io/cloud-spanner-emulator/emulator
+※閉じない
+
+環境の構築とデータ投入(新しいターミナルで起動)
+# gcloudの設定がemulatorになっていることを確認・有効化
+gcloud config configurations activate emulator
+# インスタンスを再作成
+gcloud spanner instances create test-instance --config=emulator-config --description="Test Instance" --nodes=1
+# データベースを再作成
+gcloud spanner databases create test-database --instance=test-instance --project=test-medsearch
+
+spanner-importerのターミナルに移動し、データベースへデータをインポート
+# 1. Emulatorへの接続先を設定
+$env:SPANNER_EMULATOR_HOST="localhost:9010"
+# 2. schema.sqlファイルを実行して、5つのテーブルを一気に作成
+spanner-cli -p test-medsearch -i test-instance -d test-database -f schema.sql
+# 3. Goプログラムを実行して、すべてのデータをインポート
+go run main.go
+
+spanner-data-serverのターミナルでサーバーを起動
+サーバーが接続するSpanner Emulatorの場所を指定
+$env:SPANNER_EMULATOR_HOST="localhost:9010"
+サーバーを起動
+node server.js
+
+medsearchを起動
