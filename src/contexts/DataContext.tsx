@@ -1,20 +1,15 @@
-// src/contexts/DataContext.tsx
-
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import * as XLSX from 'xlsx';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-
 dayjs.extend(customParseFormat);
 
-// --- 型定義 ---
+// --- 型定義 (変更なし) ---
 export interface PharmacyData {
   drugName: string; price: number; facilityName: string; distance: number; dispenseCount: number; dispenseAmount: number; lastDispenseDate: string; facilityNumber: string; facilityId: string;
 }
-// ▼▼▼ Facilityの型定義に facilityNumber を追加します ▼▼▼
 export interface Facility {
   id: string; facilityName: string; groupId: string; facilityNumber: string; [key: string]: any;
 }
@@ -45,67 +40,33 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        if (process.env.NODE_ENV === 'development') {
-          const response = await fetch('http://localhost:3001/api/data');
-          if (!response.ok) {
-            throw new Error(`データサーバーからの応答エラー: ${response.statusText}`);
-          }
-          const data = await response.json();
-          setPharmacyData(data.pharmacyData);
-          setFacilities(data.facilities);
-          setGroups(data.groups);
-          setAllGroups(data.allGroups);
-          setGroupDetails(data.groupDetails);
-        } else {
-          await loadDataFromExcel();
+        // 環境に関わらず、常にAPIルートからデータを取得する
+        const response = await fetch('/api/data');
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => null);
+          const errorMessage = errorData?.message || response.statusText;
+          throw new Error(`データサーバーからの応答エラー: ${errorMessage}`);
         }
+        const data = await response.json();
+        
+        if(data.message) {
+            throw new Error(data.message);
+        }
+
+        setPharmacyData(data.pharmacyData);
+        setFacilities(data.facilities);
+        setGroups(data.groups);
+        setAllGroups(data.allGroups);
+        setGroupDetails(data.groupDetails);
       } catch (err: unknown) {
-        setError(err instanceof Error ? err.message : '不明なエラー');
+        console.error("DataContext fetch error:", err);
+        setError(err instanceof Error ? err.message : 'データの読み込み中に不明なエラーが発生しました。');
       } finally {
         setIsLoading(false);
       }
     };
     loadData();
   }, []);
-
-  const loadDataFromExcel = async () => {
-    // (この部分は変更ありません)
-    const response = await fetch('/PharmacyData.xlsx');
-    if (!response.ok) throw new Error('Excel file not found');
-    const arrayBuffer = await response.arrayBuffer();
-    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-    const facilitySheetName = workbook.SheetNames[1];
-    const facilityWorksheet = workbook.Sheets[facilitySheetName];
-    const facilityJson: any[] = XLSX.utils.sheet_to_json(facilityWorksheet);
-    const facilitiesWithId = facilityJson.map((facility) => ({ ...facility, id: facility.uniqueId, groupId: facility.groupId }));
-    setFacilities(facilitiesWithId);
-    const facilityMap = new Map(facilitiesWithId.map(f => [f.facilityName, f]));
-    const pharmacySheetName = workbook.SheetNames[0];
-    const pharmacyWorksheet = workbook.Sheets[pharmacySheetName];
-    const pharmacyJsonData: any[] = XLSX.utils.sheet_to_json(pharmacyWorksheet);
-    const processedPharmacyData = pharmacyJsonData.map((item) => {
-        const facilityInfo = facilityMap.get(item.facilityName || '');
-        return {
-          drugName: (item.drugName as string) || '', price: Number(item.price) || 0, facilityName: item.facilityName || '', distance: Number(item.distance) || 0, dispenseCount: Number(item.dispenseCount) || 0, dispenseAmount: Number(item.dispenseAmount) || 0, lastDispenseDate: convertExcelDate(item.lastDispenseDate, 'YYYY/MM/DD'), facilityNumber: facilityInfo?.facilityNumber || '', facilityId: facilityInfo?.id || '',
-        };
-    });
-    setPharmacyData(processedPharmacyData);
-    const groupSheetName = workbook.SheetNames[2];
-    const groupWorksheet = workbook.Sheets[groupSheetName];
-    const groupJson: Group[] = XLSX.utils.sheet_to_json(groupWorksheet);
-    setGroups(groupJson);
-    const allGroupsSheetName = workbook.SheetNames[3];
-    const allGroupsWorksheet = workbook.Sheets[allGroupsSheetName];
-    const allGroupsJson: any[] = XLSX.utils.sheet_to_json(allGroupsWorksheet);
-    const formattedAllGroups = allGroupsJson.map(row => ({
-        id: String(row['id'] || ''), groupName: String(row['groupName'] || ''), region: String(row['region'] || ''), memberCount: Number(row['memberCount'] || 0), updateDate: convertExcelDate(row['updateDate']), status: String(row['status'] || ''), button: String(row['button'] || '')
-    }));
-    setAllGroups(formattedAllGroups);
-    const groupDetailsSheetName = workbook.SheetNames[4];
-    const groupDetailsWorksheet = workbook.Sheets[groupDetailsSheetName];
-    const groupDetailsJson: GroupDetail[] = XLSX.utils.sheet_to_json(groupDetailsWorksheet);
-    setGroupDetails(groupDetailsJson);
-  };
 
   const value = { pharmacyData, facilities, groups, allGroups, groupDetails, isLoading, error };
   return <DataContext.Provider value={value}>{children}</DataContext.Provider>;
@@ -116,9 +77,3 @@ export const useData = () => {
   if (context === undefined) { throw new Error('useData must be used within a DataProvider'); }
   return context;
 };
-
-function convertExcelDate(serial: any, format: string = 'YYYY-MM-DD'): string {
-    if (typeof serial !== 'number' || serial <= 0) { return ''; }
-    const date = dayjs('1899-12-30').add(serial, 'day');
-    return date.format(format);
-}
