@@ -1,3 +1,5 @@
+// 開発環境と本番環境でデータソースを切り替え、アプリにデータを提供するAPIエンドポイント
+
 import { NextResponse } from 'next/server';
 import { Spanner } from '@google-cloud/spanner';
 import path from 'path';

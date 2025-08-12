@@ -1,3 +1,5 @@
+//表示するデータがない売場合にテーブル画面に表示する内容
+
 'use client';
 
 import Image from 'next/image';

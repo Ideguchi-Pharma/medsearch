@@ -1,3 +1,5 @@
+//アプリ内共通のデータ保管庫
+
 'use client';
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';

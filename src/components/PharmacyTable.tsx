@@ -1,3 +1,5 @@
+//医薬品検索結果を表示するテーブル部分
+
 'use client';
 
 import Link from 'next/link';

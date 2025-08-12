@@ -1,3 +1,5 @@
+//「メドサーチとは」ページ
+
 import Link from "next/link"
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 

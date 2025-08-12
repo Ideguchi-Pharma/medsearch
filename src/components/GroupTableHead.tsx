@@ -1,3 +1,5 @@
+///グループを探すページ内のテーブルヘッド部分
+
 import React from 'react';
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/outline';
 import { allGroup } from '@/hooks/useGroupData'; // データの型をインポート

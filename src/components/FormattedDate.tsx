@@ -1,3 +1,5 @@
+//日付をdayjs形式に変換する機能
+
 import React from 'react';
 import dayjs from 'dayjs';
 

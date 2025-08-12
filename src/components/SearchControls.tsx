@@ -1,3 +1,5 @@
+//医薬品検索、絞り込み、並べ替えのUI部分
+
 'use client';
 
 import { Listbox, ListboxButton, ListboxOptions, ListboxOption, Input } from '@headlessui/react';

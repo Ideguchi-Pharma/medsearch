@@ -1,3 +1,5 @@
+//医薬品検索、絞り込み、並び替えの機能部分
+
 'use client';
 
 import { useState, useEffect } from 'react';

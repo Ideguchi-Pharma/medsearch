@@ -1,3 +1,5 @@
+//施設の詳細情報を表示するページ
+
 'use client';
 
 import { useParams } from 'next/navigation';

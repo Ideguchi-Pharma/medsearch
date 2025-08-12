@@ -1,3 +1,5 @@
+//医薬品検索結果を表示するテーブルのヘッダー部分
+
 import React from 'react'; 
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/outline'; 
 import type { PharmacyData } from '@/contexts/DataContext';

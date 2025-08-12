@@ -1,3 +1,5 @@
+//ヘッダーのアカウントボタンより遷移するダイアログ機能
+
 'use client';
 
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';

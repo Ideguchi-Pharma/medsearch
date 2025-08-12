@@ -1,3 +1,5 @@
+//「グループを探す」ページ
+
 'use client';
 
 import React, { useState } from 'react';
@@ -108,6 +110,8 @@ const GroupSearchContent = () => {
 export default function GroupPage() { 
     return (
         <div className="p-8">
+            <div className="flex flex-row items-center justify-between">
+            <div>
             <p className="
             tracking-[-.01em] text-2xl font-bold
             ">
@@ -129,6 +133,11 @@ export default function GroupPage() {
                 ">
                     グループを探す
                 </p>
+            </div>
+            </div>
+                <Link href={"group/create"} className="p-2 button-fg rounded-lg text-sm font-bold">
+                    ＋ グループの作成
+                </Link>
             </div>
             <div className="
             flex flex-row items-center justify-start

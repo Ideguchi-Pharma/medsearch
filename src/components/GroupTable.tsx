@@ -1,3 +1,5 @@
+///グループを探すページ内のテーブル部分
+
 'use client';
 
 import React, { useState, useMemo } from 'react';

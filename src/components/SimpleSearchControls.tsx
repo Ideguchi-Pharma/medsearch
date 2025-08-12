@@ -1,3 +1,5 @@
+//グループを探す画面の検索、絞り込み、並び替えのUI部分
+
 'use client';
 
 import React from 'react';

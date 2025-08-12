@@ -1,3 +1,5 @@
+//全画面共通のヘッダー部分
+
 'use client';
 
 import { useState } from 'react';

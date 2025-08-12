@@ -1,4 +1,4 @@
-//グループ検索の絞り込みフィルター部分
+//グループ検索、絞り込み、並び替えの機能部分
 
 import { useMemo } from 'react';
 import { allGroup } from './useGroupData';

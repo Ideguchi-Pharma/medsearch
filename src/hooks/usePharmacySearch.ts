@@ -1,4 +1,4 @@
-// src/hooks/usePharmacySearch.ts (本来あるべきシンプルな状態)
+// 施設データを取得する機能部分
 
 'use client';
 

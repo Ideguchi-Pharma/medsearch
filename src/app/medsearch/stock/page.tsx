@@ -1,3 +1,5 @@
+//「在庫状況を共有する」ページ
+
 import Link from "next/link";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 

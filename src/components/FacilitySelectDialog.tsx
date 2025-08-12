@@ -1,3 +1,5 @@
+//ヘッダーで使用してる施設選択機能
+
 'use client';
 
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react';

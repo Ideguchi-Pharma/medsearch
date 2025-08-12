@@ -1,3 +1,5 @@
+//ページ送りと行高さ調整
+
 'use client';
 
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions, Switch } from '@headlessui/react';

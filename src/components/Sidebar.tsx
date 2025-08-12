@@ -1,3 +1,5 @@
+//全画面共通のサイドバー部分
+
 'use client';
 
 import { useState, Fragment } from 'react';
