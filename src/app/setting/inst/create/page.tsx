@@ -208,7 +208,7 @@ export default function FacilityCreatePage() {
           </div>
         </div>
         <div className="w-full p-6 mt-6 space-y-4 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm">
-            <div className="w-full rounded-md info-bg p-6">
+            <div className="w-full rounded-lg info-bg p-6">
                 <p className="flex flex-row gap-2 items-center font-bold">
                 <InformationCircleIcon className="w-5 h-5"></InformationCircleIcon>
                 開設許可証のアップロードについて
