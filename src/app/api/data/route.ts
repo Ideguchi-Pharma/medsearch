@@ -43,7 +43,7 @@ export async function GET() {
             const facilityJson: any[] = XLSX.utils.sheet_to_json(facilityWorksheet);
             const facilitiesWithId = facilityJson.map((facility) => ({
                  ...facility, 
-                 id: facility.uniqueId, 
+                 id: facility.facilityId, 
                  groupId: facility.groupId 
                 }));
             const facilityMap = new Map(facilitiesWithId.map(f => [f.facilityName, f]));
