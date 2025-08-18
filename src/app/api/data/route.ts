@@ -41,7 +41,11 @@ export async function GET() {
             const facilitySheetName = workbook.SheetNames[1];
             const facilityWorksheet = workbook.Sheets[facilitySheetName];
             const facilityJson: any[] = XLSX.utils.sheet_to_json(facilityWorksheet);
-            const facilitiesWithId = facilityJson.map((facility) => ({ ...facility, id: facility.uniqueId, groupId: facility.groupId }));
+            const facilitiesWithId = facilityJson.map((facility) => ({
+                 ...facility, 
+                 id: facility.uniqueId, 
+                 groupId: facility.groupId 
+                }));
             const facilityMap = new Map(facilitiesWithId.map(f => [f.facilityName, f]));
 
             const pharmacySheetName = workbook.SheetNames[0];
@@ -50,7 +54,16 @@ export async function GET() {
             const processedPharmacyData = pharmacyJsonData.map((item) => {
                 const facilityInfo = facilityMap.get(item.facilityName || '');
                 return {
-                    drugName: (item.drugName as string) || '', price: Number(item.price) || 0, facilityName: item.facilityName || '', distance: Number(item.distance) || 0, dispenseCount: Number(item.dispenseCount) || 0, dispenseAmount: Number(item.dispenseAmount) || 0, lastDispenseDate: convertExcelDate(item.lastDispenseDate, 'YYYY/MM/DD'), facilityNumber: facilityInfo?.facilityNumber || '', facilityId: facilityInfo?.id || '',
+                    drugName: 
+                    (item.drugName as string) || '',
+                     price: Number(item.price) || 0,
+                     facilityName: item.facilityName || '',
+                     distance: Number(item.distance) || 0,
+                     dispenseCount: Number(item.dispenseCount) || 0,
+                     dispenseAmount: Number(item.dispenseAmount) || 0,
+                     lastDispenseDate: convertExcelDate(item.lastDispenseDate, 'YYYY/MM/DD'),
+                     facilityNumber: facilityInfo?.facilityNumber || '',
+                     facilityId: facilityInfo?.id || '',
                 };
             });
 
@@ -62,7 +75,13 @@ export async function GET() {
             const allGroupsWorksheet = workbook.Sheets[allGroupsSheetName];
             const allGroupsJson: any[] = XLSX.utils.sheet_to_json(allGroupsWorksheet);
             const formattedAllGroups = allGroupsJson.map(row => ({
-                id: String(row['id'] || ''), groupName: String(row['groupName'] || ''), region: String(row['region'] || ''), memberCount: Number(row['memberCount'] || 0), updateDate: convertExcelDate(row['updateDate']), status: String(row['status'] || ''), button: String(row['button'] || '')
+                id: String(row['id'] || ''),
+                groupName: String(row['groupName'] || ''), 
+                region: String(row['region'] || ''), 
+                memberCount: Number(row['memberCount'] || 0), 
+                updateDate: convertExcelDate(row['updateDate']), 
+                status: String(row['status'] || ''), 
+                button: String(row['button'] || '')
             }));
 
             const groupDetailsSheetName = workbook.SheetNames[4];
@@ -70,7 +89,11 @@ export async function GET() {
             const groupDetailsJson: GroupDetail[] = XLSX.utils.sheet_to_json(groupDetailsWorksheet);
 
             return NextResponse.json({
-                pharmacyData: processedPharmacyData, facilities: facilitiesWithId, groups: groupJson, allGroups: formattedAllGroups, groupDetails: groupDetailsJson,
+                pharmacyData: processedPharmacyData,
+                facilities: facilitiesWithId, 
+                groups: groupJson, 
+                allGroups: formattedAllGroups, 
+                groupDetails: groupDetailsJson,
             });
         } catch (error) {
              console.error("Production (Excel) Error:", error);
@@ -98,7 +121,7 @@ export async function GET() {
             ]);
 
             const rawPharmacyData = rawPharmacyDataResults[0].map((row) => row.toJSON());
-            const facilities = facilityResults[0].map((row) => ({ ...row.toJSON(), id: row.toJSON().uniqueId }));
+            const facilities = facilityResults[0].map((row) => ({ ...row.toJSON(), id: row.toJSON().facilityId }));
             const groups = groupResults[0].map((row) => row.toJSON());
             const allGroups = allGroupResults[0].map((row) => {
                 const json = row.toJSON();

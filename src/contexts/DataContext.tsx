@@ -10,22 +10,52 @@ dayjs.extend(customParseFormat);
 
 // --- 型定義 (変更なし) ---
 export interface PharmacyData {
-  drugName: string; price: number; facilityName: string; distance: number; dispenseCount: number; dispenseAmount: number; lastDispenseDate: string; facilityNumber: string; facilityId: string;
+  drugName: string; 
+  price: number; 
+  facilityName: string; 
+  distance: number; 
+  dispenseCount: number; 
+  dispenseAmount: number; 
+  lastDispenseDate: string; 
+  facilityNumber: string; 
+  facilityId: string;
 }
 export interface Facility {
-  id: string; facilityName: string; groupId: string; facilityNumber: string; [key: string]: any;
+  id: string; 
+  facilityName: string; 
+  groupId: string; 
+  facilityNumber: string; 
+  [key: string]: any;
 }
 export interface Group {
-  id: string; name: string;
+  id: string; 
+  name: string;
 }
 export interface AllGroup {
-  id: string; groupName: string; region: string; memberCount: number; updateDate: string; status: string; button: string;
+  id: string; 
+  groupName: string; 
+  region: string; 
+  memberCount: number;
+  updateDate: string; 
+  status: string; 
+  button: string;
 }
 export interface GroupDetail {
-  groupId: string; groupName: string; postCode: string; address: string; contactAddress: string; explanation: string;
+  groupId: string; 
+  groupName: string; 
+  postCode: string; 
+  address: string; 
+  contactAddress: string; 
+  explanation: string;
 }
 interface DataContextType {
-  pharmacyData: PharmacyData[]; facilities: Facility[]; groups: Group[]; allGroups: AllGroup[]; groupDetails: GroupDetail[]; isLoading: boolean; error: string | null;
+  pharmacyData: PharmacyData[]; 
+  facilities: Facility[]; 
+  groups: Group[]; 
+  allGroups: AllGroup[]; 
+  groupDetails: GroupDetail[]; 
+  isLoading: boolean; 
+  error: string | null;
 }
 
 const DataContext = createContext<DataContextType | undefined>(undefined);

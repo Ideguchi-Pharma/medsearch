@@ -1,4 +1,5 @@
 Spanner Emulatorの起動(新しいターミナルで起動)
+※先にdocker desktopを開く
 docker run -p 9010:9010 -p 9020:9020 gcr.io/cloud-spanner-emulator/emulator
 ※閉じない
 

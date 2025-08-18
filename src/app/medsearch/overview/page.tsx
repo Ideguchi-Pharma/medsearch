@@ -65,17 +65,17 @@ return (
             </li>
                 <li className="pl-6">「2. 薬局の施設登録（登録無料）」に記載の通り、利用する施設を登録しましょう。</li>
                 <li className="pl-6">
-                    <Link href="#" className="button-fg">グループを探す</Link>
+                    <Link href="/medsearch/group/" className="button-fg">グループを探す</Link>
                     画面から参加したいグループを探し、参加申請を行いましょう。グループ管理者が承認したらグループに参加できます。</li>
                 <li className="pl-6">
-                    <Link href="#" className="button-fg">グループの登録</Link>
+                    <Link href="/medsearch/group/create" className="button-fg">グループの登録</Link>
                     画面から新たにご自身が管理するグループを作成することもできます。薬剤師会や近隣の仲の良い薬局同士でグループを作り、メドサーチを活用しましょう。</li>
             </ol>
         </div>
         <div className="flex flex-col pt-10 px-6">
             <h2 className="sm:text-2xl font-bold mb-6">2. 薬局の施設登録（登録無料）</h2>
             <p className="text-sm">メドサーチを利用する薬局の施設登録を行いましょう。新規の施設登録は
-                <Link href="#" className="button-fg">こちら</Link>
+                <Link href="/setting/inst/create/" className="button-fg">こちら</Link>
                 から。</p>
             <p className="text-sm">すでに登録済の施設にメンバーとして参加することもできます。その場合は施設の管理者が
                 <Link href="#" className="button-fg">施設を管理する</Link>
@@ -87,7 +87,7 @@ return (
             <p className="text-sm">メドサーチは毎月のレセプトファイル(CYOファイル)をパソコン上で読み込み、医薬品ごとの在庫状況を抽出し、在庫状況のみをクラウドに保存します。</p>
             <p className="text-sm">保存した在庫状況は参加するグループに共有されます。共有を停止したい場合は、いつでもクラウド上の在庫状況を削除することが可能です。</p>
             <p className="text-sm">登録作業は
-                <Link href="#" className="button-fg">在庫状況を共有する</Link>
+                <Link href="/medsearch/stock/" className="button-fg">在庫状況を共有する</Link>
                 画面から簡単に実施可能です。</p>
         </div>
         <div className="flex flex-col pt-10 px-6 pb-4">

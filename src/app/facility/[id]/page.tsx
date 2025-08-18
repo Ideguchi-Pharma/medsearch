@@ -16,10 +16,12 @@ export default function FacilityDetailPage() {
   if (isLoading) return <div>読み込み中...</div>;
   if (!facility) return <div>施設が見つかりませんでした。</div>;
 
-  const keys = Object.keys(facility);
-  const start = keys.indexOf('facilityName');
-  const end = keys.indexOf('permitNumber');
-  const displayKeys = (start !== -1 && end !== -1) ? keys.slice(start, end + 1) : keys;
+  const fullAddress = [
+    facility.prefecture,
+    facility.city,
+    facility.addressLine1,
+    facility.addressLine2
+  ].filter(Boolean).join('');
 
   const labelMap: Record<string, string> = {
     facilityNumber: '医療機関番号',
@@ -30,6 +32,11 @@ export default function FacilityDetailPage() {
     hpAddress: 'ホームページ',
     permitNumber: '開設許可番号',
   };
+
+  const displayKeys = [
+    'facilityNumber', 'postCode', 'address', 'telNumber', 'faxNumber',
+    'hpAddress', 'permitNumber'
+  ];
 
   return (
     <div className="p-8 text-sm">
@@ -45,12 +52,20 @@ export default function FacilityDetailPage() {
       <div className="mt-8 w-full border border-gray-200 rounded-2xl shadow-sm p-6">
         <h1 className="font-bold mb-4">{facility['facilityName']}</h1>
         <div className="space-y-3">
-        {displayKeys.filter(key => key !== 'facilityName' && key !== 'id' && key !== 'uniqueId').map((key) => (
-            <div key={key} className="flex text-sm">
-              <span className="min-w-[120px] secondaly-fg">{labelMap[key] || key}：</span>
-              <span>{facility[key]}</span>
-            </div>
-          ))}
+        {displayKeys.map((key) => {
+            // keyが'address'の場合は結合した住所を、それ以外はfacilityのデータを表示
+            const displayValue = key === 'address' ? fullAddress : facility[key];
+
+            return (
+              // データが存在する場合のみ表示
+              displayValue && ( 
+                <div key={key} className="flex text-sm">
+                  <span className="min-w-[150px] secondaly-fg">{labelMap[key] || key}：</span>
+                  <span>{displayValue}</span>
+                </div>
+              )
+            )
+        })}
         </div>
         <div className="relative flex items-start space-x-2 px-4 py-3 rounded-lg w-full info-bg mt-4">
           <p className="px-0.5 py-0.5 text-sm pl-10 rounded-xl font-[family-name:var(--font-geist-mono)]">開設許可証が登録されていません</p>
