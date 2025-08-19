@@ -21,10 +21,19 @@ export interface PharmacyData {
   facilityId: string;
 }
 export interface Facility {
-  id: string; 
-  facilityName: string; 
-  groupId: string; 
-  facilityNumber: string; 
+  id: string; // facilityIdとして扱う
+  facilityName: string;
+  groupId: string;
+  facilityNumber: string;
+  postCode: string;
+  prefecture: string;     
+  city: string;           
+  addressLine1: string;   
+  addressLine2?: string; 
+  telNumber: string;
+  faxNumber: string;
+  hpAddress: string;
+  permitNumber: string;
   [key: string]: any;
 }
 export interface Group {
@@ -44,7 +53,9 @@ export interface GroupDetail {
   groupId: string; 
   groupName: string; 
   postCode: string; 
-  address: string; 
+  prefecture: string;
+  city: string;
+  addressLine1: string; 
   contactAddress: string; 
   explanation: string;
 }

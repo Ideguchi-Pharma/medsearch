@@ -19,6 +19,5 @@
 ・postCode
 ・prefecture
 ・city
-・addressLine1
 ・contacAddress
 ・explanation

@@ -150,3 +150,84 @@ export async function GET() {
         }
     }
 }
+
+// POSTリクエストを処理する関数 (データ追加)
+export async function POST(request: Request) {
+    try {
+        const body = await request.json();
+        const { type, data } = body;
+
+        // --- Vercelデプロイ時 (本番環境) の処理 ---
+        if (process.env.NODE_ENV === 'production') {
+            console.log('本番環境でのPOSTリクエスト受信 (書き込みなし):', data);
+            return NextResponse.json({ message: `${type} created successfully (simulation)` }, { status: 201 });
+        }
+        
+        // --- ローカル開発環境の処理 (Spannerへの書き込み) ---
+        const spanner = new Spanner({
+            projectId: 'test-medsearch',
+            apiEndpoint: 'localhost:9010',
+        });
+        const instance = spanner.instance("test-instance");
+        const database = instance.database("test-database");
+
+        if (type === 'group') {
+            // データベースに複数の変更を一度に書き込むトランザクションを開始
+            await database.runTransaction(async (err, transaction) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                if (!transaction) {
+                    console.error('Transaction object is null');
+                    return;
+                }
+                try {
+                    // 1. Groupsテーブル (詳細情報) への書き込み
+                    transaction.insert('Groups', {
+                        groupId: data.groupId,
+                        groupName: data.groupName,
+                        postCode: data.postalCode,
+                        prefecture: data.prefecture,
+                        city: data.city,
+                        addressLine1: data.addressLine1,
+                        contactAddress: data.contact,
+                        explanation: data.description,
+                    });
+
+                    // 2. AllGroupsテーブル (一覧表示用) への書き込み
+                    transaction.insert('AllGroups', {
+                        id: data.groupId,
+                        groupName: data.groupName,
+                        region: data.prefecture + data.city,
+                        memberCount: 0, 
+                        updateDate: Spanner.COMMIT_TIMESTAMP, // Spannerの機能で現在時刻を記録
+                        status: '',
+                    });
+
+                    // 3. SimpleGroupsテーブル (検索用) への書き込み
+                    transaction.insert('SimpleGroups', {
+                        id: data.groupId,
+                        name: data.groupName,
+                    });
+
+                    await transaction.commit();
+                } catch (err) {
+                    console.error('ERROR:', err);
+                    await transaction.rollback();
+                }
+            });
+
+        } else if (type === 'facility') {
+            // TODO: 施設追加のロジックをここに追加
+        } else {
+            return NextResponse.json({ message: "無効なデータタイプです。" }, { status: 400 });
+        }
+
+        return NextResponse.json({ message: `${type} を作成しました。` }, { status: 201 });
+
+    } catch (error) {
+        console.error("POST Error:", error);
+        return NextResponse.json({ message: "データの作成中にエラーが発生しました。", error: (error as Error).message }, { status: 500 });
+    }
+}
