@@ -216,7 +216,7 @@ export async function POST(request: Request) {
                     transaction.insert('AllGroups', {
                         id: data.groupId,
                         groupName: data.groupName,
-                        region: data.city,
+                        region: data.city + data.addressLine1,
                         memberCount: 0, 
                         updateDate: currentDateString, // SpannerのDATE型として保存（YYYY-MM-DD形式）
                         status: '',

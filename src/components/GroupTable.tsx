@@ -32,9 +32,6 @@ interface GroupTableProps {
 }
 
 export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTerm, isCompact }) => {
-  // デバッグ用：データの内容を確認
-  console.log('GroupTable received groups:', groups);
-  
   // 並び替えの状態管理（これは変更なし）
   const [sortColumn, setSortColumn] = useState<keyof AllGroup | null>('status');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
