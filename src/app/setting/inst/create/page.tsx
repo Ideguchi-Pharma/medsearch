@@ -61,7 +61,7 @@ export default function FacilityCreatePage() {
             マイページ
           </Link>
           <p>・</p>
-          <Link href={""} className="tracking-[-.01em] hover:underline">
+          <Link href={"/setting/inst/"} className="tracking-[-.01em] hover:underline">
             施設の管理
           </Link>
           <p>・</p>

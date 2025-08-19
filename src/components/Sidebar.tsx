@@ -61,8 +61,8 @@ const navSections = [
         icon: Cog6ToothIcon,
         label: '設定',
         links: [
-            { href: '#', label: '施設を管理する' },
-            { href: '#', label: 'グループを管理する' },
+            { href: '/setting/inst/', label: '施設を管理する' },
+            { href: '/setting/group/', label: 'グループを管理する' },
             { href: '#', label: '支払い情報を管理する' },
         ],
       },

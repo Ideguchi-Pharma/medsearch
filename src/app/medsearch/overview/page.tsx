@@ -68,7 +68,7 @@ return (
                     <Link href="/medsearch/group/" className="button-fg">グループを探す</Link>
                     画面から参加したいグループを探し、参加申請を行いましょう。グループ管理者が承認したらグループに参加できます。</li>
                 <li className="pl-6">
-                    <Link href="/medsearch/group/create" className="button-fg">グループの登録</Link>
+                    <Link href="/setting/group/create" className="button-fg">グループの登録</Link>
                     画面から新たにご自身が管理するグループを作成することもできます。薬剤師会や近隣の仲の良い薬局同士でグループを作り、メドサーチを活用しましょう。</li>
             </ol>
         </div>
