@@ -23,10 +23,25 @@ function convertExcelDate(serial: any, format = 'YYYY/MM/DD'): string {
 }
 
 // Spannerの日付オブジェクトを 'YYYY/MM/DD' 形式の文字列に変換する関数
-function formatSpannerDate(dateObject: any): string {
-    if (dateObject && typeof dateObject === 'object' && dateObject.value && typeof dateObject.value === 'string') {
-        return dayjs(dateObject.value).format('YYYY/MM/DD');
+function formatSpannerDate(dateValue: any): string {
+    // Spanner DATEオブジェクトは { value: 'YYYY-MM-DD' } という形式
+    // POSTで文字列として保存したデータは、そのまま文字列として返ってくることがある
+    const dateString = dateValue?.value || dateValue;
+
+    if (typeof dateString === 'string' && dayjs(dateString).isValid()) {
+        return dayjs(dateString).format('YYYY/MM/DD');
     }
+
+    // 数値の場合（Excelの日付シリアル値）も処理
+    if (typeof dateString === 'number' && dateString > 0) {
+        return convertExcelDate(dateString);
+    }
+
+    // 日付オブジェクトの場合
+    if (dateString instanceof Date && !isNaN(dateString.getTime())) {
+        return dayjs(dateString).format('YYYY/MM/DD');
+    }
+
     return '';
 }
 
@@ -196,12 +211,14 @@ export async function POST(request: Request) {
                     });
 
                     // 2. AllGroupsテーブル (一覧表示用) への書き込み
+                    const currentDateString = dayjs().format('YYYY-MM-DD');
+                    console.log('Saving updateDate to AllGroups:', currentDateString);
                     transaction.insert('AllGroups', {
                         id: data.groupId,
                         groupName: data.groupName,
-                        region: data.prefecture + data.city,
+                        region: data.city + data.addressLine1,
                         memberCount: 0, 
-                        updateDate: dayjs().format('YYYY-MM-DD'), // 日付を取得
+                        updateDate: currentDateString, // SpannerのDATE型として保存（YYYY-MM-DD形式）
                         status: '',
                     });
 
