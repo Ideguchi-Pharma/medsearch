@@ -201,7 +201,7 @@ export async function POST(request: Request) {
                         groupName: data.groupName,
                         region: data.prefecture + data.city,
                         memberCount: 0, 
-                        updateDate: Spanner.COMMIT_TIMESTAMP, // Spannerの機能で現在時刻を記録
+                        updateDate: dayjs().format('YYYY-MM-DD'), // 日付を取得
                         status: '',
                     });
 

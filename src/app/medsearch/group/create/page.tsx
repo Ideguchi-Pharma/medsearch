@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation'; // useRouterをインポート
 
 // 各入力フィールドの状態を管理するためのカスタムフック
 const useFormState = () => {
@@ -9,15 +10,56 @@ const useFormState = () => {
   const [postalCode, setPostalCode] = useState('');
   const [prefecture, setPrefecture] = useState('');
   const [city, setCity] = useState('');
+  const [addressLine1, setAddressLine1] = useState(''); // addressLine1を追加
   const [contact, setContact] = useState('');
   const [description, setDescription] = useState('');
+  const router = useRouter(); // useRouterフックを使用
 
-  // フォーム送信時の処理（今はコンソールに出力するだけ）
-  const handleSubmit = (e: React.FormEvent) => {
+  // フォーム送信時の処理
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = { groupName, postalCode, prefecture, city, contact, description };
-    console.log("作成されたグループ情報:", formData);
-    // ここにAPIへデータを送信する処理を記述します
+
+    // 新しいグループのIDをランダムに生成
+    const groupId = crypto.randomUUID();
+
+    const formData = { 
+      groupId,
+      groupName, 
+      postalCode, 
+      prefecture, 
+      city, 
+      addressLine1,
+      contact, 
+      description 
+    };
+
+    try {
+      // APIエンドポイントにPOSTリクエストを送信
+      const response = await fetch('/api/data', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        // typeとdataをオブジェクトで囲んで送信
+        body: JSON.stringify({ type: 'group', data: formData }),
+      });
+
+      if (!response.ok) {
+        // エラーレスポンスの場合は例外をスロー
+        throw new Error('グループの作成に失敗しました。');
+      }
+
+      // 成功した場合の処理
+      const result = await response.json();
+      console.log("作成成功:", result);
+      alert('グループが正常に作成されました！');
+      // グループ一覧ページにリダイレクト
+      window.location.href = '/medsearch/group';
+
+    } catch (error) {
+      console.error("作成失敗:", error);
+      alert((error as Error).message);
+    }
   };
 
   return {
@@ -25,6 +67,7 @@ const useFormState = () => {
     postalCode, setPostalCode,
     prefecture, setPrefecture,
     city, setCity,
+    addressLine1, setAddressLine1,
     contact, setContact,
     description, setDescription,
     handleSubmit,
@@ -63,6 +106,7 @@ export default function GroupCreatePage() {
                 value={form.groupName}
                 onChange={(e) => form.setGroupName(e.target.value)}
                 className="w-full p-4 border rounded-md focus:outline-none"
+                required // 入力必須にする
               />
             </div>
             {/* 郵便番号 */}
@@ -109,6 +153,17 @@ export default function GroupCreatePage() {
                 className="w-full p-4 border rounded-md focus:outline-none"
               />
             </div>
+          </div>
+          <div>
+            <label htmlFor="addressLine1" className="block text-sm font-medium mb-1"></label>
+            <input
+              id="addressLine1"
+              type="text"
+              placeholder="住所(町名・番地等)"
+              value={form.addressLine1}
+              onChange={(e) => form.setAddressLine1(e.target.value)}
+              className="w-full p-4 border rounded-md focus:outline-none"
+            />
           </div>
           {/* 連絡先 */}
           <div>
