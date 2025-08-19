@@ -89,19 +89,42 @@ export async function GET() {
             const allGroupsSheetName = workbook.SheetNames[3];
             const allGroupsWorksheet = workbook.Sheets[allGroupsSheetName];
             const allGroupsJson: any[] = XLSX.utils.sheet_to_json(allGroupsWorksheet);
-            const formattedAllGroups = allGroupsJson.map(row => ({
-                id: String(row['id'] || ''),
-                groupName: String(row['groupName'] || ''), 
-                region: String(row['region'] || ''), 
-                memberCount: Number(row['memberCount'] || 0), 
-                updateDate: convertExcelDate(row['updateDate']), 
-                status: String(row['status'] || ''), 
-                button: String(row['button'] || '')
-            }));
 
             const groupDetailsSheetName = workbook.SheetNames[4];
             const groupDetailsWorksheet = workbook.Sheets[groupDetailsSheetName];
             const groupDetailsJson: GroupDetail[] = XLSX.utils.sheet_to_json(groupDetailsWorksheet);
+
+            // GroupDetails から地域のフォールバックを構築（city + addressLine1）
+            const detailsById = new Map(groupDetailsJson.map((d) => [String((d as any)['groupId'] || ''), d]));
+
+            const formattedAllGroups = allGroupsJson.map(row => {
+                const id = String(row['id'] || '');
+                const groupName = String(row['groupName'] || '');
+                // 多言語/別名ヘッダーを考慮
+                const rawRegion = row['region']
+                    ?? row['地域']
+                    ?? row['address']
+                    ?? row['住所']
+                    ?? '';
+                let region = String(rawRegion || '');
+                if (!region) {
+                    const detail = detailsById.get(id);
+                    if (detail) {
+                        const city = (detail as any)['city'] || '';
+                        const addressLine1 = (detail as any)['addressLine1'] || '';
+                        region = String(city) + String(addressLine1);
+                    }
+                }
+                return {
+                    id,
+                    groupName,
+                    region,
+                    memberCount: Number(row['memberCount'] || 0),
+                    updateDate: convertExcelDate(row['updateDate']),
+                    status: String(row['status'] || ''),
+                    button: String(row['button'] || ''),
+                } as AllGroup;
+            });
 
             return NextResponse.json({
                 pharmacyData: processedPharmacyData,
