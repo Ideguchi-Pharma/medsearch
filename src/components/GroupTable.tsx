@@ -5,7 +5,7 @@
 import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { allGroup } from '@/hooks/useGroupData';
+import { AllGroup } from '@/contexts/DataContext';
 import GroupTableHead from './GroupTableHead'; // ヘッダー部品
 import FormattedDate from './FormattedDate';
 
@@ -25,19 +25,22 @@ const NoDataDisplay = ({ message }: { message: string }) => (
 
 // この部品が必要とする道具（Props）の型を定義
 interface GroupTableProps {
-  groups: allGroup[];
+  groups: AllGroup[];
   error: Error | null;
   searchTerm: string;
   isCompact: boolean;
 }
 
 export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTerm, isCompact }) => {
+  // デバッグ用：データの内容を確認
+  console.log('GroupTable received groups:', groups);
+  
   // 並び替えの状態管理（これは変更なし）
-  const [sortColumn, setSortColumn] = useState<keyof allGroup | null>('status');
+  const [sortColumn, setSortColumn] = useState<keyof AllGroup | null>('status');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
 
   // 並び替えの操作（これも変更なし）
-  const handleSort = (columnKey: keyof allGroup) => {
+  const handleSort = (columnKey: keyof AllGroup) => {
     if (sortColumn === columnKey) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     } else {
@@ -64,7 +67,7 @@ export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTer
         <GroupTableHead
           sortColumn={sortColumn}
           sortOrder={sortOrder}
-          onSort={handleSort}
+          onSort={(columnKey: keyof AllGroup) => handleSort(columnKey)}
         />
         <tbody>
           {error ? (
@@ -79,7 +82,11 @@ export const GroupTable: React.FC<GroupTableProps> = ({ groups, error, searchTer
                     {group.groupName}
                   </Link>
                 </td>
-                <td className={`px-4 text-sm ${isCompact ? 'py-1.5' : 'py-3'}`}>{group.region}</td>
+                <td className={`px-4 text-sm ${isCompact ? 'py-1.5' : 'py-3'}`}>
+                  {group.region || '地域なし'}
+                  {/* デバッグ用 */}
+                  {!group.region && <span className="text-red-500 text-xs">(region: {JSON.stringify(group.region)})</span>}
+                </td>
                 <td className={`px-4 text-center ${isCompact ? 'py-1.5' : 'py-3'}`}>
                     <span className={`
                     inline-flex items-center justify-center 

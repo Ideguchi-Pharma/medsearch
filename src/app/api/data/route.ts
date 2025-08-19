@@ -216,13 +216,13 @@ export async function POST(request: Request) {
                     transaction.insert('AllGroups', {
                         id: data.groupId,
                         groupName: data.groupName,
-                        region: data.city + data.addressLine1,
+                        region: data.city,
                         memberCount: 0, 
                         updateDate: currentDateString, // SpannerのDATE型として保存（YYYY-MM-DD形式）
                         status: '',
                     });
 
-                    // 3. SimpleGroupsテーブル (検索用) への書き込み
+                    // 3. SimpleGroupsテーブル (検索用) への書き込み ※いらないけど
                     transaction.insert('SimpleGroups', {
                         id: data.groupId,
                         name: data.groupName,

@@ -101,6 +101,12 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         setGroups(data.groups);
         setAllGroups(data.allGroups);
         setGroupDetails(data.groupDetails);
+        
+        // デバッグ用：allGroupsの内容を確認
+        console.log('DataContext loaded allGroups:', data.allGroups);
+        if (data.allGroups && data.allGroups.length > 0) {
+          console.log('First group region:', data.allGroups[0].region);
+        }
       } catch (err: unknown) {
         console.error("DataContext fetch error:", err);
         setError(err instanceof Error ? err.message : 'データの読み込み中に不明なエラーが発生しました。');

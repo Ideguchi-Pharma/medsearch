@@ -1,14 +1,14 @@
 //グループ検索、絞り込み、並び替えの機能部分
 
 import { useMemo } from 'react';
-import { allGroup } from './useGroupData';
+import { AllGroup } from '@/contexts/DataContext';
 import { convertHiraganaToKatakana } from '@/utils/converters'; 
 
 export const useFilteredGroups = (
-  allGroups: allGroup[], 
+  allGroups: AllGroup[], 
   searchTerm: string, 
   selectedRegion: string,
-  selectedStatus
+  selectedStatus: string
 ) => {
   const filteredGroups = useMemo(() => {
     const groupsFilteredByStatus = allGroups.filter(group => {

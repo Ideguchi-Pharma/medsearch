@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/outline';
-import { allGroup } from '@/hooks/useGroupData'; // データの型をインポート
+import { AllGroup } from '@/contexts/DataContext'; // データの型をインポート
 
 // ヘッダーの各項目の「設計図」の型を定義
 interface TableHeaderItem {
-  key: keyof allGroup; // どのデータ項目に対応するか
+  key: keyof AllGroup; // どのデータ項目に対応するか
   label: string;       // 画面に表示する名前
   width: string;       // 列の幅
 }
@@ -23,9 +23,9 @@ const tableHeaders: TableHeaderItem[] = [
 
 // この部品が必要とする道具（Props）の型を定義
 interface GroupTableHeadProps {
-  sortColumn: keyof allGroup | null;
+  sortColumn: keyof AllGroup | null;
   sortOrder: 'asc' | 'desc';
-  onSort: (columnKey: keyof allGroup) => void;
+  onSort: (columnKey: keyof AllGroup) => void;
 }
 
 const GroupTableHead = ({ sortColumn, sortOrder, onSort }: GroupTableHeadProps) => {
